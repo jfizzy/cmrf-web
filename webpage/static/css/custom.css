@@ -11,7 +11,12 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Open Sans', sans-serif;
 }
 
-/*NAV BAR STUFF*/
+section {
+    padding-top:50px;
+    padding-bottom:40px;
+}
+
+/*NAV BAR STYLES*/
 /***************************************/
 
 .navbar a {
@@ -23,8 +28,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 nav {
-	position: absolute;
-	width: 100%;
+	 position: absolute;
+	 width: 100%;
     background: #fff;
     z-index:99;
 }
@@ -50,11 +55,65 @@ nav {
 
 /***************************************/
 
+/*SECTION STYLES*/
+/***************************************/
+
 #home {
-    background-image: url("../img/interchange.jpg");
+   background-image: url("../img/interchange.jpg");
 	background-repeat: no-repeat;
 	background-position: center 0;
 	background-size: cover;
 	background-attachment: fixed;
 	min-height:650px;
 }
+
+#Parallax-one {
+   background-image: url("../img/volcano.jpg");
+	padding: 50px;
+	background-repeat: no-repeat;
+	background-position: center 0;
+	background-size: cover;
+	background-attachment: fixed;
+	min-height:650px;
+	color:#fff;
+}
+
+#Parallax-one i {
+	color:#fff;
+}
+
+#Parallax-two {
+   background-image: url("../img/bridge.jpg");
+	padding:50px;
+	background-repeat: no-repeat;
+	background-position: center 0;
+	background-size: cover;
+	background-attachment: fixed;
+	min-height:650px;
+	color:#fff;
+}
+
+#Parallax-two i {
+   color:#fff;
+}
+
+/***************************************/
+
+
+
+/*FOOTER STYLES*/
+/***************************************/
+
+#footer {
+    background: #d6f9ff; /* Old browsers */
+	 background: -moz-linear-gradient(top, #d6f9ff 0%, #9ee8fa 100%); /* FF3.6-15 */
+	 background: -webkit-linear-gradient(top, #d6f9ff 0%,#9ee8fa 100%); /* Chrome10-25,Safari5.1-6 */
+	 background: linear-gradient(to bottom, #d6f9ff 0%,#9ee8fa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 ); /* IE6-9 */	
+	
+    color:#fff;
+    padding:20px 50px 20px 50px;
+    text-align:right;
+}
+
+/***************************************/
