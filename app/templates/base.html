@@ -9,7 +9,7 @@ lang="en"
 
 {% block head %}
 {{ super() }}
-	
+
 	{% block metas %}
 	{{super()}}
 	<meta charset="utf-8">
@@ -17,7 +17,7 @@ lang="en"
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="cmrf web">
 	{% endblock %}
-	
+
 	{% block styles %}
 	{{super()}}
 	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
@@ -36,10 +36,10 @@ lang="en"
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-         </button>  
+         </button>
          <a class="navbar-brand" href="{{ url_for('main.index') }}">CMRF</a>
 		 </div>
-		 
+
 		 <!--Navbar links-->
 		<div class="navbar-collapse collapse" id="navbar">
 			<ul class="nav navbar-nav">
@@ -47,13 +47,13 @@ lang="en"
 					<a href="{{ url_for('main.index') }}">Home</a>
 				</li>
 				<li>
-					<a>About</a>
+					<a href="{{ url_for('main.about') }}">About</a>
 				</li>
 				<li>
-					<a>Instruments</a>
+					<a href="{{ url_for('main.inst') }}">Instruments</a>
 				</li>
 				<li>
-					<a>News</a>
+					<a href="{{ url_for('main.news') }}">News</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -80,6 +80,9 @@ lang="en"
     {% endfor %}
 
     {% block page_content %}{% endblock %}
+		<div class="navbar navbar-fixed-bottom hidden-xs" id="footer">
+	    		2016 Lewis Research Group ™ | All Rights Reserved
+		</div>
 </div>
 {% endblock %}
 

@@ -25,3 +25,21 @@ def index():
     return render_template('index.html',
                            form=form, name=session.get('name'),
                            known=session.get('known', False))
+
+@main.route('/index')
+@main.route('/home')
+def home():
+    return redirect('/')
+
+@main.route('/about')
+def about():
+    return render_template('about.html')
+
+@main.route('/instruments')
+@main.route('/inst')
+def inst():
+    return render_template('inst.html')
+
+@main.route('/news')
+def news():
+    return render_template('news.html')
