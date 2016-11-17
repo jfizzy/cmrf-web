@@ -58,12 +58,18 @@ lang="en"
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<!--this is where we will put the conditional user session buttons-->
+				{% if current_user.is_authenticated %}
+					<li>
+						<a href="{{ url_for('auth.logout') }}">Logout</a>
+					</li>
+				{% else %}
+				<li>
+					<a href="{{ url_for('auth.login') }}">Login</a>
+				</li>
 				<li>
 					<a>Register</a>
 				</li>
-				<li>
-					<a>Login</a>
-				</li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>

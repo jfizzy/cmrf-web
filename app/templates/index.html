@@ -4,11 +4,9 @@
 {% block title %}{{super()}} - Home{% endblock %}
 
 {% block page_content %}
-	<h1 class="head-main">{% if name %}Hi {{ name }}, {% endif %}Welcome to the Calgary Metabolomic Research Facility!</h1>
-	{% if not known %}
-	<p>Pleased to meet you!</p>
-	{% else %}
-	<p>Happy to see you again!</p>
- 	{% endif %}
-{{ wtf.quick_form(form) }}
+	<h1 class="head-main">{% if current_user.is_authenticated %}
+													Hi {{ current_user.first_name }} {{ current_user.last_name }}
+												{% else %}
+													Hello stranger
+												{% endif %}, Welcome to the Calgary Metabolomic Research Facility!</h1>
 {% endblock %}

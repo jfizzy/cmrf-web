@@ -1,7 +1,12 @@
 from . import db
+from . import login_manager
 from flask_login import UserMixin
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 class User(UserMixin, db.Model):
     __tablename__ = 'USER'
@@ -12,6 +17,10 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64))
     phone = db.Column(db.Integer)
     date_joined = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    @property
+    def id(self):
+        return self.UCID
 
     @property
     def password(self):
@@ -36,7 +45,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User %s %s>' % (self.first_name, self.last_name)
 
-class Admin(UserMixin, db.Model):
+class Admin(db.Model):
     __tablename__ = 'ADMIN'
     ID = db.Column(db.Integer, db.Sequence('admin_seq', start=0, increment=1), primary_key=True)
     UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
@@ -47,7 +56,7 @@ class Admin(UserMixin, db.Model):
     def __repr__(self):
         return '<Admin %r>' % self.ID
 
-class Researcher(UserMixin, db.Model):
+class Researcher(db.Model):
     __tablename__ = 'RESEARCHER'
     ID = db.Column(db.Integer, db.Sequence('admin_seq', start=0, increment=1), primary_key=True)
     UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
