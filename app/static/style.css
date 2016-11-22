@@ -1,10 +1,104 @@
-body {
+html, body {
     padding-top: 65px;
+    padding-bottom: 65px;
+    height: 100%;
+}
+
+.beforefooter{
+	min-height: 100%;
+	z-index:1;
+}
+
+.container {
+	z-index: 2;
 }
 
 #footer {
-    position: fixed;
-    bottom: 0px;
+    background: #d6f9ff; /* Old browsers */
+	 background: -moz-linear-gradient(top, #d6f9ff 0%, #9ee8fa 100%); /* FF3.6-15 */
+	 background: -webkit-linear-gradient(top, #d6f9ff 0%,#9ee8fa 100%); /* Chrome10-25,Safari5.1-6 */
+	 background: linear-gradient(to bottom, #d6f9ff 0%,#9ee8fa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 ); /* IE6-9 */	
+	
+    color:#fff;
     padding:20px 50px 20px 50px;
-    text-align: right;
+    text-align:right;
+    bottom: -50px;
+    height: 50px;
+    left: 0;
+    right: 0;
+    position: relative;
 }
+
+/***************************************/
+/*NAV BAR STYLES*/
+/***************************************/
+
+.navbar a {
+    color:#ffffff !important;
+}
+.navbar-header a {
+    color:#ffffff !important;
+    padding-right:100px;
+}
+
+nav {
+	 position: absolute;
+	 width: 100%;
+    background: #fff;
+    z-index:99;
+}
+
+.fixed {
+	position: fixed; 
+	top: 0; 
+	min-height: 50px; 
+	z-index: 99;
+}
+/*667292*/
+.navbar-inverse {
+	
+	background: #d6f9ff; /* Old browsers */
+	background: -moz-linear-gradient(top, #d6f9ff 0%, #9ee8fa 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #d6f9ff 0%,#9ee8fa 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #d6f9ff 0%,#9ee8fa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 ); /* IE6-9 */	
+	
+	border-color: #ffffff;
+	border-width: 2px;
+}
+
+/***************************************/
+/*SECTION STYLES*/
+/***************************************/
+
+.row {
+	position: relative;
+	padding-top: 15px;
+}
+.readable{
+	color: white;
+}
+
+.backdrop {
+	position: absolute;
+	background-color: black;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=7 s0)";
+	filter: alpha(opacity=70);
+	opacity: 0.7;
+	height: 100%;
+	width: 100%;
+}
+
+#home {
+	position: relative;
+    background-image: url("../static/assets/facility.jpg");
+	background-repeat: no-repeat;
+	background-position: center 0;
+	background-size: cover;
+	background-attachment: fixed;
+	min-height:650px;
+}
+
+
+

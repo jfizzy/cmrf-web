@@ -84,12 +84,21 @@ lang="en"
         {{ message }}
     </div>
     {% endfor %}
+    </div>
 
-    {% block page_content %}{% endblock %}
-		<div class="navbar navbar-fixed-bottom hidden-xs" id="footer">
-	    		2016 Lewis Research Group ™ | All Rights Reserved
+<!-- TEMPLATE CONTENT -->
+	<div class="beforefooter">
+    	{% block page_content %}{% endblock %}
+    </div>
+<!--******************-->
+	
+		<div class="container-fluid hidden-xs">
+			<div class="row">
+				<div class="span12" id="footer">
+	    			2016 Lewis Research Group ™ | All Rights Reserved
+				</div>
+			</div>
 		</div>
-</div>
 {% endblock %}
 
 {% block scripts %}
