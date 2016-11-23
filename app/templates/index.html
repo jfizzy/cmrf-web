@@ -4,13 +4,11 @@
 {% block title %}{{super()}} - Home{% endblock %}
 
 {% block page_content %}
-	<div class="top-header">
-		<div class="page-header text-center" style="position: fixed-top">
-	  		<h1>Lewis Research Group</h1>
-	  		<p>Calgary Metabolomic Research Facility</p>
-		</div>
-	</div>	
-
+<section class="jumbotron text-xs-center">
+	<div class="container">
+		<h1 class="jumbotron-heading text-center">Lewis Research Group</h1>
+	</div>
+</section>
 		<!--Home Section-->
 		<div id="home">
 			<div class="container" >
@@ -22,7 +20,7 @@
 			                	{% if current_user.is_authenticated %}
 									Hi {{current_user.first_name}}, Welcome to the Calgary Metabolomic Research Facility!
 								{% else %}
-									Hello, Welcome to the Calgary Metabolomic Research Facility!
+										Welcome to the Calgary Metabolomic Research Facility!
 								{% endif %}
 			                 </h1>
 			                <span class="head-sub-main">
@@ -35,7 +33,10 @@
 			                <div class="head-last">
 			                    This is the Calgary Metabolomic Research Facility
 			                </div>
-		                </div>
+											<div align="center" class="embed-responsive embed-responsive-16by9">
+    										<video autoplay loop class="embed-responsive-item">
+      										<source src="../static/assets/inst.jpg">
+		                	</div>
 		            </div>
         		</div>
 		   </div>
