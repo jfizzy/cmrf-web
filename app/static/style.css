@@ -1,6 +1,4 @@
 html, body {
-    padding-top: 65px;
-    padding-bottom: 65px;
     height: 100%;
 }
 
@@ -14,11 +12,11 @@ html, body {
 }
 
 #footer {
-    background: #d6f9ff; /* Old browsers */
-	 background: -moz-linear-gradient(top, #d6f9ff 0%, #9ee8fa 100%); /* FF3.6-15 */
-	 background: -webkit-linear-gradient(top, #d6f9ff 0%,#9ee8fa 100%); /* Chrome10-25,Safari5.1-6 */
-	 background: linear-gradient(to bottom, #d6f9ff 0%,#9ee8fa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 ); /* IE6-9 */	
+    background: #e52d27; /* Old browsers */
+	 background: -moz-linear-gradient(top, #e52d27 0%, #b31217 100%); /* FF3.6-15 */
+	 background: -webkit-linear-gradient(top, #e52d27 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
+	 background: linear-gradient(to bottom, #e52d27 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e52d27', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
 	
     color:#fff;
     padding:20px 50px 20px 50px;
@@ -58,11 +56,11 @@ nav {
 /*667292*/
 .navbar-inverse {
 	
-	background: #d6f9ff; /* Old browsers */
-	background: -moz-linear-gradient(top, #d6f9ff 0%, #9ee8fa 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #d6f9ff 0%,#9ee8fa 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #d6f9ff 0%,#9ee8fa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 ); /* IE6-9 */	
+	background: #e52d27; /* Old browsers */
+	background: -moz-linear-gradient(top, #e52d27 0%, #b31217 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #e52d27 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #e52d27 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e52d27', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
 	
 	border-color: #ffffff;
 	border-width: 2px;
@@ -78,6 +76,12 @@ nav {
 }
 .readable{
 	color: white;
+
+}
+
+.top-header {
+	background: lightgrey;
+	padding-top: 50px;
 }
 
 .backdrop {
