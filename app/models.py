@@ -59,7 +59,11 @@ class Admin(db.Model):
         self.UCID = ucid
 
     def __repr__(self):
-        return '<Admin %r>' % self.ID
+        return '<Admin [%s] - UCID: [%s]>' % (self.ID, self.UCID)
+
+    @property
+    def id(self):
+        return self.ID
 
 class Researcher(db.Model):
 
@@ -72,7 +76,7 @@ class Researcher(db.Model):
         self.UCID = ucid
 
     def __repr__(self):
-        return '<Researcher %r>' % self.ID
+        return '<Researcher [%s] - UCID: [%s]>' % (self.ID, self.UCID)
 
 class FundingAccount(db.Model):
     
@@ -92,7 +96,7 @@ class FundingAccount(db.Model):
         self.rsc_id = rsc_id
 
     def __repr__(self):
-        return '<Funding Account - Name: [%s], Account Number: [%s]>' % (self.acc_name, self.acc_no)
+        return '<Funding Account - Name: [%s], Account Number: [%s], Researcher ID: [%s]>' % (self.acc_name, self.acc_no, self.RSC_ID)
 
 class Report(db.Model):
     
@@ -162,6 +166,21 @@ class WorkOrder(db.Model):
     def __repr__(self):
         return '<Work Order - ID: [%s], Title: [%s], Status: [%s]>' % (
             self.ID, self.title, self.status)
+
+    def get_required_instruments(self):
+        return [self.ri_qehf, self.ri_qeb, self.ri_tsq, self.ri_unk]
+
+    def get_target_metabolites(self):
+        return [self.tm_pep, self.tm_fa, self.tm_aa, self.tm_unk]
+
+    def has_report(self):
+        return self.RPT_ID is not None
+
+    def get_report(self):
+        return self.RPT_ID
+
+    def is_approved(self):
+        return (status is 'Approved' and self.ADM_ID is not None)
 
 class LogEntry(db.Model):
 
