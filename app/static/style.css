@@ -13,11 +13,11 @@ html, body {
 
 #footer {
     background: #e52d27; /* Old browsers */
-	 background: -moz-linear-gradient(top, #e52d27 0%, #b31217 100%); /* FF3.6-15 */
-	 background: -webkit-linear-gradient(top, #e52d27 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
-	 background: linear-gradient(to bottom, #e52d27 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e52d27', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
-	
+	background: -moz-linear-gradient(top, #e52d27 0%, #b31217 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #e52d27 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #e52d27 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e52d27', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
+
     color:#fff;
     padding:20px 50px 20px 50px;
     text-align:right;
@@ -48,14 +48,13 @@ nav {
 }
 
 .fixed {
-	position: fixed; 
-	top: 0; 
-	min-height: 50px; 
+	position: fixed;
+	top: 0;
+	min-height: 50px;
 	z-index: 99;
 }
 /*667292*/
 .navbar-inverse {
-	
 	background: #e52d27; /* Old browsers */
 	background: -moz-linear-gradient(top, #e52d27 0%, #b31217 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #e52d27 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
@@ -104,5 +103,12 @@ nav {
 	min-height:650px;
 }
 
-
-
+#instruments {
+	position: relative;
+    background-image: url("../static/assets/inst.jpg");
+	background-repeat: no-repeat;
+	background-position: center 0;
+	background-size: cover;
+	background-attachment: fixed;
+	min-height:650px;
+}
