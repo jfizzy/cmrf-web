@@ -12,11 +12,11 @@ html, body {
 }
 
 #footer {
-    background: #e52d27; /* Old browsers */
-	background: -moz-linear-gradient(top, #e52d27 0%, #b31217 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #e52d27 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #e52d27 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e52d27', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
+    background: #E30C00; /* Old browsers */
+	background: -moz-linear-gradient(top, #E30C00 0%, #b31217 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #E30C00 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #E30C00 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E30C00', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
 
     color:#fff;
     padding:20px 50px 20px 50px;
@@ -32,8 +32,9 @@ html, body {
 /*NAV BAR STYLES*/
 /***************************************/
 
-.navbar a {
-    color:#ffffff !important;
+#navbar ul li a {
+    color:white !important;
+
 }
 .navbar-header a {
     color:#ffffff !important;
@@ -41,8 +42,8 @@ html, body {
 }
 
 nav {
-	 position: absolute;
-	 width: 100%;
+	position: absolute;
+	width: 100%;
     background: #fff;
     z-index:99;
 }
@@ -55,14 +56,20 @@ nav {
 }
 /*667292*/
 .navbar-inverse {
-	background: #e52d27; /* Old browsers */
-	background: -moz-linear-gradient(top, #e52d27 0%, #b31217 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #e52d27 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #e52d27 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e52d27', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
+	background: #E30C00; /* Old browsers */
+	background: -moz-linear-gradient(top, #E30C00 0%, #b31217 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #E30C00 0%,#b31217 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #E30C00 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E30C00', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */	
 	
 	border-color: #ffffff;
 	border-width: 2px;
+}
+
+.navbar-header a img {
+	height: 40px;
+	margin-top: 6px;
+	margin-left: 6px;
 }
 
 /***************************************/
