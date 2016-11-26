@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}{{super()}} - Home{% endblock %}
+
+{% block page_content %}
+<section class="jumbotron text-xs-center">
+	<div class="container">
+		<h1 class="jumbotron-heading text-center">CMRF</h1>
+	</div>
+</section>
+<div class="container" >
+  <div class="row">
+    <div class="backdrop"> </div>
+    <div class="readable">
+      <div class="col-md-9 col-sm-9">
+        <h1 class="head-main">
+          {% if current_user.is_authenticated %}
+          Hi {{current_user.first_name}}, Welcome to the Calgary Metabolomic Research Facility!
+          {% else %}
+          Welcome to the Calgary Metabolomic Research Facility!
+          {% endif %}
+        </h1>
+        <span class="head-sub-main">
+          {% if not known %}
+          Pleased to meet you!
+          {% else %}
+          Welcome back!
+          {% endif %}
+        </span>
+        <div class="head-last">
+          This is the Calgary Metabolomic Research Facility
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
