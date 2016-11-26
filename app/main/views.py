@@ -15,9 +15,9 @@ def index():
 def home():
     return redirect('/')
 
-@main.route('/about')
-def about():
-    return render_template('about.html')
+@main.route('/people')
+def people():
+    return render_template('people.html')
 
 @main.route('/instruments')
 @main.route('/inst')
