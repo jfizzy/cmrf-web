@@ -17,7 +17,29 @@ def home():
 
 @main.route('/people')
 def people():
-    return render_template('people.html')
+    posts = [
+        {
+            'pic': '../static/assets/IMG_4804.JPG',
+            'header': 'Dr. Ian Lewis',
+            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+        },
+        {
+            'pic': '../static/assets/IMG_4806.JPG',
+            'header': 'Person 2',
+            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+        },
+        {
+            'pic': '../static/assets/IMG_4807.JPG',
+            'header': 'Person 3',
+            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+        },
+        {
+            'pic': '../static/assets/IMG_4811.JPG',
+            'header': 'Person 4',
+            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+        }
+    ]
+    return render_template("people.html", posts=posts)
 
 @main.route('/instruments')
 @main.route('/inst')

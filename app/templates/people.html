@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}{{super()}} - People{% endblock %}
 
@@ -9,50 +10,19 @@
 <div class="container-full-background">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4 col-sm-6 col-xs-12">
+			{% for post in posts %}
+				<div class="col-md-4 col-sm-6 col-xs-12">
 				<div class="thumbnail thumbnail4">
-					<div class="crop-img">
-						<img src="../static/assets/IMG_4804.JPG" alt="">
+						<div class="crop-img">
+							<img src="{{ post.pic }}"" alt="">
+						</div>
+						<div class="caption">
+							<h> {{ post.header }} </h>
+							<p> {{ post.caption }} </p>
+						</div>
 					</div>
-					<div class="caption">
-						<h> Dr. Ian Lewis </h>
-						<p> Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT. </p>
-					</div>
-				</div>
-			</div>  
-			<div class="col-md-4 col-sm-6 col-xs-12">
-				<div class="thumbnail thumbnail4">
-					<div class="crop-img">
-						<img src="../static/assets/IMG_4806.JPG" alt="">
-					</div>
-					<div class="caption">
-						<h> Another Person </h>
-						<p> Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT. </p>
-					</div>
-				</div>
-			</div> 
-			<div class="col-md-4 col-sm-6 col-xs-12">
-				<div class="thumbnail thumbnail4">
-					<div class="crop-img">
-						<img src="../static/assets/IMG_4807.JPG" alt="">
-					</div>
-					<div class="caption">
-						<h> Third Person </h>
-						<p> Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT. </p>
-					</div>
-				</div>
-			</div> 
-			<div class="col-md-4 col-sm-6 col-xs-12">
-				<div class="thumbnail thumbnail4">
-					<div class="crop-img">
-						<img src="../static/assets/IMG_4811.JPG" alt="">
-					</div>
-					<div class="caption">
-						<h> Fourth Person </h>
-						<p> Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT. </p>
-					</div>
-				</div>
-			</div> 
+				</div> 
+			{% endfor %}
 		</div>
 	</div>
 </div>
