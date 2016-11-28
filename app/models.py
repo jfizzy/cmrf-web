@@ -3,6 +3,8 @@ from . import login_manager
 from flask_login import UserMixin
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -17,7 +19,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(64), index=True, nullable=False)
     pw_hash = db.Column(db.String(160))
     email = db.Column(db.String(64))
-    email_conf = db.Column(db.Boolean)
+    email_conf = db.Column(db.Boolean, default=False)
     phone = db.Column(db.Integer)
     date_joined = db.Column(db.DateTime, default=datetime.datetime.now)
 
@@ -36,11 +38,27 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.pw_hash, password)
 
-    def __init__(self, ucid, fname, lname, pw, email, phone=None):
-        self.UCID = ucid
-        self.first_name = fname
-        self.last_name = lname
-        self.password = pw
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'confirm': self.id})
+
+    def confirm_email(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.email_conf = True
+        db.session.add(self)
+        return True
+
+    def __init__(self, UCID, first_name, last_name, password, email, phone=None):
+        self.UCID = UCID
+        self.first_name = first_name
+        self.last_name = last_name
+        self.password = password
         self.email = email
         if phone is not None:
             self.phone = phone

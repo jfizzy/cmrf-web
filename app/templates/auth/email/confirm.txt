@@ -1,0 +1,13 @@
+Hi {{ user.first_name }} {{ user.last_name }},
+
+Welcome to CMRF!
+
+To confirm your account please click on the following link:
+
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+Sincerely,
+
+The Lewis Research Group
+
+Note: Replies to the email address are not monitored.
