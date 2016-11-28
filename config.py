@@ -6,11 +6,12 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'Km!Z6376=wq&X17qcPrJdMrk#xA?Z!ff2=g+a&_$'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
-    MAIL_SERVER = 'mail.lewisresearchgroup.org'
+    MAIL_SERVER = 'just65.justhost.com'
     MAIL_PORT = 465
-    MAIL_USE_TLS = True
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'no-reply@lewisresearchgroup.org'
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'hj3*+XX_3JkWr8Gzw?CfA#*a&udD2j'
     CMRF_MAIL_SUBJECT_PREFIX = '[Calgary Metabolomic Research Facility]'
     CMRF_MAIL_SENDER = 'CMRF Admin <no-reply@lewisresearchgroup.org>'
     CMRF_ADMIN = os.environ.get('CMRF_ADMIN')
