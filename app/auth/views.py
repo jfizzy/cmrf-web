@@ -13,7 +13,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('cmrf.index'))
+            return redirect(url_for('cmrf.index'))
         flash('Invalid username or password')
     return render_template('auth/login.html', form=form)
 
@@ -22,7 +22,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
-	
+
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
 	form = RegistrationForm()
@@ -41,7 +41,7 @@ def register():
 		flash('Thanks for registering. Please confirm your account by clicking the link in the email we just sent.')
 		return redirect(url_for('auth.login'))
 	return render_template('auth/register.html',form=form)
-	
+
 @auth.route('/confirm/<token>')
 @login_required
 def confirm(token):
@@ -52,20 +52,20 @@ def confirm(token):
 	else:
 		flash('That confirmation link is invalid or has expired.')
 	return redirect(url_for('cmrf.index'))
-	
+
 @auth.before_app_request
 def before_request():
 	if current_user.is_authenticated \
 		and not current_user.email_conf \
 		and request.endpoint[:5] != ('auth.' or 'cmrf.'):
 		return redirect(url_for('auth.unconfirmed'))
-		
+
 @auth.route('/unconfirmed')
 def unconfirmed():
 	if current_user.is_anonymous or current_user.email_conf:
 		return redirect('main.index')
 	return render_template('auth/unconfirmed.html')
-	
+
 @auth.route('/confirm')
 @login_required
 def resend_confirmation():
@@ -74,7 +74,7 @@ def resend_confirmation():
 			   'auth/email/confirm', user=current_user, token=token)
 	flash('A new confirmation email has been sent to you by email.')
 	return redirect(url_for('main.index'))
-	
+
 @auth.route('/change-password', methods=['GET', 'POST'])
 @login_required
 def change_password():
