@@ -26,24 +26,15 @@
       <div class="container">
 
         <div class="row">
-          <div class="card">
-            <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="../static/assets/inst_eg1.jpg" data-holder-rendered="false">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card">
-            <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="../static/assets/inst_eg2.jpg" data-holder-rendered="true">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
 
-          <div class="card">
-            <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="../static/assets/inst_eg3.jpg" data-holder-rendered="true">
-            <p class="card-text">Not really sure why this image is sideways... tried to fix it couldnt.</p>
-          </div>
-          <div class="card">
-            <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="../static/assets/inst_eg4.jpg" data-holder-rendered="true">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-
+          {% for post in posts %}
+            <div class="card">
+              <div class="crop-img2">
+                <img data-src="holder.js/100px280/thumb" alt="100%x280" src="{{ post.pic }}" data-holder-rendered="false">
+              </div>
+              <p class="card-text"> {{ post.desc }} </p>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>

@@ -44,7 +44,25 @@ def people():
 @main.route('/instruments')
 @main.route('/inst')
 def inst():
-    return render_template('inst.html')
+    posts = [
+    {
+        'pic': '../static/assets/inst_eg1.jpg',
+        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
+    },
+    {
+        'pic': '../static/assets/inst_eg2.jpg',
+        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
+    },
+    {
+        'pic': '../static/assets/inst_eg3.jpg',
+        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
+    },
+    {
+        'pic': '../static/assets/inst_eg4.jpg',
+        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
+    }
+    ]
+    return render_template('inst.html', posts=posts)
 
 @main.route('/news')
 def news():

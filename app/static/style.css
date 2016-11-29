@@ -105,6 +105,7 @@ nav {
 }
 
 .card-text {
+  width: 480px;
   font-size: 85%;
 }
 
@@ -148,6 +149,19 @@ nav {
 	background-size: cover;
 	background-attachment: fixed;
 	min-height:650px;
+}
+
+.crop-img2 {
+	padding-top: 10px;
+	width: 480px;
+	height: 280px;
+	overflow: hidden;
+}
+
+.crop-img2 img {
+	width: 100%;
+	margin-top: -10px;
+	image-orientation: from-image;
 }
 
 .crop-img {
