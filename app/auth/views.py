@@ -4,7 +4,8 @@ from . import auth
 from .. import db
 from ..models import User, Researcher
 from ..email import send_email
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
+    PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -152,3 +153,8 @@ def change_email(token):
     else:
         flash('Invalid request.')
     return redirect(url_for('main.index'))
+
+@auth.route('/account', methods=['GET'])
+@login_required
+def account_details():
+    return render_template("auth/account.html")

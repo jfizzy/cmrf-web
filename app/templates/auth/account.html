@@ -10,15 +10,25 @@
   <div class="col-md-4">
     <h3>
       UCID: {{current_user.id}}
+      <br>
       First Name: {{current_user.first_name}}
+      <br>
       Last Name: {{current_user.last_name}}
-
+      <br>
+      Email: {{current_user.email}}
+      <br>
+      Phone Number:
+      {% if current_user.phone %}
+        {{current_user.phone}}
+      {% else %}
+        Nothing on file.
+      {% endif %}
+      <br><br>
       Account Options:
     </h3>
     <div class="btn-group-vertical">
-      <button href="{{url_for('auth.change-password')}}" type="button" class="btn btn-primary">Change Password</button>
-      <button href="{{url_for('auth.reset-password')}}" type="button" class="btn btn-primary">Reset Password</button>
-      <button href="{{url_for('auth.change-email')}}" type="button" class="btn btn-primary">Change Email</button>
+      <a href="{{url_for('auth.change_password')}}" class="btn btn-primary">Change Password</a>
+      <a href="{{url_for('auth.change_email_request')}}" class="btn btn-primary">Change Email</a>
     </div>
   </div>
 </div>

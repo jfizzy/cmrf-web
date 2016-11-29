@@ -59,9 +59,15 @@ lang="en"
 			<ul class="nav navbar-nav navbar-right">
 				<!--this is where we will put the conditional user session buttons-->
 				{% if current_user.is_authenticated %}
-					<li>
-						<a href="{{ url_for('auth.logout') }}">Logout</a>
-					</li>
+				<li class="dropdown" id="acc-dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+								<li><a href="{{ url_for('auth.account_details') }}">Account Details</a></li>
+								<li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
+								<li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
+								<li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+						</ul>
+				</li>
 				{% else %}
 				<li>
 					<a href="{{ url_for('auth.login') }}">Login</a>
@@ -95,7 +101,7 @@ lang="en"
 		<div class="container-fluid hidden-xs">
 			<div class="row">
 				<div class="span12" id="footer">
-	    			2016 Lewis Research Group ™ | All Rights Reserved
+	    			2016 Lewis Research Group © | All Rights Reserved
 				</div>
 			</div>
 		</div>
