@@ -11,9 +11,9 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(UserMixin, db.Model):
-    
+
     __tablename__ = 'USER'
-    
+
     UCID = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(64), index=True, nullable=False)
     last_name = db.Column(db.String(64), index=True, nullable=False)
@@ -97,7 +97,7 @@ class Researcher(db.Model):
         return '<Researcher [%s] - UCID: [%s]>' % (self.ID, self.UCID)
 
 class FundingAccount(db.Model):
-    
+
     __tablename__ = 'FUNDING_ACCOUNT'
 
     ID = db.Column(db.Integer, db.Sequence('funding_account_seq', start=0, increment=1),
@@ -117,7 +117,7 @@ class FundingAccount(db.Model):
         return '<Funding Account - Name: [%s], Account Number: [%s], Researcher ID: [%s]>' % (self.acc_name, self.acc_no, self.RSC_ID)
 
 class Report(db.Model):
-    
+
     __tablename__ = "REPORT"
 
     ID = db.Column(db.Integer, db.Sequence('report_sequence', start=0, increment=1), primary_key=True, nullable=False)
@@ -125,7 +125,7 @@ class Report(db.Model):
     balance = db.Column(db.Numeric(6,2))
     desc = db.Column(db.Text, nullable=True)
     file_loc = db.Column(db.String(64), nullable=True)
-    
+
     def __init__(self, balance, woid, desc=None, file_loc=None):
         self.balance = balance
         if desc is not None:
@@ -137,9 +137,9 @@ class Report(db.Model):
     def __repr__(self):
         return '<Report - ID: [%s], Work Order ID: [%s], Date: [%s], File Location: [%s]>'% (
             self.ID, self.WKO_ID, self.date, self.file_loc)
-        
-        
-    
+
+
+
 class WorkOrder(db.Model):
 
     __tablename__ = "WORK_ORDER"
@@ -161,7 +161,7 @@ class WorkOrder(db.Model):
     RPT_ID = db.Column(db.Integer, db.ForeignKey("REPORT.ID"), nullable=True)
     RSC_ID = db.Column(db.Integer, db.ForeignKey("RESEARCHER.ID"), nullable=False)
     ADM_ID = db.Column(db.Integer, db.ForeignKey("ADMIN.ID"), nullable=True)
-    
+
     def __init__(self, title, no_samples, ri_qehf, ri_qeb, ri_tsq, ri_unk, tm_pep, tm_fa,
                  tm_aa, tm_unk, RSC_ID, status='Pending', desc=None):
         self.title = title
