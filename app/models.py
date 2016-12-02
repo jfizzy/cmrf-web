@@ -178,7 +178,7 @@ class FundingAccount(db.Model):
     acc_no = db.Column(db.String(64), index=True, nullable=False)
     acc_name = db.Column(db.String(64), nullable=False)
     acc_type = db.Column(db.String(64))
-    RSC_ID = db.Column(db.Integer, db.ForeignKey("RESEARCHER.ID"))
+    RSC_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
 
     def __init__(self, acc_no, acc_name, acc_type, rsc_id):
         self.acc_no = acc_no
@@ -187,7 +187,7 @@ class FundingAccount(db.Model):
         self.rsc_id = rsc_id
 
     def __repr__(self):
-        return '<Funding Account - Name: [%s], Account Number: [%s], Researcher ID: [%s]>' % (self.acc_name, self.acc_no, self.RSC_ID)
+        return '<Funding Account - Name: [%s], Account Number: [%s], User ID: [%s]>' % (self.acc_name, self.acc_no, self.RSC_ID)
 
 class Report(db.Model):
 
@@ -232,8 +232,8 @@ class WorkOrder(db.Model):
     tm_aa = db.Column(db.Boolean)
     tm_unk = db.Column(db.Boolean)
     RPT_ID = db.Column(db.Integer, db.ForeignKey("REPORT.ID"), nullable=True)
-    RSC_ID = db.Column(db.Integer, db.ForeignKey("RESEARCHER.ID"), nullable=False)
-    ADM_ID = db.Column(db.Integer, db.ForeignKey("ADMIN.ID"), nullable=True)
+    RSC_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
+    ADM_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=True)
 
     def __init__(self, title, no_samples, ri_qehf, ri_qeb, ri_tsq, ri_unk, tm_pep, tm_fa,
                  tm_aa, tm_unk, RSC_ID, status='Pending', desc=None):
