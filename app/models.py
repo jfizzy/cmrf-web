@@ -36,7 +36,7 @@ class Role(db.Model):
             'Administrator': (0xff, False) #all permissions
         }
         for r in roles:
-            role = ROLE.query.filter_by(name=r).first()
+            role = Role.query.filter_by(name=r).first()
             if role is None:
                 role=Role(name=r)
             role.permissions = roles[r][0]
