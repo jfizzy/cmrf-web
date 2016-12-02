@@ -9,9 +9,9 @@ from flask import current_app
 class Permission:
     MAKEREQUEST = 0x01
     VIEWREQUEST = 0x02
-    VIEWREPORT = 0x03
-    ADDARTICLE = 0x04
-    EDITREPORT = 0x08
+    VIEWREPORT = 0x04
+    ADDARTICLE = 0x08
+    EDITREPORT = 0x16
     ADMINISTER = 0x80
 
 class Role(db.Model):
@@ -45,7 +45,7 @@ class Role(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return '<Role [%s] - Permissions: [%s]>' % (self.id, self.permissions)
+        return '<Role [%s] - Permissions: [%s]>' % (self.name, bin(self.permissions))
 
 class User(UserMixin, db.Model):
 
