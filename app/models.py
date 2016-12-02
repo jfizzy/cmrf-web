@@ -1,14 +1,51 @@
 from . import db
 from . import login_manager
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+class Permission:
+    MAKEREQUEST = 0x01
+    VIEWREQUEST = 0x02
+    VIEWREPORT = 0x03
+    ADDARTICLE = 0x04
+    EDITREPORT = 0x08
+    ADMINISTER = 0x80
+
+class Role(db.Model):
+
+    __tablename__ = 'ROLE'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    default = db.Column(db.Boolean, default=False, index=True)
+    permissions = db.Column(db.Integer)
+    users = db.relationship('User', backref='role', lazy='dynamic')
+
+    @staticmethod
+    def insert_roles():
+        roles = {
+            'User' : (Permission.MAKEREQUEST |
+                      Permission.VIEWREQUEST |
+                      Permission.VIEWREPORT, True),
+            'Assistant' : (Permission.VIEWREQUEST |
+                           Permission.VIEWREPORT |
+                           Permission.ADDARTICLE, False),
+            'Administrator': (0xff, False) #all permissions
+        }
+        for r in roles:
+            role = ROLE.query.filter_by(name=r).first()
+            if role is None:
+                role=Role(name=r)
+            role.permissions = roles[r][0]
+            role.default = roles[r][1]
+            db.session.add(role)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<Role [%s] - Permissions: [%s]>' % (self.id, self.permissions)
 
 class User(UserMixin, db.Model):
 
@@ -19,6 +56,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(64), index=True, nullable=False)
     pw_hash = db.Column(db.String(160))
     email = db.Column(db.String(64))
+    role_id = db.Column(db.Integer, db.ForeignKey('ROLE.id'))
     email_conf = db.Column(db.Boolean, default=False)
     phone = db.Column(db.Integer)
     date_joined = db.Column(db.DateTime, default=datetime.datetime.now)
@@ -37,6 +75,26 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.pw_hash, password)
+
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+        if self.role is None:
+            if self.email == current_app.config['CMRF_ADMIN']:
+                self.role = Role.query.filter_by(permissions=0xff).first()
+            if self.role is None:
+                self.role = Role.query.filter_by(default=True).first()
+
+    def __init__(self, UCID, first_name, last_name, password, email, phone=None):
+        self.UCID = UCID
+        self.first_name = first_name
+        self.last_name = last_name
+        self.password = password
+        self.email = email
+        if phone is not None:
+            self.phone = phone
+
+    def __repr__(self):
+        return '<User %s %s>' % (self.first_name, self.last_name)
 
     def generate_confirmation_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
@@ -91,47 +149,25 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         return True
 
-    def __init__(self, UCID, first_name, last_name, password, email, phone=None):
-        self.UCID = UCID
-        self.first_name = first_name
-        self.last_name = last_name
-        self.password = password
-        self.email = email
-        if phone is not None:
-            self.phone = phone
+    def can(self, permissions):
+        return self.role is not None and \
+            (self.role.permissions & permissions) == permissions
 
-    def __repr__(self):
-        return '<User %s %s>' % (self.first_name, self.last_name)
+    def is_administrator(self):
+        return self.can(Permission.ADMINISTER)
 
-class Admin(db.Model):
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permissions):
+        return False
 
-    __tablename__ = 'ADMIN'
+    def is_administrator(self):
+        return False
 
-    ID = db.Column(db.Integer, db.Sequence('admin_seq', start=0, increment=1), primary_key=True)
-    UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
+login_manager.anonymous_user = AnonymousUser
 
-    def __init__(self, ucid):
-        self.UCID = ucid
-
-    def __repr__(self):
-        return '<Admin [%s] - UCID: [%s]>' % (self.ID, self.UCID)
-
-    @property
-    def id(self):
-        return self.ID
-
-class Researcher(db.Model):
-
-    __tablename__ = 'RESEARCHER'
-
-    ID = db.Column(db.Integer, db.Sequence('admin_seq', start=0, increment=1), primary_key=True)
-    UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
-
-    def __init__(self, ucid):
-        self.UCID = ucid
-
-    def __repr__(self):
-        return '<Researcher [%s] - UCID: [%s]>' % (self.ID, self.UCID)
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 class FundingAccount(db.Model):
 
