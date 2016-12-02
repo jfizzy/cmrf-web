@@ -49,7 +49,7 @@ def confirm(token):
     if current_user.email_conf:
         return redirect(url_for('cmrf.index'))
     if current_user.confirm_email(token):
-        flash('Thanks for confirming your account! You may now login.')
+        flash('Thanks for confirming your account! You may now access your user features.')
     else:
 		flash('That confirmation link is invalid or has expired.')
     return redirect(url_for('cmrf.index'))
