@@ -23,8 +23,8 @@ lang="en"
 	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 	{% endblock %}
 
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 {% endblock %}
 
 {% block navbar %}
@@ -57,10 +57,9 @@ lang="en"
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<!--this is where we will put the conditional user session buttons-->
 				{% if current_user.is_authenticated %}
 				<li class="dropdown" id="acc-dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.first_name}} {{current_user.last_name}}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 								<li><a href="{{ url_for('auth.account_details') }}">Account Details</a></li>
 								<li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
@@ -85,7 +84,7 @@ lang="en"
 {% block content %}
 <div class="container">
     {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
+    <div class="alert alert-warning" style="z-index: 3; margin-top: 6px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
     </div>
@@ -93,9 +92,7 @@ lang="en"
     </div>
 
 <!-- TEMPLATE CONTENT -->
-	<div class="beforefooter">
     	{% block page_content %}{% endblock %}
-    </div>
 <!--******************-->
 
 		<div class="container-fluid hidden-xs">
@@ -110,4 +107,10 @@ lang="en"
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
+<!-- Script to Activate the Carousel -->
+<script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+</script>
 {% endblock %}

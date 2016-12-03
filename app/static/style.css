@@ -2,8 +2,12 @@ html, body {
     height: 100%;
 }
 
+body {
+    padding-top: 50px;
+}
+
 .beforefooter{
-  padding-top: 50px;
+    padding-top: 50px;
 	min-height: 100%;
 	z-index:1;
 }
@@ -80,6 +84,57 @@ nav {
   background: linear-gradient(to bottom, #E30C00 0%,#b31217 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E30C00', endColorstr='#b31217',GradientType=0 ); /* IE6-9 */
 }
+
+/***************************************/
+/*HOME STYLES*/
+/***************************************/
+
+/*Carousel*/
+
+.img-portfolio {
+    margin-bottom: 30px;
+}
+
+.img-hover:hover {
+    opacity: 0.8;
+}
+
+header.carousel {
+    height: 50%;
+}
+
+header.carousel .item,
+header.carousel .item.active,
+header.carousel .carousel-inner {
+    height: 100%;
+}
+
+header.carousel .fill {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+/* Responsive Styles */
+
+@media(max-width:991px) {
+    .customer-img,
+    .img-related {
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width:767px) {
+    .img-portfolio {
+        margin-bottom: 15px;
+    }
+    
+    header.carousel .carousel {
+        height: 70%;
+    }
+}
+
 /***************************************/
 /*SECTION STYLES*/
 /***************************************/
@@ -135,7 +190,7 @@ nav {
 	background-position: center 0;
 	background-size: cover;
 	background-attachment: fixed;
-	min-height:650px;
+	min-height: 100%;
 }
 
 #instruments {
@@ -157,6 +212,10 @@ nav {
 	background-attachment: fixed;
 	min-height:650px;
 }
+
+/***************************************/
+/*PEOPLE STYLES*/
+/***************************************/
 
 .crop-img2 {
 	padding-top: 10px;
