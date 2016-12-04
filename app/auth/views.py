@@ -41,7 +41,7 @@ def register():
 		token = user.generate_confirmation_token()
 		send_email(user.email, 'Confirm Your Account',
 				   'auth/email/confirm', user=user, token=token)
-		flash('Thanks for registering. Please confirm your account by clicking the link in the email we just sent.')
+		flash('Thanks for registering! Please login and confirm your account by clicking the link in the email we just sent.')
 		return redirect(url_for('auth.login'))
 	return render_template('auth/register.html',form=form)
 
@@ -204,7 +204,3 @@ def adm_change_account_details(id):
     form.role.data = user.role_id
     form.phone.data = user.phone
     return render_template("auth/adm_change_account.html", form=form, selected_user=user)
-
-
-
-

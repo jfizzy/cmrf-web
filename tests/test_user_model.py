@@ -1,5 +1,6 @@
 import unittest
 import time
+from datetime import datetime
 from app import create_app, db
 from app.models import User, AnonymousUser, Role, Permission
 
@@ -18,33 +19,33 @@ class UserModelTestCase(unittest.TestCase):
         self.app_context.pop()
 
     def test_password_setter(self):
-        u = User(password='cat')
-        self.assertTrue(u.password_hash is not None)
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
+        self.assertTrue(u.pw_hash is not None)
 
     def test_no_password_getter(self):
-        u = User(password='cat')
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
         with self.assertRaises(AttributeError):
             u.password
 
     def test_password_verification(self):
-        u = User(password='cat')
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
         self.assertTrue(u.verify_password('cat'))
         self.assertFalse(u.verify_password('dog'))
 
     def test_password_salts_are_random(self):
-        u = User(password='cat')
-        u2 = User(password='cat')
-        self.assertTrue(u.password_hash != u2.password_hash)
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
+        u2 = User(UCID=11111111, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
+        self.assertTrue(u.pw_hash != u2.pw_hash)
 
     def test_valid_confirmation_token(self):
-        u = User(password='cat')
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
         db.session.add(u)
         db.session.commit()
         token = u.generate_confirmation_token()
         self.assertTrue(u.confirm(token))
 
     def test_invalid_confirmation_token(self):
-        u1 = User(password='cat')
+        u1 = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
         u2 = User(password='dog')
         db.session.add(u1)
         db.session.add(u2)
@@ -53,15 +54,15 @@ class UserModelTestCase(unittest.TestCase):
         self.assertFalse(u2.confirm(token))
 
     def test_expired_confirmation_token(self):
-        u = User(password='cat')
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
         db.session.add(u)
         db.session.commit()
-        token = u.generate_confirmation_token(1)
+        token = u.generate_confirmation_token(expiration=1)
         time.sleep(2)
         self.assertFalse(u.confirm(token))
 
     def test_valid_reset_token(self):
-        u = User(password='cat')
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
         db.session.add(u)
         db.session.commit()
         token = u.generate_reset_token()
@@ -69,8 +70,8 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue(u.verify_password('dog'))
 
     def test_invalid_reset_token(self):
-        u1 = User(password='cat')
-        u2 = User(password='dog')
+        u1 = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
+        u2 = User(UCID=11111111, first_name='Someone', last_name='Special', password='dog', email='someoneelse@example.com')
         db.session.add(u1)
         db.session.add(u2)
         db.session.commit()
@@ -79,7 +80,7 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue(u2.verify_password('dog'))
 
     def test_valid_email_change_token(self):
-        u = User(email='john@example.com', password='cat')
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='john@example.com')
         db.session.add(u)
         db.session.commit()
         token = u.generate_email_change_token('susan@example.org')
@@ -87,8 +88,8 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue(u.email == 'susan@example.org')
 
     def test_invalid_email_change_token(self):
-        u1 = User(email='john@example.com', password='cat')
-        u2 = User(email='susan@example.org', password='dog')
+        u1 = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='john@example.com')
+        u2 = User(UCID=11111111, first_name='Someone', last_name='Special', password='dog', email='susan@example.org')
         db.session.add(u1)
         db.session.add(u2)
         db.session.commit()
@@ -97,8 +98,8 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue(u2.email == 'susan@example.org')
 
     def test_duplicate_email_change_token(self):
-        u1 = User(email='john@example.com', password='cat')
-        u2 = User(email='susan@example.org', password='dog')
+        u1 = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='john@example.com')
+        u2 = User(UCID=11111111, first_name='Someone', last_name='Special', password='dog', email='susan@example.org')
         db.session.add(u1)
         db.session.add(u2)
         db.session.commit()
@@ -107,7 +108,7 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue(u2.email == 'susan@example.org')
 
     def test_roles_and_permissions(self):
-        u = User(email='john@example.com', password='cat')
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='john@example.com')
         self.assertTrue(u.can(Permission.MAKEREQUEST))
         self.assertFalse(u.can(Permission.ADMINISTER))
 
