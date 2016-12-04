@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - Account{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Account Details</h1>
+    </div>
+    <br>
+    <div class="col-md-4">
+        <h4>
+            UCID: {{selected_user.id}}
+            <br>
+            First Name: {{selected_user.first_name}}
+            <br>
+            Last Name: {{selected_user.last_name}}
+            <br>
+            Email: {{selected_user.email}}
+            <br>
+            Email Confirmed: {{selected_user.email_conf}}
+            <br>
+            Phone Number:
+            {% if selected_user.phone %}
+            {{selected_user.phone}}
+            {% else %}
+            Nothing on file.
+            {% endif %}
+            <br><br>
+            Account Options:
+        </h4>
+        <a href="{{url_for('auth.adm_change_account_details', id=selected_user.id)}}" class="btn btn-danger">Make Changes</a>
+    </div>
+</div>
+{% endblock %}

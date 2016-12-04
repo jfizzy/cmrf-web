@@ -1,11 +1,13 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
+from ..decorators import admin_required
 from . import auth
 from .. import db
-from ..models import User
+from ..models import User, Role
 from ..email import send_email
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
-    PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
+    PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, ChangeAccountDetailsForm,\
+    ChangeAccountDetailsAdminForm
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -155,3 +157,54 @@ def change_email(token):
 @login_required
 def account_details():
     return render_template("auth/account.html")
+
+@auth.route('/account/<int:id>', methods=['GET'])
+@login_required
+@admin_required
+def adm_account_details(id):
+    user = User.query.get_or_404(id)
+    return render_template("auth/adm_account.html", selected_user=user)
+
+@auth.route('/change-account', methods=['GET','POST'])
+@login_required
+def change_account_details():
+    form = ChangeAccountDetailsForm()
+    if form.validate_on_submit():
+        current_user.phone = form.phone.data
+        db.session.add(current_user)
+        flash('Your information was successfully updated.')
+        return redirect(url_for('auth.account_details'))
+    return render_template("auth/change_account.html", form=form)
+
+@auth.route('/change-account/<int:id>', methods=['GET','POST'])
+@login_required
+@admin_required
+def adm_change_account_details(id):
+    user = User.query.get_or_404(id)
+    form = ChangeAccountDetailsAdminForm(user=user)
+    if form.validate_on_submit():
+        if form.first_name.data != None and \
+            user.first_name != form.first_name.data:
+            user.first_name = form.first_name.data
+        if form.last_name.data != None and \
+            user.last_name != form.last_name.data:
+            user.last_name = form.last_name.data
+        user.email = form.email.data
+        user.email_conf = form.email_conf.data
+        user.role = Role.query.get(form.role.data)
+        if user.phone != form.phone.data:
+            user.first_name = form.first_name.data
+        db.session.add(user)
+        flash('User account has been updated.')
+        return redirect(url_for('auth.adm_account_details', id=user.id))
+    form.first_name.data = user.first_name
+    form.last_name.data = user.last_name
+    form.email.data = user.email
+    form.email_conf.data = user.email_conf
+    form.role.data = user.role_id
+    form.phone.data = user.phone
+    return render_template("auth/adm_change_account.html", form=form, selected_user=user)
+
+
+
+

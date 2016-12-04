@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}{{super()}} - Edit User Account{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Selected Account Details</h1>
+    </div>
+    <br>
+    <div class="col-md-4">
+        <h4>
+            UCID: {{selected_user.id}}
+            <br>
+            {{wtf.quick_form(form)}}
+        </h4>
+    </div>
+</div>
+{% endblock %}

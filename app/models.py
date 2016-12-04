@@ -78,11 +78,11 @@ class User(UserMixin, db.Model):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        if self.role is None:
+        if self.role_id is None:
             if self.email == current_app.config['CMRF_ADMIN']:
-                self.role = Role.query.filter_by(permissions=0xff).first()
-            if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
+                self.role_id = Role.query.filter_by(permissions=0xff).first().id
+            if self.role_id is None:
+                self.role_id = Role.query.filter_by(default=True).first().id
 
     def __init__(self, UCID, first_name, last_name, password, email, phone=None):
         self.UCID = UCID
