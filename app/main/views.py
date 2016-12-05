@@ -20,23 +20,97 @@ def people():
     posts = [
         {
             'pic': '../static/assets/IMG_4804.JPG',
-            'header': 'Dr. Ian Lewis',
-            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+            'name': 'Dr. Ian Lewis',
+            'title': 'Principal Investigator',
+            'caption': 'Assistant Professor, AIHS Chair in Translational Health - Metabolomics. Let us fill this space, naw mean?',
+            'dept': 'BIO-442, Department of Biological Sciences',
+            'school': 'University of Calgary',
+            'address': '2500 University Drive NW',
+            'city': 'Calgary, Alberta, Canada',
+            'postal': 'T2N 1N4',
+            'tel': '+1 (403) 220-4366',
+            'email': 'Dr. Ian Lewis',
+            'emailaddress': 'ian.lewis2@ucalgary.ca'
         },
         {
-            'pic': '../static/assets/IMG_4806.JPG',
-            'header': 'Person 2',
-            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+            'pic': '../static/assets/placeholder.png',
+            'name': 'Dr. Andrew Stopford',
+            'title': 'Staff',
+            'caption': 'Facility Director/Instrumentation Specialist',
+            'dept': 'BIO-442, Department of Biological Sciences',
+            'school': 'University of Calgary',
+            'address': '2500 University Drive NW',
+            'city': 'Calgary, Alberta, Canada',
+            'postal': 'T2N 1N4',
+            'tel': '+1 (403) 220-6242',
+            'fax': '+1 (403) 210-9460',
+            'email': 'Dr. Andrew Stopford',
+            'emailaddress': 'andrew.stopford@ucalgary.ca',
+            'email2': 'CMRF',
+            'emailaddress2': 'omics@ucalgary.ca'
         },
         {
             'pic': '../static/assets/IMG_4807.JPG',
-            'header': 'Person 3',
-            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+            'name': 'Dr. Vishaldeep Sidhu',
+            'title': 'Staff',
+            'caption': 'Lewis Research Group Laboratory Manager. It would be cool if we could get more info maybe?',
+            'dept': 'BIO-442, Department of Biological Sciences',
+            'school': 'University of Calgary',
+            'address': '2500 University Drive NW',
+            'city': 'Calgary, Alberta, Canada',
+            'postal': 'T2N 1N4',
+            'tel': '+1 (403) 220-4849',
+            'fax': '+1 (403) 210-9460',
+            'email': 'Dr. Vishaldeep Sidhu',
+            'emailaddress': 'vishaldeep.sidhu@ucalgary.ca'
+        },
+        {
+            'pic': '../static/assets/IMG_5194.JPG',
+            'name': 'Ryan Groves',
+            'title': 'Staff',
+            'caption': 'Awaiting Description. For now I\'ll just say he\'s a swell guy!'
+        },
+        {
+            'pic': '../static/assets/placeholder.png',
+            'name': 'Dr. Matthias Klein',
+            'title': 'Graduate Student',
+            'caption': 'Facility Director/Instrumentation Specialist'
+        },
+        {
+            'pic': '../static/assets/IMG_4806.JPG',
+            'name': 'Travis Bingeman',
+            'title': 'Graduate Student',
+            'caption': 'Awaiting Description. For now I\'ll just say he\'s a swell guy!'
         },
         {
             'pic': '../static/assets/IMG_4811.JPG',
-            'header': 'Person 4',
-            'caption': 'Description goes here. Get info from lewisresearchgroup.org. PLACEHOLDER TEXT. PLACEHOLDER TEXT. PLACEHOLDER TEXT.'
+            'name': 'Michelle Chang',
+            'title': 'Graduate Student',
+            'caption': 'Say something, I\'m giving up on you.'
+        },
+        {
+            'pic': '../static/assets/placeholder.png',
+            'name': 'Hassan Hazari',
+            'title': 'Graduate Student',
+            'caption': 'Say something, I\'m giving up on you.'
+        },
+        {
+            'pic': '../static/assets/placeholder.png',
+            'name': 'Kurt Ebeling',
+            'title': 'Undergraduate Student',
+            'caption': 'Say something, I\'m giving up on you.'
+        },
+        {
+            'pic': '../static/assets/placeholder.png',
+            'name': 'Austin Nguyen',
+            'title': 'Undergraduate Student',
+            'caption': 'Say something, I\'m giving up on you.'
+        },
+        {
+            'pic': '../static/assets/placeholder.png',
+            'name': 'Selena Osman',
+            'title': 'Undergraduate Student',
+            'caption': 'Say something, I\'m giving up on you.'
         }
     ]
     return render_template("people.html", posts=posts)
