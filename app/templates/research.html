@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - News{% endblock %}
+
+{% block page_content %}
+<!-- Full Width Image Header -->
+<header class="header-image">
+    <div class="headline">
+        <div class="container">
+            <h1>Research Areas</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <hr class="featurette-divider">
+
+    <!-- Analytics Featurette -->
+    <div class="featurette" id="analytics">
+        <img class="featurette-image img-circle img-responsive pull-right" src="{{ url_for('static', filename='assets/big_data_analytics_research.jpg')}}">
+        <h2 class="featurette-heading">Analytics
+            <br>
+            <span class="text-muted">Big Data Analysis</span>
+        </h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- Malaria Featurette -->
+    <div class="featurette" id="malaria">
+        <img class="featurette-image img-circle img-responsive pull-left" src="{{ url_for('static', filename='assets/infectious_bacteria.jpg')}}">
+        <h2 class="featurette-heading">Malaria
+            <br>
+            <span class="text-muted">Infectious Disease caused by Parasitic Protozoans</span>
+        </h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- Hospital Acquired Infections Featurette -->
+    <div class="featurette" id="hospitalai">
+        <img class="featurette-image img-circle img-responsive pull-right" src="{{ url_for('static', filename='assets/hosp_acqu_infections.jpg')}}">
+        <h2 class="featurette-heading">Hospital Acquired Infections
+            <br>
+            <span class="text-muted">Viral, Bacterial and Fungal Pathogens</span>
+        </h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- Malaria Featurette -->
+    <div class="featurette" id="opppath">
+        <img class="featurette-image img-circle img-responsive pull-left" src="{{ url_for('static', filename='assets/opportunistic_pathogens.jpg')}}">
+        <h2 class="featurette-heading">Opportunistic Pathogens
+            <br>
+            <span class="text-muted">Identification of High-Risk Hosts</span>
+        </h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- Publications Featurette -->
+    <div class="featurette" id="publications">
+        <img class="featurette-image img-circle img-responsive pull-right" src="{{ url_for('static', filename='assets/publications.jpg')}}">
+        <h2 class="featurette-heading">Publications
+            <br>
+        </h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+    </div>
+
+    <hr class="featurette-divider">
+</div>
+{% endblock %}
