@@ -1,9 +1,9 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, SelectField
 from wtforms.fields.html5 import TelField
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
-from ..models import User
+from ..models import User, Role
 
 
 
@@ -82,3 +82,33 @@ class ChangeEmailForm(Form):
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email already registered.')
+
+class ChangeAccountDetailsForm(Form):
+    phone = TelField('Phone Number')
+    submit = SubmitField('Update')
+
+class ChangeAccountDetailsAdminForm(Form):
+    first_name = StringField('First Name', validators=[Required(), Length(2,64),
+                                                       Regexp('^[A-Za-z -]*$', 0,
+                                                       'Name contains invalid characters')])
+    last_name = StringField('Last Name', validators=[Required(), Length(2,64),
+                                                     Regexp('^[A-Za-z -]*$', 0,
+                                                     'Name contains invalid characters')])
+    email = StringField('Email', validators=[Required(), Length(1, 64),
+                                             Email()])
+    email_conf = BooleanField('Confirmed')
+    role = SelectField('User Role', coerce=int)
+    phone = TelField('Phone Number (Optional)')
+    
+    submit = SubmitField('Confirm Changes')
+    
+    def __init__(self, user, *args, **kwargs):
+        super(ChangeAccountDetailsAdminForm, self).__init__(*args, **kwargs)
+        self.role.choices = [(role.id, role.name)
+                             for role in Role.query.order_by(Role.name).all()]
+        self.user = user
+
+    def validate_email(self, field):
+        if field.data != self.user.email and \
+                User.query.filter_by(email=field.data).first() is None:
+            raise ValidationError('Email already Registered.')

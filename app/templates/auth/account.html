@@ -7,8 +7,9 @@
   <div class="page-header">
     <h1>Account Details</h1>
   </div>
+  <br>
   <div class="col-md-4">
-    <h3>
+    <h4>
       UCID: {{current_user.id}}
       <br>
       First Name: {{current_user.first_name}}
@@ -25,10 +26,11 @@
       {% endif %}
       <br><br>
       Account Options:
-    </h3>
+    </h4>
     <div class="btn-group-vertical">
-      <a href="{{url_for('auth.change_password')}}" class="btn btn-primary">Change Password</a>
-      <a href="{{url_for('auth.change_email_request')}}" class="btn btn-primary">Change Email</a>
+      <a href="{{url_for('auth.change_account_details')}}" class="btn btn-info">Edit Information</a>
+      <a href="{{url_for('auth.change_password')}}" class="btn btn-info">Change Password</a>
+      <a href="{{url_for('auth.change_email_request')}}" class="btn btn-info">Change Email</a>
     </div>
   </div>
 </div>

@@ -78,20 +78,11 @@ class User(UserMixin, db.Model):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        if self.role is None:
-            if self.email == current_app.config['CMRF_ADMIN']:
-                self.role = Role.query.filter_by(permissions=0xff).first()
-            if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
-
-    def __init__(self, UCID, first_name, last_name, password, email, phone=None):
-        self.UCID = UCID
-        self.first_name = first_name
-        self.last_name = last_name
-        self.password = password
-        self.email = email
-        if phone is not None:
-            self.phone = phone
+        if self.role_id is None:
+            if self.email == current_app.config['CMRF_ADMIN'] and self.email is not None:
+                self.role_id = Role.query.filter_by(permissions=0xff).first().id
+            if self.role_id is None:
+                self.role_id = Role.query.filter_by(default=True).first().id
 
     def __repr__(self):
         return '<User %s %s>' % (self.first_name, self.last_name)
