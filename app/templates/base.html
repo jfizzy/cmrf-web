@@ -123,4 +123,9 @@ lang="en"
 		popup.classList.toggle('show');
 	}
 </script>
+<script>
+	$(".clickable-row").click(function() {
+			window.document.location = $(this).data("href");
+	});
+</script>
 {% endblock %}

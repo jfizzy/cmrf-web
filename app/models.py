@@ -7,11 +7,12 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
 class Permission:
-    MAKEREQUEST = 0x01
-    VIEWREQUEST = 0x02
-    VIEWREPORT = 0x04
-    ADDARTICLE = 0x08
-    EDITREPORT = 0x16
+    MAKE_R = 0x01
+    VIEW_R = 0x02
+    ADD_ARTICLE = 0x04
+    ALL_R = 0x08
+    EDITING = 0x16
+    USER_ACC = 0x32
     ADMINISTER = 0x80
 
 class Role(db.Model):
@@ -27,12 +28,16 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User' : (Permission.MAKEREQUEST |
-                      Permission.VIEWREQUEST |
-                      Permission.VIEWREPORT, True),
-            'Assistant' : (Permission.VIEWREQUEST |
-                           Permission.VIEWREPORT |
-                           Permission.ADDARTICLE, False),
+            'User' : (Permission.MAKE_R |
+                      Permission.VIEW_R, True),
+            'Assistant' : (Permission.VIEW_R |
+                           Permission.ADD_ARTICLE |
+                           Permission.ALL_R, False),
+            'LabAdmin' : (Permission.VIEW_R |
+                          Permission.ADD_ARTICLE |
+                          Permission.ALL_R |
+                          Permission.EDITING |
+                          Permission.USER_ACC, False),
             'Administrator': (0xff, False) #all permissions
         }
         for r in roles:
@@ -210,6 +215,7 @@ class WorkOrder(db.Model):
 
     ID = db.Column(db.Integer, db.Sequence('work_order_seq', start=0, increment=1),
                    primary_key=True, nullable=False)
+    submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
     title = db.Column(db.String(64), nullable=False)
     no_samples = db.Column(db.Integer, nullable=False)
     status = db.Column(db.Integer, nullable=False)
@@ -226,21 +232,21 @@ class WorkOrder(db.Model):
     RSC_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
     ADM_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=True)
 
-    def __init__(self, title, no_samples, ri_qehf, ri_qeb, ri_tsq, ri_unk, tm_pep, tm_fa,
-                 tm_aa, tm_unk, RSC_ID, status='Pending', desc=None):
+    def __init__(self, title, no_samples,
+                 RSC_ID, status='Pending Approval', desc=None):
         self.title = title
         self.no_samples = no_samples
         self.status = status
         if desc is not None:
             self.desc = desc
-        self.ri_qehf = ri_qehf
-        self.ri_qeb = ri_qeb
-        self.ri_tsq = ri_tsq
-        self.ri_unk = ri_unk
-        self.tm_pep = tm_pep
-        self.tm_fa = tm_fa
-        self.tm_aa = tm_aa
-        self.tm_unk = tm_unk
+        self.ri_qehf = False
+        self.ri_qeb = False
+        self.ri_tsq = False
+        self.ri_unk = False
+        self.tm_pep = False
+        self.tm_fa = False
+        self.tm_aa = False
+        self.tm_unk = False
         self.RPT_ID = None
         self.RSC_ID = RSC_ID
         self.ADM_ID = None

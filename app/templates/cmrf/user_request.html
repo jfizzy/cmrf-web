@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - Request{% endblock %}
+
+{% block page_content %}
+<div class="container">
+  <div class="well">
+    <div class="page-header">
+      <h1>Request #{{request.id}}</h1>
+      <br>
+      <h3>Submitted by: {{request.first_name}}{{request.last_name}} - UCID: {{request.UCID}}</h3>
+    </div>
+  </div>
+</div>
+{% endblock %}

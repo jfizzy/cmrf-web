@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - My Requests{% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+  <div class="page-header">
+    <h1>My CMRF Requests - UCID: {{current_user.id}}</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Request ID</th>
+          <th>Title</th>
+          <th>Date Submitted</th>
+          <th>Number of Samples</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for request in requests %}
+          <tr class="clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+            <td>{{request.ID}}</td>
+            <td>{{request.title}}</td>
+            <td>{{request.submit_date.strftime('EE dd.MM.y HH:mm')}}</td>
+            <td>{{request.no_samples}}</td>
+            {% if request.status == 'Pending Approval' %}
+              <td class="table-warning">{{request.status}}</td>
+            {% else %}
+              {% if request.status == 'Complete' %}
+                <td class="table-success">{{request.status}}</td>
+              {% else %}
+                {% if request.status == 'Approved' %}
+                  <td class="table-info">{{request.status}}</td>
+                {% else %}
+                  <td class="table-danger">{{request.status}}</td>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

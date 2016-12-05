@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - Requests: {{title}}{% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+  <div class="page-header">
+    <h1>All {% if title != None %}{{title}}{% endif %} CMRF Requests</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Request ID</th>
+          <th>Submitter UCID</th>
+          <th>Submitter Name</th>
+          <th>Title</th>
+          <th>Date Submitted</th>
+          <th>Number of Samples</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for request in requests %}
+          {% if request.status == 'Pending Approval' %}
+          <tr class="warning clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          {% else %}
+          {% if request.status == 'Complete' %}
+          <tr class="info clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          {% else %}
+          {% if request.status == 'Approved' %}
+          <tr class="success clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          {% else %}
+          <tr class="danger clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          {% endif %}
+          {% endif %}
+          {% endif %}
+            <td>{{request.ID}}</td>
+            <td>{{request.RSC_ID}}</td>
+            <td>{{request.first_name}} {{request.last_name}}</td>
+            <td>{{request.title}}</td>
+            <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
+            <td>{{request.no_samples}}</td>
+            <td>{{request.status}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
