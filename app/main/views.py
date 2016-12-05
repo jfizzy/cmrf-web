@@ -138,6 +138,6 @@ def inst():
     ]
     return render_template('inst.html', posts=posts)
 
-@main.route('/news')
-def news():
-    return render_template('news.html')
+@main.route('/research')
+def research():
+    return render_template('research.html')
