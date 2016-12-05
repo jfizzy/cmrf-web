@@ -1,9 +1,10 @@
-from flask import render_template, session, redirect, url_for, current_app
+from flask import render_template, session, redirect, url_for, current_app, abort
 from .. import db
 from ..models import User
 from ..email import send_email
 from . import main
 from .forms import NameForm
+from pathlib import Path
 
 
 @main.route('/')
@@ -141,3 +142,11 @@ def inst():
 @main.route('/research')
 def research():
     return render_template('research.html')
+
+@main.route('/view-image/<image>')
+def view_image(image):
+    image_file = Path("static/assets/" + image)
+    if image_file.is_file():
+        render_template('view_image.html', image=image)
+    else:
+        abort(404)
