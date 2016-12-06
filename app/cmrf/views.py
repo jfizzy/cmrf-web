@@ -8,13 +8,6 @@ from . import cmrf
 def index():
 	return render_template('cmrf/cmrf.html')
 
-@cmrf.before_app_request
-def before_request():
-	if current_user.is_authenticated \
-		and not current_user.email_conf \
-		and request.endpoint[:5] != ('auth.' or 'cmrf.' and not 'cmrf.index'):
-		return redirect(url_for('auth.unconfirmed'))
-
 @cmrf.route('/requests', methods=['GET'])
 @login_required
 def requests():

@@ -28,23 +28,17 @@ def logout():
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-	form = RegistrationForm()
-	if form.validate_on_submit():
-		user = User(UCID=int(form.UCID.data),
-					first_name=form.first_name.data,
-					last_name=form.last_name.data,
-					password=form.password.data,
-					email=form.email.data,
-					phone=form.phone.data)
-		db.session.add(user)
-		db.session.commit()
-		token = user.generate_confirmation_token()
-        login_user(user, True)
-        send_email(user.email, 'Confirm Your Account',
-				   'auth/email/confirm', user=user, token=token)
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user=User(UCID=int(form.UCID.data),first_name=form.first_name.data,last_name=form.last_name.data,password=form.password.data,email=form.email.data,phone=form.phone.data)
+        db.session.add(user)
+        db.session.commit()
+        token = user.generate_confirmation_token()
+        send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token)
         flash('Thanks for registering! Please login and confirm your account by clicking the link in the email we just sent.')
-        return redirect(url_for('auth.unconfirmed'))
-	return render_template('auth/register.html',form=form)
+        return redirect(url_for('auth.login'))
+    else:
+        return render_template('auth/register.html',form=form)
 
 @auth.route('/confirm/<token>')
 @login_required
@@ -59,10 +53,12 @@ def confirm(token):
 
 @auth.before_app_request
 def before_request():
-	if current_user.is_authenticated \
-		and not current_user.email_conf \
-		and request.endpoint[:5] != ('auth.' or 'cmrf.' and not 'cmrf.index'):
-		return redirect(url_for('auth.unconfirmed'))
+    if current_user.is_authenticated:
+        if not current_user.email_conf:
+            if request.endpoint[:5] != 'auth.':
+                if request.endpoint[:5] != 'cmrf.':
+                    if request.endpoint != 'cmrf.index':
+                        return redirect(url_for('auth.unconfirmed'))
 
 @auth.route('/unconfirmed')
 def unconfirmed():
