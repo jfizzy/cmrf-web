@@ -20,6 +20,7 @@ lang="en"
 
 	{% block styles %}
 	{{super()}}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 	{% endblock %}
 
@@ -124,6 +125,13 @@ lang="en"
 {{ super() }}
 {{ moment.include_moment() }}
 <!-- Script to Activate the Carousel -->
+<!-- Datatables js script -->
+<script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+		$(document).ready(function(){
+		    $('#all_req_table').DataTable();
+		});
+</script>
 <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
