@@ -5,6 +5,7 @@ from ..email import send_email
 from . import main
 from .forms import NameForm
 from pathlib import Path
+import os
 
 
 @main.route('/')
@@ -119,25 +120,7 @@ def people():
 @main.route('/instruments')
 @main.route('/inst')
 def inst():
-    posts = [
-    {
-        'pic': '../static/assets/inst_eg1.jpg',
-        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
-    },
-    {
-        'pic': '../static/assets/inst_eg2.jpg',
-        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
-    },
-    {
-        'pic': '../static/assets/inst_eg3.jpg',
-        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
-    },
-    {
-        'pic': '../static/assets/inst_eg4.jpg',
-        'desc': 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer'
-    }
-    ]
-    return render_template('inst.html', posts=posts)
+    return render_template('inst.html')
 
 @main.route('/research')
 def research():
@@ -145,8 +128,10 @@ def research():
 
 @main.route('/view-image/<image>')
 def view_image(image):
-    image_file = Path("static/assets/" + image)
-    if image_file.is_file():
-        render_template('view_image.html', image=image)
-    else:
-        abort(404)
+    # print(os.getcwd())
+    # image_file = Path("/static/assets/placeholder.png")
+    # print(image_file)
+    # if image_file.is_file():
+    return render_template('view_image.html', image=image)
+    # else:
+    #     return abort(404)
