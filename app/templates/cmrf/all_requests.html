@@ -26,15 +26,15 @@
       <tbody>
         {% for request in requests %}
           {% if request.status == 'Pending Approval' %}
-          <tr class="warning clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          <tr class="warning clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
           {% else %}
           {% if request.status == 'Complete' %}
-          <tr class="info clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          <tr class="info clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
           {% else %}
           {% if request.status == 'Approved' %}
-          <tr class="success clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          <tr class="success clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
           {% else %}
-          <tr class="danger clickable-row" data-href="{{url_for('cmrf.requests')}}">
+          <tr class="danger clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
           {% endif %}
           {% endif %}
           {% endif %}

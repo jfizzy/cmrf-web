@@ -23,24 +23,24 @@
       </thead>
       <tbody>
         {% for request in requests %}
-          <tr class="clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          {% if request.status == 'Pending Approval' %}
+          <tr class="warning clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          {% else %}
+          {% if request.status == 'Complete' %}
+          <tr class="info clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          {% else %}
+          {% if request.status == 'Approved' %}
+          <tr class="success clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          {% else %}
+          <tr class="danger clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          {% endif %}
+          {% endif %}
+          {% endif %}
             <td>{{request.ID}}</td>
             <td>{{request.title}}</td>
-            <td>{{request.submit_date.strftime('EE dd.MM.y HH:mm')}}</td>
+            <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
             <td>{{request.no_samples}}</td>
-            {% if request.status == 'Pending Approval' %}
-              <td class="table-warning">{{request.status}}</td>
-            {% else %}
-              {% if request.status == 'Complete' %}
-                <td class="table-success">{{request.status}}</td>
-              {% else %}
-                {% if request.status == 'Approved' %}
-                  <td class="table-info">{{request.status}}</td>
-                {% else %}
-                  <td class="table-danger">{{request.status}}</td>
-                {% endif %}
-              {% endif %}
-            {% endif %}
+            <td>{{request.status}}</td>
           </tr>
         {% endfor %}
       </tbody>

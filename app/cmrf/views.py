@@ -5,9 +5,15 @@ from ..models import WorkOrder, User, Permission
 from . import cmrf
 
 @cmrf.route('/', methods=['GET'])
-@login_required
 def index():
 	return render_template('cmrf/cmrf.html')
+
+@cmrf.before_app_request
+def before_request():
+	if current_user.is_authenticated \
+		and not current_user.email_conf \
+		and request.endpoint[:5] != ('auth.' or 'cmrf.' and not 'cmrf.index'):
+		return redirect(url_for('auth.unconfirmed'))
 
 @cmrf.route('/requests', methods=['GET'])
 @login_required
@@ -17,31 +23,15 @@ def requests():
 					WorkOrder.submit_date.desc())
 	return render_template('cmrf/user_requests.html', requests=requests)
 
-@cmrf.route('/user-request/<int:id>', methods=['GET'])
+@cmrf.route('/request/<int:id>', methods=['GET'])
 @login_required
 def request(id):
-    try:
-    	request = WorkOrder.query.join(User,
-                             WorkOrder.RSC_ID==User.UCID).filter_by(
-    						 WorkOrder.ID==id).first()
-                             #HERE
-                            #  .add_columns(
-    						#  WorkOrder.ID, WorkOrder.title,
-    						#  WorkOrder.submit_date, WorkOrder.no_samples,
-    						#  WorkOrder.status, WorkOrder.desc, WorkOrder.ri_qehf,
-    						#  WorkOrder.ri_qeb, WorkOrder.ri_tsq, WorkOrder.ri_unk,
-    						#  WorkOrder.tm_pep, WorkOrder.tm_fa, WorkOrder.tm_fa,
-    						#  WorkOrder.tm_fa, WorkOrder.tm_aa, WorkOrder.tm_unk,
-    						#  WorkOrder.RPT_ID, WorkOrder.ADM_ID, User.UCID,
-    						#  User.first_name, User.last_name, User.email)
-    except:
-        abort(404)
-	if request is None:
-		abort(404)
-	if current_user.id != request.UCID:
+	request = WorkOrder.query.filter_by(ID=str(id)).first_or_404()
+	if current_user.id != request.RSC_ID:
 		if not current_user.can(Permission.ALL_R):
 			abort(404)
-	render_template('cmrf/user_request.html', request=request)
+	user = User.query.filter_by(UCID=request.RSC_ID).first()
+	return render_template('cmrf/request.html', request=request, owner=user)
 
 @cmrf.route('/all-requests')
 @login_required

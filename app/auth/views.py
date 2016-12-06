@@ -39,10 +39,11 @@ def register():
 		db.session.add(user)
 		db.session.commit()
 		token = user.generate_confirmation_token()
-		send_email(user.email, 'Confirm Your Account',
+        login_user(user, True)
+        send_email(user.email, 'Confirm Your Account',
 				   'auth/email/confirm', user=user, token=token)
-		flash('Thanks for registering! Please login and confirm your account by clicking the link in the email we just sent.')
-		return redirect(url_for('auth.login'))
+        flash('Thanks for registering! Please login and confirm your account by clicking the link in the email we just sent.')
+        return redirect(url_for('auth.unconfirmed'))
 	return render_template('auth/register.html',form=form)
 
 @auth.route('/confirm/<token>')
@@ -60,7 +61,7 @@ def confirm(token):
 def before_request():
 	if current_user.is_authenticated \
 		and not current_user.email_conf \
-		and request.endpoint[:5] != ('auth.' or 'cmrf.'):
+		and request.endpoint[:5] != ('auth.' or 'cmrf.' and not 'cmrf.index'):
 		return redirect(url_for('auth.unconfirmed'))
 
 @auth.route('/unconfirmed')

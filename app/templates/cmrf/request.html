@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - Request{% endblock %}
+
+{% block page_content %}
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1>Request </h1> <h3>{{request.title}}
+        {% if current_user.is_r_privileged() %} - ID: {{request.ID}}{% endif %}</h3>
+      <br>
+      <h3>Submitted by: {{owner.first_name}} {{owner.last_name}} - UCID: {{owner.UCID}}</h3>
+    </div>
+    <div class="panel-content">
+      <br>
+      <ul>
+        <li>Title: <p class="text-primary">{{request.title}}</p></li>
+        <br>
+        <li>Submission Date: <p class="text-primary">{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</p></li>
+        <br>
+        <li>Number of Samples: <p class="text-primary">{{request.no_samples}}</p></li>
+        <br>
+        <li>Current Status:
+          {% if request.status == 'Pending Approval' %}
+          <p class="text-warning">
+          {% else %}
+          {% if request.status == 'Complete' %}
+          <p class="text-success">
+          {% else %}
+          {% if request.status == 'In Progress' %}
+          <p class="text-primary">
+          {% else %}
+          <p class="text-danger">
+          {% endif %}
+          {% endif %}
+          {% endif %}
+          {{request.status}}</p></li>
+        <br>
+        <li>Description: <br><p class="text-primary">{{request.desc}}</p></li>
+        <br>
+        <li>Required Instruments:
+          <p class="text-primary">
+            <ul>
+              <li>QEHF: {{request.ri_qehf}}</li>
+              <li>QE Basic: {{request.ri_qeb}}</li>
+              <li>TSQ: {{request.ri_tsq}}</li>
+              <li>Unknown: {{request.ri_unk}}</li>
+            </ul>
+          </p>
+        </li>
+        <li>Target Metabolites: <br>
+          <p class="text-primary">
+            <ul>
+              <li>Peptides: {{request.tm_pep}}</li>
+              <li>Fatty Acids: {{request.tm_fa}}</li>
+              <li>Amino Acids: {{request.tm_aa}}</li>
+              <li>Unknown: {{request.tm_unk}}</li>
+            </ul>
+          </p>
+        </li>
+        <!--Link to report here eventually-->
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
