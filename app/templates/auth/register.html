@@ -9,14 +9,7 @@
     <h1>Register</h1>
 </div>
 <div class="col-md-4">
-  <form method="post" action="/">
-    {{ form.hidden_tag() }}
-    {{ form.title }}
-    {{ form.desc }}
-    <h3>{{ form.assistance.label }}</h3>
-    {{ form.assistance }}
-    {{ form.submit }}
-  </form>
+    {{ wtf.quick_form(form) }}
 </div>
 </div>
 {% endblock %}

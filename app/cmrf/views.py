@@ -86,12 +86,12 @@ def all_completed_requests():
 	return render_template('cmrf/all_requests.html',
 						   title='Completed', requests=requests)
 
-@cmrf.route('/all-declined-requests')
+@cmrf.route('/all-cancelled-requests')
 @login_required
 @all_r_required
-def all_declined_requests():
+def all_cancelled_requests():
 	requests = WorkOrder.query.filter_by(
-					status='Declined').order_by(
+					status='Cancelled').order_by(
 					WorkOrder.submit_date.desc())
 	return render_template('cmrf/all_requests.html',
-						   title='Declined', requests=requests)
+						   title='Cancelled', requests=requests)
