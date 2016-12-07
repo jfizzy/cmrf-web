@@ -99,9 +99,9 @@ class ChangeAccountDetailsAdminForm(Form):
     email_conf = BooleanField('Confirmed')
     role = SelectField('User Role', coerce=int)
     phone = TelField('Phone Number (Optional)')
-    
+
     submit = SubmitField('Confirm Changes')
-    
+
     def __init__(self, user, *args, **kwargs):
         super(ChangeAccountDetailsAdminForm, self).__init__(*args, **kwargs)
         self.role.choices = [(role.id, role.name)

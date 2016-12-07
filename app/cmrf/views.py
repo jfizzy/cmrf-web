@@ -1,8 +1,9 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
-from ..decorators import admin_required, all_r_required
+from ..decorators import admin_required, all_r_required, view_r_required, make_r_required
 from ..models import WorkOrder, User, Permission
 from . import cmrf
+from .forms import RequestForm
 
 @cmrf.route('/', methods=['GET'])
 def index():
@@ -10,6 +11,7 @@ def index():
 
 @cmrf.route('/requests', methods=['GET'])
 @login_required
+@view_r_required
 def requests():
 	requests = WorkOrder.query.filter_by(
 					RSC_ID=current_user.UCID).order_by(
@@ -18,6 +20,7 @@ def requests():
 
 @cmrf.route('/request/<int:id>', methods=['GET'])
 @login_required
+@view_r_required
 def request(id):
 	request = WorkOrder.query.filter_by(ID=str(id)).first_or_404()
 	if current_user.id != request.RSC_ID:
@@ -25,6 +28,20 @@ def request(id):
 			abort(404)
 	user = User.query.filter_by(UCID=request.RSC_ID).first()
 	return render_template('cmrf/request.html', request=request, owner=user)
+
+@cmrf.route('/make-request')
+@login_required
+@make_r_required
+def make_request():
+	form = RequestForm()
+	if form.validate_on_submit():
+		wo = WorkOrder(form.title, form.no_samples, current_user.UCID, desc=form.desc)
+		db.session.add(wo)
+		db.session.commit()
+		flash('Request Submitted.')
+		return redirect(url_for('cmrf.requests'))
+	return render_template('cmrf/make_request.html', form=form)
+
 
 @cmrf.route('/all-requests')
 @login_required
