@@ -8,12 +8,16 @@ body {
 
 .beforefooter{
     padding-top: 50px;
-	min-height: 100%;
-	z-index:1;
+    min-height: 100%;
+    z-index:1;
 }
 
 .container {
-	z-index: 2;
+    z-index: 2;
+}
+
+.a {
+    cursor: pointer;
 }
 
 #footer {

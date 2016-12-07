@@ -63,6 +63,8 @@ lang="en"
 									<li><a href="{{ url_for('cmrf.index') }}">CMRF Home</a></li>
 									<li><a href="{{ url_for('cmrf.requests') }}">My Requests</a></li>
 									{% if current_user.is_administrator %}
+										<li role="separator" class="divider"></li>
+										<li class="dropdown-header">Admin Tools</li>
 										<li><a href="{{ url_for('cmrf.all_requests') }}">All Requests</a></li>
 									{% endif %}
 							</ul>
@@ -128,6 +130,12 @@ lang="en"
 <!-- Datatables js script -->
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
+		$.extend( true, $.fn.dataTable.defaults, {
+				"searching": false,
+				"paging":   false,
+				"order": [[ 4, "desc" ]]
+		} );
+
 		$(document).ready(function(){
 		    $('#all_req_table').DataTable();
 		});
@@ -143,10 +151,5 @@ lang="en"
 		var popup = document.getElementById(name);
 		popup.classList.toggle('show');
 	}
-</script>
-<script>
-	$(".clickable-row").click(function() {
-			window.document.location = $(this).data("href");
-	});
 </script>
 {% endblock %}

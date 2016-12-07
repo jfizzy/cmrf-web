@@ -11,7 +11,7 @@
 </div>
 <div class="container">
   <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover cell-border">
       <thead>
         <tr>
           <th>Request ID</th>
@@ -19,20 +19,21 @@
           <th>Date Submitted</th>
           <th>Number of Samples</th>
           <th>Status</th>
+          <th>Request Link</th>
         </tr>
       </thead>
       <tbody>
         {% for request in requests %}
           {% if request.status == 'Pending Approval' %}
-          <tr class="warning clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          <tr class="warning">
           {% else %}
           {% if request.status == 'Complete' %}
-          <tr class="info clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          <tr class="info">
           {% else %}
           {% if request.status == 'Approved' %}
-          <tr class="success clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          <tr class="success">
           {% else %}
-          <tr class="danger clickable-row" data-href="{{url_for('cmrf.request', id=request.ID)}}">
+          <tr class="danger">
           {% endif %}
           {% endif %}
           {% endif %}
@@ -41,6 +42,7 @@
             <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
             <td>{{request.no_samples}}</td>
             <td>{{request.status}}</td>
+            <td><a href="{{url_for('cmrf.request', id=request.ID)}}">View</a></td>
           </tr>
         {% endfor %}
       </tbody>
