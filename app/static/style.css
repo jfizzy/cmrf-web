@@ -550,3 +550,29 @@ footer {
     from {opacity: 0;}
     to {opacity:1 ;}
 }
+
+/***************************************/
+/* ACCOUNT INFO PAGE STYLES */
+/***************************************/
+
+.account-info h3 {
+    display: inline;
+    padding: 5px;
+    margin: 0;
+}
+
+.account-info p {
+    display: inline;
+    padding: 5px;
+    margin: 0;
+    font-size: larger;
+}
+
+.account-info hr {
+    padding: 5px;
+    margin: 0;
+}
+
+.account-info .row {
+    padding-top: 0;
+}
