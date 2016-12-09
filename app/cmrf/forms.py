@@ -1,6 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, IntegerField, SelectField, TextAreaField, SelectMultipleField, RadioField
-from wtforms.validators import Required, Length, Email, Regexp, EqualTo
+from wtforms.validators import Required, Optional, Length, Email, Regexp, EqualTo
+from wtforms.widgets import TextArea
 from wtforms import ValidationError
 from ..models import User, Role, WorkOrder
 
@@ -20,15 +21,36 @@ class Unique(object):
 
 class RequestForm(Form):
 	title = StringField('Title', validators=[Required(), Length(6, 64)])
-	desc = TextAreaField('Description', validators=[Required(), Length(0, 200)])
-	no_samples = SelectField('Number of Samples', validators=[Required()], choices=[(100,'100'),(200,'200'),(300,'300'),(400,'400'),(500,'500'),(600,'600'),(700,'700'),(800,'800'),(900,'900'),(1000,'1000')])
-
-	tm = SelectMultipleField('Target Metabolites',choices=[(0, 'Central Carbon Metabolism'), (1,'Peptides'), (2, 'Fatty Acids'), (3, 'Amino Acids'), (4, 'Other')], default=[0])
-	other_tm = StringField('Other', validators=[Length(3, 20)])
-	ri = SelectMultipleField('Required Instruments', choices=[(0, 'QE-HF'), (1, 'QE-Basic'), (2,'TSQ'), (3, 'Unknown')])
-	funding_acc_num = IntegerField('UC Funding Account #', validators=[Required()])
-	funding_acc_type = RadioField(choices=[(0, 'NSPRC'), (1, 'CIHR'), (2, 'Provincial'), (3, 'Other')])
-	funding_acc_other = StringField('Type', validators=[Length(4,20)])
-	assistance = RadioField('Assistance (Technician)', choices=[(True, 'Yes'), (False, 'No')])
+	desc = StringField('Description', validators=[Required(), Length(0, 200)], widget=TextArea())
+	no_samples = SelectField('Number of Samples', \
+							 validators=[Required()], \
+							 choices=[(100,'100'),(200,'200'),(300,'300'), \
+								      (400,'400'),(500,'500'),(600,'600'), \
+									  (700,'700'),(800,'800'),(900,'900'), \
+									  (1000,'1000')], coerce=int)
+	tm = SelectMultipleField('Target Metabolites (Select all that apply)', \
+							 choices=[(0, 'Central Carbon Metabolism'), \
+							 		  (1,'Peptides'), (2, 'Fatty Acids'), \
+									  (3, 'Amino Acids'), (4, 'Other')], \
+							 default=[0], \
+							 coerce=int)
+	other_tm = StringField('Other Target Metabolites (If applciable)', \
+						   validators=[Optional(), Length(4, 20)])
+	ri = SelectMultipleField('Required Instruments (Select all that apply)', \
+							 choices=[(0, 'QE-HF'), (1, 'QE-Basic'), \
+							 		  (2,'TSQ'), (3, 'Unknown')], \
+							 coerce=int)
+	funding_acc_num = StringField('UC Funding Account #', \
+								   validators=[Required(), \
+								   			   Length(6,20), \
+										   	   Regexp('^[0-9]*$', 0, 'Must be an Integer')])
+	funding_acc_type = RadioField(choices=[(0, 'NSPRC'), (1, 'CIHR'), \
+										   (2, 'Provincial'), (3, 'Other')], \
+								  validators=[Required()], coerce=int)
+	funding_acc_other = StringField('Other Account Type (If applciable)', \
+									validators=[Optional(), Length(4,20)])
+	assistance = RadioField('Assistance (Technician)', \
+							choices=[(0, 'Assistance Required (Technician)'), (1, 'No Assistance Required')], \
+							default=[0], coerce=int)
 
 	submit = SubmitField("Submit")

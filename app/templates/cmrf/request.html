@@ -49,14 +49,16 @@
           </p>
         </li>
         <li>Target Metabolites: <br>
-          <p class="text-primary">
             <ul>
+              <li>Central Carbon Metabolism: {{request.tm_ccm}}</li>
               <li>Peptides: {{request.tm_pep}}</li>
               <li>Fatty Acids: {{request.tm_fa}}</li>
               <li>Amino Acids: {{request.tm_aa}}</li>
               <li>Unknown: {{request.tm_unk}}</li>
             </ul>
-          </p>
+        </li>
+        <li>
+          <p>{% if request.assistance %}Technician's assistance is required.{% else %}No assistance required.{% endif %}</p>
         </li>
         <!--Link to report here eventually-->
       </ul>

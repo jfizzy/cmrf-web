@@ -174,14 +174,23 @@ class FundingAccount(db.Model):
 
     ID = db.Column(db.Integer, db.Sequence('funding_account_seq', start=0, increment=1),
                    primary_key=True, nullable=False)
-    acc_no = db.Column(db.String(64), index=True, nullable=False)
+    acc_no = db.Column(db.Integer, index=True, nullable=False)
     acc_type = db.Column(db.String(64))
+    acc_other = db.Column(db.String(64))
     RSC_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
 
-    def __init__(self, acc_no, acc_name, acc_type, rsc_id):
+    def __init__(self, acc_no, acc_type, RSC_ID, acc_other=None):
         self.acc_no = acc_no
-        self.acc_type = acc_type
-        self.rsc_id = rsc_id
+        if acc_type == 0:
+            self.acc_type = 'NSPRC'
+        elif acc_type == 1:
+            self.acc_type = 'CIHR'
+        elif acc_type == 2:
+            self.acc_type = 'Provincial'
+        else:
+            self.acc_type = 'Other'
+            self.acc_other=acc_other
+        self.RSC_ID = RSC_ID
 
     def __repr__(self):
         return '<Funding Account - Account Number: [%s], User ID: [%s]>' % (self.acc_no, self.RSC_ID)
@@ -243,29 +252,31 @@ class WorkOrder(db.Model):
         self.status = status
         if desc is not None:
             self.desc = desc
-        if '0' in ri:
+        if 0 in ri:
             self.ri_qehf = True
-        if '1' in ri:
+        if 1 in ri:
             self.ri_qeb = True
-        if '2' in ri:
+        if 2 in ri:
             self.ri_tsq = True
-        if '3' in ri:
+        if 3 in ri:
             self.ri_unk = True
 
-        if '0' in tm:
+        if 0 in tm:
             self.tm_pep = True
-        if '1' in tm:
+        if 1 in tm:
             self.tm_pep = True
-        if '2' in tm:
+        if 2 in tm:
             self.tm_fa = True
-        if '3' in tm:
+        if 3 in tm:
             self.tm_aa = True
-        if '4' in tm:
+        if 4 in tm:
             self.tm_oth = True
             self.tm_oth_txt = other_tm
 
-        if assistance:
+        if assistance == 0:
             self.assistance = True
+        else:
+            self.assistance = False
 
         self.RSC_ID = RSC_ID
         self.RPT_ID = None

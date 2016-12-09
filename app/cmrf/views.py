@@ -1,8 +1,9 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
 from ..decorators import admin_required, all_r_required, view_r_required, make_r_required
-from ..models import WorkOrder, User, Permission
+from ..models import WorkOrder, User, Permission, FundingAccount
 from . import cmrf
+from .. import db
 from .forms import RequestForm
 
 @cmrf.route('/', methods=['GET'])
@@ -33,17 +34,27 @@ def request(id):
 @login_required
 @make_r_required
 def make_request():
+	userfa = FundingAccount.query.filter_by(RSC_ID=current_user.id).first()
 	form = RequestForm()
 	if form.validate_on_submit():
-		#need to do something with the funding account data
-		wo = WorkOrder(title=form.title, no_samples=form.no_samples, \
-					   RSC_ID=current_user.UCID, desc=form.desc, \
-					   tm=form.tm, ri=form.ri, assistance=form.assistance)
+		fa = FundingAccount(int(form.funding_acc_num.data), form.funding_acc_type.data, current_user.id, form.funding_acc_other.data)
+		if userfa is not None:
+			userfa.acc_no = fa.acc_no
+			userfa.acc_type = fa.acc_type
+			userfa.acc_other = fa.acc_other
+			db.session.add(userfa)
+		else:
+			db.session.add(fa)
+		wo = WorkOrder(title=form.title.data, no_samples=form.no_samples.data, \
+					   RSC_ID=current_user.UCID, desc=form.desc.data, \
+					   tm=form.tm.data, ri=form.ri.data, assistance=form.assistance.data)
+
 		db.session.add(wo)
 		db.session.commit()
 		flash('Request Submitted.')
 		return redirect(url_for('cmrf.requests'))
-	return render_template('cmrf/make_request.html', form=form)
+	else:
+		return render_template('cmrf/make_request.html', form=form)
 
 
 @cmrf.route('/all-requests')
