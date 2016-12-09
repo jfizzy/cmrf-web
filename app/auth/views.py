@@ -55,10 +55,9 @@ def confirm(token):
 def before_request():
     if current_user.is_authenticated:
         if not current_user.email_conf:
-            if request.endpoint[:5] != 'auth.':
-                if request.endpoint[:5] != 'cmrf.':
-                    if request.endpoint != 'cmrf.index':
-                        return redirect(url_for('auth.unconfirmed'))
+            if request.endpoint[:5] == 'auth.' or request.endpoint[:5] == 'cmrf.':
+                if request.endpoint != 'auth.unconfirmed' and request.endpoint != 'cmrf.index' and request.endpoint != 'auth.logout' and request.endpoint[:12] != 'auth.confirm':
+                    return redirect(url_for('auth.unconfirmed'))
 
 @auth.route('/unconfirmed')
 def unconfirmed():

@@ -62,7 +62,8 @@ lang="en"
 							<ul class="dropdown-menu">
 									<li><a href="{{ url_for('cmrf.index') }}">CMRF Home</a></li>
 									<li><a href="{{ url_for('cmrf.requests') }}">My Requests</a></li>
-									{% if current_user.is_administrator %}
+									<li><a href="{{ url_for('cmrf.make_request') }}">Make Request</a></li>
+									{% if current_user.can(Permission.ALL_R) %}
 										<li role="separator" class="divider"></li>
 										<li class="dropdown-header">Admin Tools</li>
 										<li><a href="{{ url_for('cmrf.all_requests') }}">All Requests</a></li>

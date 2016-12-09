@@ -175,18 +175,16 @@ class FundingAccount(db.Model):
     ID = db.Column(db.Integer, db.Sequence('funding_account_seq', start=0, increment=1),
                    primary_key=True, nullable=False)
     acc_no = db.Column(db.String(64), index=True, nullable=False)
-    acc_name = db.Column(db.String(64), nullable=False)
     acc_type = db.Column(db.String(64))
     RSC_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
 
     def __init__(self, acc_no, acc_name, acc_type, rsc_id):
         self.acc_no = acc_no
-        self.acc_name = acc_name
         self.acc_type = acc_type
         self.rsc_id = rsc_id
 
     def __repr__(self):
-        return '<Funding Account - Name: [%s], Account Number: [%s], User ID: [%s]>' % (self.acc_name, self.acc_no, self.RSC_ID)
+        return '<Funding Account - Account Number: [%s], User ID: [%s]>' % (self.acc_no, self.RSC_ID)
 
 class Report(db.Model):
 
@@ -223,35 +221,54 @@ class WorkOrder(db.Model):
     no_samples = db.Column(db.Integer, nullable=False)
     status = db.Column(db.Integer, nullable=False)
     desc = db.Column(db.Text, nullable=True)
-    ri_qehf = db.Column(db.Boolean)
-    ri_qeb = db.Column(db.Boolean)
-    ri_tsq = db.Column(db.Boolean)
-    ri_unk = db.Column(db.Boolean)
-    tm_pep = db.Column(db.Boolean)
-    tm_fa = db.Column(db.Boolean)
-    tm_aa = db.Column(db.Boolean)
-    tm_unk = db.Column(db.Boolean)
+    ri_qehf = db.Column(db.Boolean, default=False)
+    ri_qeb = db.Column(db.Boolean, default=False)
+    ri_tsq = db.Column(db.Boolean, default=False)
+    ri_unk = db.Column(db.Boolean, default=False)
+    tm_ccm = db.Column(db.Boolean, default=False)
+    tm_pep = db.Column(db.Boolean, default=False)
+    tm_fa = db.Column(db.Boolean, default=False)
+    tm_aa = db.Column(db.Boolean, default=False)
+    tm_oth = db.Column(db.Boolean, default=False)
+    tm_oth_txt = db.Column(db.String(20), default=None)
+    assistance = db.Column(db.Boolean, default=False)
     RPT_ID = db.Column(db.Integer, db.ForeignKey("REPORT.ID"), nullable=True)
     RSC_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
     ADM_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=True)
 
     def __init__(self, title, no_samples,
-                 RSC_ID, status='Pending Approval', desc=None):
+                 RSC_ID, tm, ri, assistance, status='Pending Approval',other_tm=None, desc=None):
         self.title = title
         self.no_samples = no_samples
         self.status = status
         if desc is not None:
             self.desc = desc
-        self.ri_qehf = False
-        self.ri_qeb = False
-        self.ri_tsq = False
-        self.ri_unk = False
-        self.tm_pep = False
-        self.tm_fa = False
-        self.tm_aa = False
-        self.tm_unk = False
-        self.RPT_ID = None
+        if '0' in ri:
+            self.ri_qehf = True
+        if '1' in ri:
+            self.ri_qeb = True
+        if '2' in ri:
+            self.ri_tsq = True
+        if '3' in ri:
+            self.ri_unk = True
+
+        if '0' in tm:
+            self.tm_pep = True
+        if '1' in tm:
+            self.tm_pep = True
+        if '2' in tm:
+            self.tm_fa = True
+        if '3' in tm:
+            self.tm_aa = True
+        if '4' in tm:
+            self.tm_oth = True
+            self.tm_oth_txt = other_tm
+
+        if assistance:
+            self.assistance = True
+
         self.RSC_ID = RSC_ID
+        self.RPT_ID = None
         self.ADM_ID = None
 
     def __repr__(self):

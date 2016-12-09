@@ -41,7 +41,7 @@
             <td>{{request.ID}}</td>
             <td><a href="{{ url_for('cmrf.all_requests') }}">{{request.RSC_ID}}</a></td>
             <td><a href="{{ url_for('cmrf.all_requests') }}">{{request.first_name}} {{request.last_name}}</a></td>
-            <td>{{request.title}}</td>
+            <td>{% if request.title|length > 17 %}{{request.title[:15]+'...'}}{% else %}{{request.title}}{% endif %}</td>
             <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
             <td>{{request.no_samples}}</td>
             <td>{{request.status}}</td>

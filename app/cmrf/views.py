@@ -29,13 +29,16 @@ def request(id):
 	user = User.query.filter_by(UCID=request.RSC_ID).first()
 	return render_template('cmrf/request.html', request=request, owner=user)
 
-@cmrf.route('/make-request')
+@cmrf.route('/make-request', methods=['GET', 'POST'])
 @login_required
 @make_r_required
 def make_request():
 	form = RequestForm()
 	if form.validate_on_submit():
-		wo = WorkOrder(form.title, form.no_samples, current_user.UCID, desc=form.desc)
+		#need to do something with the funding account data
+		wo = WorkOrder(title=form.title, no_samples=form.no_samples, \
+					   RSC_ID=current_user.UCID, desc=form.desc, \
+					   tm=form.tm, ri=form.ri, assistance=form.assistance)
 		db.session.add(wo)
 		db.session.commit()
 		flash('Request Submitted.')
