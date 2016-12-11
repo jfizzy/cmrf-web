@@ -63,7 +63,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('ROLE.id'))
     email_conf = db.Column(db.Boolean, default=False)
-    phone = db.Column(db.Integer)
+    phone = db.Column(db.String(64), nullable=True, default=None)
     date_joined = db.Column(db.DateTime, default=datetime.datetime.now)
 
     @property
@@ -262,7 +262,7 @@ class WorkOrder(db.Model):
             self.ri_unk = True
 
         if 0 in tm:
-            self.tm_pep = True
+            self.tm_ccm = True
         if 1 in tm:
             self.tm_pep = True
         if 2 in tm:

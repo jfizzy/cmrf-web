@@ -54,7 +54,7 @@ def make_request():
 		flash('Request Submitted.')
 		return redirect(url_for('cmrf.requests'))
 	else:
-		return render_template('cmrf/make_request.html', form=form)
+		return render_template('cmrf/make_request.html', errors=form.errors.items(), form=form)
 
 
 @cmrf.route('/all-requests')

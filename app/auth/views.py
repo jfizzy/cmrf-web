@@ -30,7 +30,7 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user=User(UCID=int(form.UCID.data),first_name=form.first_name.data,last_name=form.last_name.data,password=form.password.data,email=form.email.data,phone=form.phone.data)
+        user=User(UCID=int(form.UCID.data),first_name=form.first_name.data,last_name=form.last_name.data,password=form.password.data,email=form.email.data,phone=str(form.phone.data))
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()

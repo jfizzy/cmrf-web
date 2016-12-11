@@ -34,7 +34,7 @@ class RequestForm(Form):
 									  (3, 'Amino Acids'), (4, 'Other')], \
 							 default=[0], \
 							 coerce=int)
-	other_tm = StringField('Other Target Metabolites (If applciable)', \
+	other_tm = StringField('Other Target Metabolites (If applicable)', \
 						   validators=[Optional(), Length(4, 20)])
 	ri = SelectMultipleField('Required Instruments (Select all that apply)', \
 							 choices=[(0, 'QE-HF'), (1, 'QE-Basic'), \
@@ -44,10 +44,10 @@ class RequestForm(Form):
 								   validators=[Required(), \
 								   			   Length(6,20), \
 										   	   Regexp('^[0-9]*$', 0, 'Must be an Integer')])
-	funding_acc_type = RadioField(choices=[(0, 'NSPRC'), (1, 'CIHR'), \
+	funding_acc_type = RadioField(choices=[(0, 'NSERC'), (1, 'CIHR'), \
 										   (2, 'Provincial'), (3, 'Other')], \
-								  validators=[Required()], coerce=int)
-	funding_acc_other = StringField('Other Account Type (If applciable)', \
+                                           coerce=int, default=0)
+	funding_acc_other = StringField('Other Account Type (If applicable)', \
 									validators=[Optional(), Length(4,20)])
 	assistance = RadioField('Assistance (Technician)', \
 							choices=[(0, 'Assistance Required (Technician)'), (1, 'No Assistance Required')], \

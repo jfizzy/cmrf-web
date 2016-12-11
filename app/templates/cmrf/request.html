@@ -41,22 +41,28 @@
         <li>Required Instruments:
           <p class="text-primary">
             <ul>
+              {% if request.ri_unk %}Unknown{% else %}
               <li>QEHF: {{request.ri_qehf}}</li>
               <li>QE Basic: {{request.ri_qeb}}</li>
-              <li>TSQ: {{request.ri_tsq}}</li>
-              <li>Unknown: {{request.ri_unk}}</li>
+              <li>TSG: {{request.ri_tsq}}</li>
+              {% endif %}
             </ul>
           </p>
         </li>
+        <br>
         <li>Target Metabolites: <br>
             <ul>
+              {% if request.tm_unk %}
+                Other - "{{ request.tm_oth_txt }}"
+              {% else %}
               <li>Central Carbon Metabolism: {{request.tm_ccm}}</li>
               <li>Peptides: {{request.tm_pep}}</li>
               <li>Fatty Acids: {{request.tm_fa}}</li>
               <li>Amino Acids: {{request.tm_aa}}</li>
-              <li>Unknown: {{request.tm_unk}}</li>
+              {% endif %}
             </ul>
         </li>
+        <br>
         <li>
           <p>{% if request.assistance %}Technician's assistance is required.{% else %}No assistance required.{% endif %}</p>
         </li>
