@@ -63,7 +63,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('ROLE.id'))
     email_conf = db.Column(db.Boolean, default=False)
-    phone = db.Column(db.String(64), nullable=True, default=None)
+    phone = db.Column(db.String(64))
     date_joined = db.Column(db.DateTime, default=datetime.datetime.now)
 
     @property
@@ -228,7 +228,7 @@ class WorkOrder(db.Model):
     submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
     title = db.Column(db.String(64), nullable=False)
     no_samples = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String(64), nullable=False)
     desc = db.Column(db.Text, nullable=True)
     ri_qehf = db.Column(db.Boolean, default=False)
     ri_qeb = db.Column(db.Boolean, default=False)
