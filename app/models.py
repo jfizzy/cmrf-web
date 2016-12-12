@@ -155,6 +155,9 @@ class User(UserMixin, db.Model):
     def is_r_privileged(self):
         return self.can(Permission.ALL_R)
 
+    def is_u_privileged(self):
+        return self.can(Permission.USER_ACC)
+
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
         return False

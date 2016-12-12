@@ -62,50 +62,59 @@ def make_request():
 @all_r_required
 def all_requests():
 	requests = WorkOrder.query.join(User,
-						 WorkOrder.RSC_ID==User.UCID).add_columns(
-						 WorkOrder.ID, WorkOrder.RSC_ID, User.first_name,
-						 User.last_name, WorkOrder.title, WorkOrder.submit_date,
-						 WorkOrder.no_samples, WorkOrder.status).order_by(
-						 WorkOrder.submit_date.desc()).all()
+                                     WorkOrder.RSC_ID==User.UCID).add_columns(
+                                     WorkOrder.ID, WorkOrder.RSC_ID, User.first_name,
+                                     User.last_name, WorkOrder.title, WorkOrder.submit_date,
+                                     WorkOrder.no_samples, WorkOrder.status).order_by(
+                                     WorkOrder.submit_date.desc()).all()
 	return render_template('cmrf/all_requests.html',
 						   title=None,requests=requests)
 
-@cmrf.route('/all-approved-requests')
+@cmrf.route('/all-active-requests')
 @login_required
 @all_r_required
 def all_active_requests():
-	requests = WorkOrder.query.filter_by(
-					status='Approved').order_by(
-					WorkOrder.submit_date.desc())
+        requests = WorkOrder.query.filter_by(status='In Progress').join(User,
+                                     WorkOrder.RSC_ID==User.UCID).add_columns(
+                                     WorkOrder.ID, WorkOrder.RSC_ID, User.first_name,
+                                     User.last_name, WorkOrder.title, WorkOrder.submit_date,
+                                     WorkOrder.no_samples, WorkOrder.status).order_by(
+                                     WorkOrder.submit_date.desc()).all()
 	return render_template('cmrf/all_requests.html',
-						   title='Approved', requests=requests)
+						   title='In Progress', requests=requests)
 
 @cmrf.route('/all-pending-requests')
 @login_required
 @all_r_required
 def all_pending_requests():
-	requests = WorkOrder.query.filter_by(
-					status='Pending').order_by(
-					WorkOrder.submit_date.desc())
+	requests = WorkOrder.query.filter_by(status='Pending Approval').join(User,
+                                     WorkOrder.RSC_ID==User.UCID).add_columns(
+                                     WorkOrder.ID, WorkOrder.RSC_ID, User.first_name,
+                                     User.last_name, WorkOrder.title, WorkOrder.submit_date,
+                                     WorkOrder.no_samples, WorkOrder.status).order_by(
+                                     WorkOrder.submit_date.desc()).all()
 	return render_template('cmrf/all_requests.html',
-						   title='Pending Approval', requests=requests)
+						   title='Pending', requests=requests)
 
-@cmrf.route('/all-completed-requests')
+@cmrf.route('/all-complete-requests')
 @login_required
 @all_r_required
-def all_completed_requests():
-	requests = WorkOrder.query.filter_by(
-					status='Complete').order_by(
-					WorkOrder.submit_date.desc())
+def all_complete_requests():
+	requests = WorkOrder.query.filter_by(status='Complete').join(User,
+                                     WorkOrder.RSC_ID==User.UCID).add_columns(
+                                     WorkOrder.ID, WorkOrder.RSC_ID, User.first_name,
+                                     User.last_name, WorkOrder.title, WorkOrder.submit_date,
+                                     WorkOrder.no_samples, WorkOrder.status).order_by(
+                                     WorkOrder.submit_date.desc()).all()
 	return render_template('cmrf/all_requests.html',
 						   title='Completed', requests=requests)
 
-@cmrf.route('/all-cancelled-requests')
+@cmrf.route('/all-cancel-requests')
 @login_required
 @all_r_required
-def all_cancelled_requests():
+def all_cancel_requests():
 	requests = WorkOrder.query.filter_by(
-					status='Cancelled').order_by(
+					status='Cancel').order_by(
 					WorkOrder.submit_date.desc())
 	return render_template('cmrf/all_requests.html',
 						   title='Cancelled', requests=requests)

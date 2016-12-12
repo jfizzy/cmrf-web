@@ -10,17 +10,26 @@
   </div>
 </div>
 <div class="container">
-  <div class="table-responsive">
+    <h6>Filter by Status:</h6>
+    <br>
+    <a class="btn" href="{{url_for('cmrf.all_requests')}}">All</a>
+    <a class="btn btn-primary" href="{{url_for('cmrf.all_active_requests')}}">In Progress</a>
+    <a class="btn btn-warning" href="{{url_for('cmrf.all_pending_requests')}}">Pending Approval</a>
+    <a class="btn btn-danger" href="{{url_for('cmrf.all_cancel_requests')}}">Cancelled</a>
+    <a class="btn btn-success" href="{{url_for('cmrf.all_complete_requests')}}">Complete</a>
+    <br>
+    <div class="table-responsive">
     <table id="all_req_table" class="table table-hover cell-border">
       <thead class="thead-inverse">
         <tr>
-          <th>Request ID</th>
+          <th>ID</th>
           <th>Submitter UCID</th>
           <th>Submitter Name</th>
           <th>Title</th>
           <th>Date Submitted</th>
           <th>Samples</th>
           <th>Status</th>
+          <th>Link</th>
         </tr>
       </thead>
       <tbody>
@@ -39,12 +48,14 @@
           {% endif %}
           {% endif %}
             <td>{{request.ID}}</td>
-            <td><a href="{{ url_for('cmrf.all_requests') }}">{{request.RSC_ID}}</a></td>
-            <td><a href="{{ url_for('cmrf.all_requests') }}">{{request.first_name}} {{request.last_name}}</a></td>
+            <td><a href="{{ url_for('auth.adm_account_details', id=request.RSC_ID) }}">
+                {{request.RSC_ID}}</a></td>
+            <td>{{request.first_name}} {{request.last_name}}</td>
             <td>{% if request.title|length > 17 %}{{request.title[:15]+'...'}}{% else %}{{request.title}}{% endif %}</td>
             <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
             <td>{{request.no_samples}}</td>
             <td>{% if request.status == 'Pending Approval' %}<span class="glyphicon glyphicon-warning-sign">{% else %}{% if request.status == 'Complete' %}<span class="glyphicon glyphicon-ok">{% else %}{% if request.status == 'In Progress' %}<span class="glyphicon glyphicon-time">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}{% endif %}{% endif %}</span> {{request.status}}</td>
+            <td><a href="{{url_for('cmrf.request', id=request.ID)}}">View</a></td>
           </tr>
         {% endfor %}
       </tbody>

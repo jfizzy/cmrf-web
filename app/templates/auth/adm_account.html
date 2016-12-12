@@ -8,27 +8,39 @@
         <h1>Account Details</h1>
     </div>
     <br>
-    <div class="col-md-4">
-        <h4>
-            UCID: {{selected_user.id}}
-            <br>
-            First Name: {{selected_user.first_name}}
-            <br>
-            Last Name: {{selected_user.last_name}}
-            <br>
-            Email: {{selected_user.email}}
-            <br>
-            Email Confirmed: {{selected_user.email_conf}}
-            <br>
-            Phone Number:
-            {% if selected_user.phone %}
-            {{selected_user.phone}}
-            {% else %}
-            Nothing on file.
-            {% endif %}
-            <br><br>
-            Account Options:
-        </h4>
+    <div class="account-info">
+        <div class="row">
+            <div class="col-md-3"><h3>UCID:</h3></div> <div class="col-md-2"><p>{{selected_user.id}}</p></div>
+        </div>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><h3>First Name:</h3></div> <div class="col-md-2"><p>{{selected_user.first_name}}</p></div>
+        </div>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><h3>Last Name:</h3></div> <div class="col-md-2"><p>{{selected_user.last_name}}</p></div>
+        </div>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><h3>Email:</h3></div> <div class="col-md-2"><p>{{selected_user.email}}</p></div>
+        </div>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-3"><h3>Phone Number:</h3></div>
+            
+            <div class="col-md-2"><p>{% if selected_user.phone %}
+                {{selected_user.phone}}
+                {% else %}
+                Nothing on file.
+                {% endif %}</p></div>
+        </div>
+        <hr>
+        <br><br>
+        <h3>Account Options:</h3><br><br>
         <a href="{{url_for('auth.adm_change_account_details', id=selected_user.id)}}" class="btn btn-danger">Make Changes</a>
     </div>
 </div>
