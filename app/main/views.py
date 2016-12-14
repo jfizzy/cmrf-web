@@ -24,7 +24,7 @@ def people():
             'pic': '../static/assets/IMG_4804.JPG',
             'name': 'Dr. Ian Lewis',
             'title': 'Principal Investigator',
-            'caption': 'Assistant Professor, AIHS Chair in Translational Health - Metabolomics. Let us fill this space, naw mean?',
+            'caption': 'Assistant Professor, AIHS Chair in Translational Health - Metabolomics. Dr.Lewis identifies and develops research objectives.',
             'dept': 'BIO-442, Department of Biological Sciences',
             'school': 'University of Calgary',
             'address': '2500 University Drive NW',
@@ -35,7 +35,7 @@ def people():
             'emailaddress': 'ian.lewis2@ucalgary.ca'
         },
         {
-            'pic': '../static/assets/placeholder.png',
+            'pic': '../static/assets/Andrew_S.jpg',
             'name': 'Dr. Andrew Stopford',
             'title': 'Staff',
             'caption': 'Facility Director/Instrumentation Specialist',
@@ -55,7 +55,7 @@ def people():
             'pic': '../static/assets/IMG_4807.JPG',
             'name': 'Dr. Vishaldeep Sidhu',
             'title': 'Staff',
-            'caption': 'Lewis Research Group Laboratory Manager. It would be cool if we could get more info maybe?',
+            'caption': 'Lewis Research Group Laboratory Manager. Responsible for all aspects of the lab, including equipment, software, and documentation.',
             'dept': 'BIO-442, Department of Biological Sciences',
             'school': 'University of Calgary',
             'address': '2500 University Drive NW',
@@ -70,37 +70,37 @@ def people():
             'pic': '../static/assets/IMG_5194.JPG',
             'name': 'Ryan Groves',
             'title': 'Staff',
-            'caption': 'Awaiting Description. For now I\'ll just say he\'s a swell guy!'
+            'caption': 'As a scientific labratory staff member, Ryanin is involved in a variety of labratory-based-investigations.'
         },
         {
-            'pic': '../static/assets/placeholder.png',
+            'pic': '../static/assets/Matthias_K.jpg',
             'name': 'Dr. Matthias Klein',
             'title': 'Graduate Student',
-            'caption': 'Facility Director/Instrumentation Specialist'
+            'caption': 'Performs a variety of administrative tasks including preparation of Power Point presentation, data entry and analysis.'
         },
         {
             'pic': '../static/assets/IMG_4806.JPG',
             'name': 'Travis Bingeman',
             'title': 'Graduate Student',
-            'caption': 'Awaiting Description. For now I\'ll just say he\'s a swell guy!'
+            'caption': 'Facility Director/Instrumentation Specialist. Facilitates projects in an office with other students.'
         },
         {
             'pic': '../static/assets/IMG_4811.JPG',
             'name': 'Michelle Chang',
             'title': 'Graduate Student',
-            'caption': 'Say something, I\'m giving up on you.'
+            'caption': 'Provides assistance with event planning including supervision of undergraduate student workers.'
         },
         {
-            'pic': '../static/assets/placeholder.png',
+            'pic': '../static/assets/Hassan_H.jpg',
             'name': 'Hassan Hazari',
             'title': 'Graduate Student',
-            'caption': 'Say something, I\'m giving up on you.'
+            'caption': 'Responsible for configuration and managment of instruments in the lab used for metabolic research testing.'
         },
         {
-            'pic': '../static/assets/placeholder.png',
+            'pic': '../static/assets/Kurt_E.jpg',
             'name': 'Kurt Ebeling',
             'title': 'Undergraduate Student',
-            'caption': 'Say something, I\'m giving up on you.'
+            'caption': 'Preforms routine tasks in the research lab, without constant supervision.'
         },
         {
             'pic': '../static/assets/placeholder.png',
