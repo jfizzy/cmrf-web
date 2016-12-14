@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
-from ..decorators import admin_required, all_r_required, view_r_required, make_r_required
+from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required
 from ..models import WorkOrder, User, Permission, FundingAccount
 from . import cmrf
 from .. import db
@@ -18,6 +18,16 @@ def requests():
 					RSC_ID=current_user.UCID).order_by(
 					WorkOrder.submit_date.desc())
 	return render_template('cmrf/user_requests.html', requests=requests)
+
+@cmrf.route('/adm-requests/<int:id>')
+@login_required
+@all_r_required
+@user_acc_required
+def adm_requests(id):
+    requests = WorkOrder.query.filter_by(
+                    RSC_ID=id).order_by(
+                    WorkOrder.submit_date.desc())
+    return render_template('cmrf/adm_requests.html', requests=requests)
 
 @cmrf.route('/request/<int:id>', methods=['GET'])
 @login_required
@@ -56,6 +66,58 @@ def make_request():
 	else:
 		return render_template('cmrf/make_request.html', errors=form.errors.items(), form=form)
 
+@cmrf.route('/edit-request/<int:id>', methods=['GET', 'POST'])
+@login_required
+@user_acc_required
+def edit_request(id):
+    wo = WorkOrder.query.get_or_404(id)
+    userfa = FundingAccount.query.filter_by(RSC_ID=current_user.id).first()
+    form = RequestForm(fa=userfa, wo=wo)
+    if form.validate_on_submit():
+        fa = FundingAccount(int(form.funding_acc_num.data), form.funding_acc_type.data, current_user.id, form.funding_acc_other.data)
+        if userfa is not None:
+            userfa.acc_no = fa.acc_no
+            userfa.acc_type = fa.acc_type
+            userfa.acc_other = fa.acc_other
+            db.session.add(userfa)
+        else:
+            db.session.add(fa)
+        wo.title = form.title.data
+        wo.no_samples = form.no_samples.data
+        wo.desc = form.desc.data
+        wo.tm = form.desc.data
+        wo.assistance = form.assistance.data
+        if 0 in form.tm.data:
+            wo.tm_ccm = True
+        if 1 in form.tm.data:
+            wo.tm_pep = True
+        if 2 in form.tm.data:
+            wo.tm_fa = True
+        if 3 in form.tm.data:
+            wo.tm_aa = True
+        if 4 in form.tm.data:
+            wo.tm_oth = True
+            wo.tm_oth_txt = form.other_tm.data
+
+        if 0 in form.ri.data:
+            wo.ri_qehf = True
+        if 1 in form.ri.data:
+            wo.ri_qeb = True
+        if 2 in form.ri.data:
+            wo.ri_tsq = True
+        if 3 in form.ri.data:
+            wo.ri_unk = True
+        db.session.add(wo)
+        db.session.commit()
+        flash('Changes Saved.')
+        return redirect(url_for('cmrf.adm_requests', id=wo.RSC_ID))
+    form.title.data = wo.title
+    form.no_samples.data = wo.no_samples
+    form.desc.data = wo.desc
+    form.funding_acc_num.data = userfa.acc_no
+    form.funding_acc_other.data = userfa.acc_other
+    form.assistance.data = wo.assistance
+    return render_template("cmrf/edit_request.html", id=wo.RSC_ID, form=form)
 
 @cmrf.route('/all-requests')
 @login_required

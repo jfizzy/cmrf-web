@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
-from ..decorators import admin_required
+from ..decorators import admin_required, user_acc_required
 from . import auth
 from .. import db
 from ..models import User, Role
@@ -174,7 +174,7 @@ def change_account_details():
 
 @auth.route('/change-account/<int:id>', methods=['GET','POST'])
 @login_required
-@admin_required
+@user_acc_required
 def adm_change_account_details(id):
     user = User.query.get_or_404(id)
     form = ChangeAccountDetailsAdminForm(user=user)
@@ -200,3 +200,10 @@ def adm_change_account_details(id):
     form.role.data = user.role_id
     form.phone.data = user.phone
     return render_template("auth/adm_change_account.html", form=form, selected_user=user)
+
+@auth.route('/all-accounts', methods=['GET'])
+@login_required
+@user_acc_required
+def all_accounts():
+    users = User.query.all()
+    return render_template("auth/adm_all_accounts.html", users=users)

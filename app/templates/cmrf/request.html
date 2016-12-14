@@ -6,21 +6,41 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1>Request</h1><h3>{{request.title}}
-        {% if current_user.is_r_privileged() %} - ID: {{request.ID}}{% endif %}</h3>
+      <h1>Request</h1>
+      <div class="well">
+      <h3>{% if current_user.is_r_privileged() %}ID: {{request.ID}}{% endif %} - {{request.title}}</h3>
       <br>
       <h3>Submitted by: {{owner.first_name}} {{owner.last_name}} - UCID:
           {% if current_user.is_u_privileged() %}
           <a href="{{url_for('auth.adm_account_details', id=owner.UCID)}}">
           {{owner.UCID}}</a>
           {% else %}<a href="{{url_for('auth.account_details')}}">{{owner.UCID}}</a>{% endif %}</h3>
+      </div>
+      <br>
+      <div class="well">
+      <div class="container">
+          <h4>Current Status:
+      {% if request.status == 'Pending Approval' %}
+      <div class="text-warning">
+      {% else %}
+      {% if request.status == 'Complete' %}
+      <div class="text-success">
+      {% else %}
+      {% if request.status == 'In Progress' %}
+      <div class="text-primary">
+      {% else %}
+      <div class="text-danger">
+      {% endif %}
+      {% endif %}
+      {% endif %}
+      {{request.status}}</div></h4>
       <br>
       {% if current_user.is_r_privileged() %}
-      <div class="container">
       <h6>Admin Options:</h6>
-          <a class="btn btn-primary" href="{{url_for('cmrf.requests')}}">   Edit   </a>
+          <a class="btn btn-primary" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
           <a class="btn btn-success" href="{{url_for('cmrf.requests')}}"> Approve </a>
           <a class="btn btn-danger" href="{{url_for('cmrf.requests')}}">  Cancel  </a>
+      </div>
       </div>
       <br>
       {% else %}

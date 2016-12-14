@@ -9,9 +9,6 @@
       <h1>New Request</h1>
   </div>
   <div class="col-md-4">
-      {% for error in errors %}
-      {{error}}
-      {% endfor %}
     {{ wtf.quick_form(form) }}
   </div>
 </div>
