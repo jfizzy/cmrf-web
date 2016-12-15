@@ -35,26 +35,32 @@
       {% endif %}
       {{request.status}}</div></h4>
       <br>
+      
       {% if current_user.is_r_privileged() %}
+      {% if request.status != 'Complete' %}
       <h6>Admin Options:</h6>
           <a class="btn btn-primary" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
-          <a class="btn btn-success" href="{{url_for('cmrf.requests')}}"> Approve </a>
-          <a class="btn btn-danger" href="{{url_for('cmrf.requests')}}">  Cancel  </a>
+          <a class="btn btn-success" href="{{url_for('cmrf.approve_request', id=request.ID)}}"> Approve </a>
+          <a class="btn btn-danger" href="{{url_for('cmrf.cancel_request', id=request.ID)}}">  Cancel  </a>
+          <br>
+          <a class="btn btn-warning" href="{{url_for('cmrf.make_report', id=request.ID)}}"> Make Report </a>
       </div>
       </div>
       <br>
       {% else %}
+      <a class="btn btn-success" href="{{url_for('cmrf.report', id=request.RPT_ID)}}"> View Report</a>
       
+      {% endif %}
       {% endif %}
     </div>
     <div class="panel-content">
       <br>
       <ul>
-        <li>Title: <p class="text-primary">{{request.title}}</p></li>
+        <li>Title: <p>{{request.title}}</p></li>
         <br>
-        <li>Submission Date: <p class="text-primary">{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</p></li>
+        <li>Submission Date: <p>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</p></li>
         <br>
-        <li>Number of Samples: <p class="text-primary">{{request.no_samples}}</p></li>
+        <li>Number of Samples: <p>{{request.no_samples}}</p></li>
         <br>
         <li>Current Status:
           {% if request.status == 'Pending Approval' %}
@@ -72,10 +78,10 @@
           {% endif %}
           {{request.status}}</p></li>
         <br>
-        <li>Description: <br><p class="text-primary">{{request.desc}}</p></li>
+        <li>Description: <br><p>{{request.desc}}</p></li>
         <br>
         <li>Required Instruments:
-          <p class="text-primary">
+          <p>
             <ul>
               {% if request.ri_unk %}Unknown{% else %}
               <li>QEHF: {{request.ri_qehf}}</li>
@@ -102,7 +108,6 @@
         <li>
           <p>{% if request.assistance %}Technician's assistance is required.{% else %}No assistance required.{% endif %}</p>
         </li>
-        <!--Link to report here eventually-->
       </ul>
     </div>
   </div>

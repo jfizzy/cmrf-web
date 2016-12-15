@@ -55,6 +55,12 @@ class RequestForm(Form):
 
 	submit = SubmitField("Submit")
 
+class ReportForm(Form):
+    balance = StringField('Balance For Request ($):', validators=[Required(), Length(2,20), Regexp('^[0-9]*$', 0, 'Must be an Integer')])
+    desc = StringField('Notes', validators=[Required(), Length(0, 200)], widget=TextArea())
+    file_loc = StringField('File Location (Results)', validators=[Optional()])
+
+    submit = SubmitField("Submit")
 
 class AdminChangeRequest(Form):
     title = StringField('Title', validators=[Required(), Length(6, 64)])

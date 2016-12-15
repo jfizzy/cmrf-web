@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - Request{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>Report</h1>
+            <div class="well">
+                <h3>{% if current_user.is_r_privileged() %}ID: {{report.ID}}{% endif %}</h3>
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="well">
+            <p>Dated: {{report.date.strftime('%a %b %d %Y %I:%M:%S %p')}}</p>
+            <br>
+            <p>Balance: {{report.balance}}</p>
+            <br>
+            <p>Notes: {{report.desc}}</p>
+            <br>
+            <p>File Location: {{report.file_loc}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

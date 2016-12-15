@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}{{super()}} - Sumbit Report{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="page-header">
+        <h1>New Report</h1>
+        <br>
+        <h4>Request {{request.ID}} - {{request.title}}</h4>
+        <br>
+        <h4>Status: {{request.status}}</h4>
+    </div>
+    <div class="col-md-4">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+{% endblock %}
