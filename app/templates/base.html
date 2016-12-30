@@ -41,7 +41,6 @@ lang="en"
          <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='assets/uofclogo.png') }}"></a>
 		 </div>
 
-		 <!--Navbar links-->
 		<div class="navbar-collapse collapse" id="navbar">
 			<ul class="nav navbar-nav">
 				<li>
@@ -96,7 +95,7 @@ lang="en"
                                 {% if current_user.can(Permission.USER_ACC) %}
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-header">Admin Tools</li>
-                                    <li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
+                                    <li><a href="{{ url_for('auth.all_accounts') }}">All User Accounts</a></li>
                                 {% endif %}
 						</ul>
 				</li>
@@ -124,9 +123,7 @@ lang="en"
     {% endfor %}
     </div>
 
-<!-- TEMPLATE CONTENT -->
     	{% block page_content %}{% endblock %}
-<!--******************-->
 
 		<div class="container-fluid hidden-xs">
 			<div class="row">
@@ -140,8 +137,6 @@ lang="en"
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
-<!-- Script to Activate the Carousel -->
-<!-- Datatables js script -->
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
 		$.extend( true, $.fn.dataTable.defaults, {
@@ -159,7 +154,6 @@ lang="en"
         interval: 5000 //changes the speed
     })
 </script>
-<!-- script to open popup window -->
 <script>
 	function myFunction(name) {
 		var popup = document.getElementById(name);

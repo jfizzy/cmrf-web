@@ -1,24 +1,43 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, g, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_httpauth import HTTPBasicAuth
 from ..decorators import admin_required, user_acc_required
 from . import auth
 from .. import db
-from ..models import User, Role
+from ..models import User, Role, AnonymousUser
 from ..email import send_email
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
     PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, ChangeAccountDetailsForm,\
     ChangeAccountDetailsAdminForm
+
+httpauth = HTTPBasicAuth()
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is not None and user.verify_password(form.password.data):
+        if user is not None and h_verify_password(user.email, form.password.data):
             login_user(user, form.remember_me.data)
             return redirect(url_for('cmrf.index'))
         flash('Invalid email or password.')
     return render_template('auth/login.html', form=form)
+
+@httpauth.verify_password
+def h_verify_password(email_or_token, password):
+    if email_or_token == '':
+        g.current_user = AnonymousUser()
+        return True
+    if password == '':
+        g.current_user = User.verify_auth_token(email_or_token)
+        g.token_used = True
+        return g.current_user is not None
+    user = User.query.filter_by(email = email_or_token).first()
+    if not user:
+        return False
+    g.current_user = user
+    g.token_used = False
+    return user.verify_password(password)
 
 @auth.route('/logout')
 @login_required
