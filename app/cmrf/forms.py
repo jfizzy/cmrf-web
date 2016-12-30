@@ -24,10 +24,10 @@ class RequestForm(Form):
 	desc = StringField('Description', validators=[Required(), Length(0, 200)], widget=TextArea())
 	no_samples = SelectField('Number of Samples', \
 							 validators=[Required()], \
-							 choices=[(100,'100'),(200,'200'),(300,'300'), \
-								      (400,'400'),(500,'500'),(600,'600'), \
-									  (700,'700'),(800,'800'),(900,'900'), \
-									  (1000,'1000')], coerce=int)
+							 choices=[(1,'1'),(5,'5'),(10,'10'), \
+								      (15,'15'),(20,'20'),(25,'25'), \
+									  (50,'50'),(75,'75'),(100,'100'), \
+									  (200,'200')], coerce=int)
 	tm = SelectMultipleField('Target Metabolites (Select all that apply)', \
 							 choices=[(0, 'Central Carbon Metabolism'), \
 							 		  (1,'Peptides'), (2, 'Fatty Acids'), \

@@ -53,8 +53,16 @@ lang="en"
 				<li>
 					<a href="{{ url_for('main.inst') }}">Instruments</a>
 				</li>
-				<li>
-					<a href="{{ url_for('main.research') }}">Research</a>
+				<li class="dropdown" id="acc-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('main.research') }}">Analytics</a></li>
+                            <li><a href="{{ url_for('main.research') }}">Malaria</a></li>
+                            <li><a href="{{ url_for('main.research') }}">Hospital Acquired Infections</a></li>
+                            <li><a href="{{ url_for('main.research') }}">Opportunistic Pathogens</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ url_for('main.research') }}">Publications</a></li>
+                        </ul>
 				</li>
 				{% if current_user.is_authenticated %}
 					<li class="dropdown" id="acc-dropdown">
@@ -85,6 +93,11 @@ lang="en"
 								<li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
 								<li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
 								<li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                                {% if current_user.can(Permission.USER_ACC) %}
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">Admin Tools</li>
+                                    <li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
+                                {% endif %}
 						</ul>
 				</li>
 				{% else %}
