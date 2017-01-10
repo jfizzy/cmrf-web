@@ -42,16 +42,16 @@ class UserModelTestCase(unittest.TestCase):
         db.session.add(u)
         db.session.commit()
         token = u.generate_confirmation_token()
-        self.assertTrue(u.confirm(token))
+        self.assertTrue(u.confirm_email(token))
 
     def test_invalid_confirmation_token(self):
         u1 = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
-        u2 = User(password='dog')
+        u2 = User(UCID=11111111, first_name='Someone', last_name='Else', password='dog', email='someoneelse@example.com')
         db.session.add(u1)
         db.session.add(u2)
         db.session.commit()
         token = u1.generate_confirmation_token()
-        self.assertFalse(u2.confirm(token))
+        self.assertFalse(u2.confirm_email(token))
 
     def test_expired_confirmation_token(self):
         u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
@@ -59,7 +59,7 @@ class UserModelTestCase(unittest.TestCase):
         db.session.commit()
         token = u.generate_confirmation_token(expiration=1)
         time.sleep(2)
-        self.assertFalse(u.confirm(token))
+        self.assertFalse(u.confirm_email(token))
 
     def test_valid_reset_token(self):
         u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='someone@example.com')
@@ -109,9 +109,9 @@ class UserModelTestCase(unittest.TestCase):
 
     def test_roles_and_permissions(self):
         u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='john@example.com')
-        self.assertTrue(u.can(Permission.MAKEREQUEST))
+        self.assertTrue(u.can(Permission.ALL_R))
         self.assertFalse(u.can(Permission.ADMINISTER))
 
     def test_anonymous_user(self):
         u = AnonymousUser()
-        self.assertFalse(u.can(Permission.MAKEREQUEST))
+        self.assertFalse(u.can(Permission.MAKE_R))
