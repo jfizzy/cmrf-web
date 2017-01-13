@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}{{super()}} - Instruments{% endblock %}
+{% block title %}{{super()}} - Facilities{% endblock %}
 
 {% block page_content %}
   <div id="instruments">
@@ -11,16 +11,20 @@
             <div class="readable">
                 <div class="col-md-9 col-sm-9">
                     <h1 class="head-main">
-                      Instruments
+                      Facilities
                      </h1>
                     <span class="head-sub-main">
-                      Metabolomic Research Lab
+                      Lewis Research Group
                     </span>
                   </div>
               </div>
           </div>
      </div>
    </div>
+    <div style="text-align: center;">
+        <span class="glyphicon glyphicon-circle-arrow-down" style="font-size:4em; padding-top: 8px;"></span>
+    </div>
+    <hr>
 
      <div class="album text-muted">
       <div class="container">
@@ -31,16 +35,16 @@
                            <img class="img-responsive" src="../static/assets/inst_eg1.jpg" alt="">
                        </a>
                        <h3>
-                           <u>Instrument One </u>
+                           <u>Mass Spectrometry </u>
                        </h3>
-                       <p>This incubator is an enclosed apparatus providing a controlled environment for the test samples.</p>
+                       <p>This is a description of this facility</p>
                    </div>
                    <div class="col-md-6 portfolio-item">
                        <a href="{{url_for('main.view_image', image = 'inst_eg2.jpg')}}">
                            <img class="img-responsive" src="../static/assets/inst_eg2.jpg" alt="">
                        </a>
                        <h3>
-                           <u>Instrument Two</u>
+                           <u>Prokaryotic Lab </u>
                        </h3>
                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
                    </div>
@@ -55,7 +59,7 @@
                            <img class="img-responsive" src="../static/assets/inst_eg3.jpg" alt="">
                        </a>
                        <h3>
-                           <u>Instrument Three</u>
+                           <u>Eukaryotic Lab </u>
                        </h3>
                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
                    </div>
@@ -64,7 +68,7 @@
                            <img class="img-responsive" src="../static/assets/inst_eg4.jpg" alt="">
                        </a>
                        <h3>
-                           <u>Instrument Four</u>
+                           <u>Nuclear Magnetic Resonance (NMR) </u>
                        </h3>
                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
                    </div>

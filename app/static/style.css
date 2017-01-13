@@ -429,12 +429,12 @@ footer {
 
 #instruments {
 	position: relative;
-    background-image: url("../static/assets/inst.jpg");
+    background-image: url("../static/assets/f_main.jpg");
 	background-repeat: no-repeat;
 	background-position: center 0;
 	background-size: cover;
 	background-attachment: fixed;
-	min-height:650px;
+	min-height:800px;
 }
 
 #using_inst {

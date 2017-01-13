@@ -90,10 +90,9 @@ def team():
     ]
     return render_template("team.html", posts=posts)
 
-@main.route('/instruments')
-@main.route('/inst')
-def inst():
-    return render_template('inst.html')
+@main.route('/facilities')
+def facilities():
+    return render_template('facilities.html')
 
 @main.route('/research')
 def research():
