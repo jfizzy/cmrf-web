@@ -5,7 +5,7 @@ from ..email import send_email
 from . import main
 from .forms import NameForm
 from pathlib import Path
-import os
+from flask_sqlalchemy import get_debug_queries
 
 
 @main.route('/')
@@ -17,11 +17,11 @@ def index():
 def home():
     return redirect('/')
 
-@main.route('/people')
-def people():
+@main.route('/team')
+def team():
     posts = [
         {
-            'pic': '../static/assets/IMG_4804.JPG',
+            'pic': '../static/assets/s_ian_lewis.jpg',
             'name': 'Dr. Ian Lewis',
             'title': 'Principal Investigator',
             'caption': 'Assistant Professor, AIHS Chair in Translational Health - Metabolomics. Dr.Lewis identifies and develops research objectives.',
@@ -35,28 +35,11 @@ def people():
             'emailaddress': 'ian.lewis2@ucalgary.ca'
         },
         {
-            'pic': '../static/assets/Andrew_S.jpg',
-            'name': 'Dr. Andrew Stopford',
-            'title': 'Staff',
-            'caption': 'Facility Director/Instrumentation Specialist',
-            'dept': 'BIO-442, Department of Biological Sciences',
-            'school': 'University of Calgary',
-            'address': '2500 University Drive NW',
-            'city': 'Calgary, Alberta, Canada',
-            'postal': 'T2N 1N4',
-            'tel': '+1 (403) 220-6242',
-            'fax': '+1 (403) 210-9460',
-            'email': 'Dr. Andrew Stopford',
-            'emailaddress': 'andrew.stopford@ucalgary.ca',
-            'email2': 'CMRF',
-            'emailaddress2': 'omics@ucalgary.ca'
-        },
-        {
-            'pic': '../static/assets/IMG_4807.JPG',
+            'pic': '../static/assets/s_vishaldeep_sidhu.jpg',
             'name': 'Dr. Vishaldeep Sidhu',
             'title': 'Staff',
             'caption': 'Lewis Research Group Laboratory Manager. Responsible for all aspects of the lab, including equipment, software, and documentation.',
-            'dept': 'BIO-442, Department of Biological Sciences',
+            'dept': 'BIO-497, Department of Biological Sciences',
             'school': 'University of Calgary',
             'address': '2500 University Drive NW',
             'city': 'Calgary, Alberta, Canada',
@@ -67,55 +50,45 @@ def people():
             'emailaddress': 'vishaldeep.sidhu@ucalgary.ca'
         },
         {
-            'pic': '../static/assets/IMG_5194.JPG',
+            'pic': '../static/assets/s_ryan_groves.jpg',
             'name': 'Ryan Groves',
-            'title': 'Staff',
-            'caption': 'As a scientific labratory staff member, Ryanin is involved in a variety of labratory-based-investigations.'
+            'title': 'Staff'
         },
         {
-            'pic': '../static/assets/Matthias_K.jpg',
-            'name': 'Dr. Matthias Klein',
-            'title': 'Graduate Student',
-            'caption': 'Performs a variety of administrative tasks including preparation of Power Point presentation, data entry and analysis.'
+            'pic': '../static/assets/placeholder.jpg',
+            'name': 'Dr. Dominique Bihan',
+            'title': 'Staff'
         },
         {
-            'pic': '../static/assets/IMG_4806.JPG',
+            'pic': '../static/assets/s_travis_bingeman.jpg',
             'name': 'Travis Bingeman',
             'title': 'Graduate Student',
-            'caption': 'Facility Director/Instrumentation Specialist. Facilitates projects in an office with other students.'
+            'caption': 'Facility Director/Instrumentation Specialist'
         },
         {
-            'pic': '../static/assets/IMG_4811.JPG',
+            'pic': '../static/assets/s_michelle_chang.jpg',
             'name': 'Michelle Chang',
             'title': 'Graduate Student',
-            'caption': 'Provides assistance with event planning including supervision of undergraduate student workers.'
+            'caption': 'Provides assistance with event planning including supervision of undergraduate students'
         },
         {
-            'pic': '../static/assets/Hassan_H.jpg',
-            'name': 'Hassan Hazari',
+            'pic': '../static/assets/placeholder.jpg',
+            'name': 'Dr. Matthias Klein',
             'title': 'Graduate Student',
-            'caption': 'Responsible for configuration and managment of instruments in the lab used for metabolic research testing.'
+            'caption': 'Performs a variety of administrative tasks including data entry and analysis.'
         },
         {
-            'pic': '../static/assets/Kurt_E.jpg',
-            'name': 'Kurt Ebeling',
-            'title': 'Undergraduate Student',
-            'caption': 'Preforms routine tasks in the research lab, without constant supervision.'
+            'pic': '../static/assets/placeholder.jpg',
+            'name': 'Dr. Thomas Rydzak',
+            'title': 'Graduate Student'
         },
         {
-            'pic': '../static/assets/placeholder.png',
+            'pic': '../static/assets/placeholder.jpg',
             'name': 'Austin Nguyen',
-            'title': 'Undergraduate Student',
-            'caption': 'Say something, I\'m giving up on you.'
-        },
-        {
-            'pic': '../static/assets/placeholder.png',
-            'name': 'Selena Osman',
-            'title': 'Undergraduate Student',
-            'caption': 'Say something, I\'m giving up on you.'
+            'title': 'Graduate Student'
         }
     ]
-    return render_template("people.html", posts=posts)
+    return render_template("team.html", posts=posts)
 
 @main.route('/instruments')
 @main.route('/inst')
@@ -126,12 +99,41 @@ def inst():
 def research():
     return render_template('research.html')
 
+@main.route('/analytics')
+def analytics():
+    return render_template('analytics.html')
+
+@main.route('/malaria')
+def malaria():
+    return render_template('malaria.html')
+
+@main.route('/hainfections')
+def hainfections():
+    return render_template('hainfections.html')
+
+@main.route('/publications')
+def publications():
+    return render_template('publications.html')
+
 @main.route('/view-image/<image>')
 def view_image(image):
-    # print(os.getcwd())
-    # image_file = Path("/static/assets/placeholder.png")
-    # print(image_file)
-    # if image_file.is_file():
     return render_template('view_image.html', image=image)
-    # else:
-    #     return abort(404)
+
+@main.route('/shutdown')
+def server_shutdown():
+    if not current_app.testing:
+        abort(404)
+    shutdown = request.environ.get('werkzeug.server.shutdown')
+    if not shutdown:
+        abort(500)
+    shutdown()
+    return 'Shutting down...'
+
+@main.after_app_request
+def after_request(response):
+    for query in get_debug_queries():
+        if query.duration >= current_app.config['CMRF_SLOW_DB_QUERY_TIME']:
+            current_app.logger.warning(
+                'Slow query: %s\nParameters: %s\nDuration: %fs\nContext: %s\n' %
+                                       (query.statement, query.parameters, query.duration, query.context))
+    return response

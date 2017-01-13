@@ -63,7 +63,7 @@ nav {
 	min-height: 50px;
 	z-index: 99;
 }
-/*667292*/
+
 .navbar-inverse {
 	background: #E30C00; /* Old browsers */
 	background: -moz-linear-gradient(top, #E30C00 0%, #b31217 100%); /* FF3.6-15 */
@@ -576,3 +576,7 @@ footer {
 .account-info .row {
     padding-top: 0;
 }
+
+/***************************************/
+/* RESEARCH TOPIC STYLES */
+/***************************************/

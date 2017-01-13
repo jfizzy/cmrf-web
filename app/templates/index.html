@@ -16,13 +16,16 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
         <div class="item active">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/team.jpg') }}');"></div>
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/rockies_peak.jpg') }}');"></div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/rockies_lake.jpg') }}');"></div>
         </div>
         <div class="item">
             <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/facility.jpg') }}');"></div>
         </div>
         <div class="item">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/peace_bridge_skyline.jpg') }}');"></div>
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/i_5_team.jpg') }}');"></div>
         </div>
     </div>
 
@@ -37,8 +40,6 @@
 
 <!-- Page Content -->
 <div class="container">
-
-    <!-- Marketing Icons Section -->
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
@@ -52,7 +53,7 @@
                 </div>
                 <div class="panel-body">
                     <p>The Lewis Research Group is a team of researchers, scholars, students, alumni, and others interested in research to investigates the connection between metabolic adaptation and virulence of human pathogens. </p>
-                    <a href="{{ url_for('main.people') }}" class="btn btn-primary">Learn More</a>
+                    <a href="{{ url_for('main.team') }}" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
@@ -73,30 +74,130 @@
                     <h4><i class="fa fa-fw fa-compass"></i> Location</h4>
                 </div>
                 <div class="panel-body">
-                    <p>The Lewis Research lab is located in University of Calgary. Calgary is situated at the confluence of the Bow River and the Elbow River in the south of the province, in an area of foothills and prairie, about 80 km (50 mi) east of the front ranges of the Canadian Rockies.</p>
+                    <p class="lead">Calgary, Alberta, Canada</p>
                     <a href="{{ url_for('main.index') }}" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- /.row -->
-
-    <!--Promotional Video Section-->
+    
     <div class="row">
-      <div class="panel panel-default">
-        <div class="panel-heading">Calgary Metabolomic Research Facility</div>
-        <div class="panel-body hidden-md hidden-sm hidden-xs">
-          <p>Take a look inside the facility!</p>
+        
+        <div class="col-lg-12">
+            <h3 class="page-header">Location <small>Calgary, Alberta, Canada</small></h3>
         </div>
         <div class="well">
-          <a class="btn btn-link hidden-lg" href="https://www.youtube.com/embed/rsJAqO9vmqM" target="_blank">Take a look inside the facility! (Video Link)</a>
+            <p>The Lewis Research Group is located at the University of Calgary.
+            Calgary is the heart of the new west, situated at the confluence of the Bow river and the Elbow river in southern Alberta, surrounded by foothills and prairie. About 80 km (50 mi) west of the city, you find youself in the front ranges of the Canadian Rockies!</p>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_sunrise.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_rockies_sunrise.jpg') }}" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_waterfall.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_rockies_waterfall.jpg') }}" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_canoe.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_rockies_canoe.jpg') }}" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_rafting.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_rockies_rafting.jpg') }}" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'calgary_dt.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_calgary_dt.jpg') }}" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'calgary_bow.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_calgary_bow.jpg') }}" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_peak.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_rockies_peak.jpg') }}" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_rafting.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_rockies_lake.jpg') }}" alt="">
+                    </a>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+
+<hr>
+
+<div class="container">
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3>Calgary Metabolomic Research Facility</h3></div>
+        <div class="well">
+            <div class="panel-body hidden-md hidden-sm hidden-xs">
+              <p class="lead">Take a look inside the facility!</p>
+            </div>
+        
+          <a class="lead btn btn-link hidden-lg" href="https://www.youtube.com/embed/rsJAqO9vmqM" target="_blank">Take a look inside the facility! (Video Link)</a>
           <div class="center-block embed-responsive embed-responsive-16by9 hidden-md hidden-sm hidden-xs" style="margin: auto">
             <iframe width="1128" height="640" src="https://www.youtube.com/embed/rsJAqO9vmqM?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
+        
+        <div class="col-lg-12">
+            <h1 class="page-header">Facility Gallery</h1>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+        </div>
       </div>
     </div>
-
-</div>
-<!-- /.container -->
+   </div>
 {% endblock %}

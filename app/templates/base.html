@@ -38,7 +38,7 @@ lang="en"
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
          </button>
-         <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='assets/uofclogo.png') }}"></a>
+         <a href="http://www.ucalgary.ca"><img src="{{ url_for('static', filename='assets/uofclogo.png') }}"></a>
 		 </div>
 
 		<div class="navbar-collapse collapse" id="navbar">
@@ -47,20 +47,16 @@ lang="en"
 					<a href="{{ url_for('main.index') }}">Home</a>
 				</li>
 				<li>
-					<a href="{{ url_for('main.people') }}">People</a>
-				</li>
-				<li>
-					<a href="{{ url_for('main.inst') }}">Instruments</a>
+					<a href="{{ url_for('main.inst') }}">Facilities</a>
 				</li>
 				<li class="dropdown" id="acc-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('main.research') }}">Analytics</a></li>
-                            <li><a href="{{ url_for('main.research') }}">Malaria</a></li>
-                            <li><a href="{{ url_for('main.research') }}">Hospital Acquired Infections</a></li>
-                            <li><a href="{{ url_for('main.research') }}">Opportunistic Pathogens</a></li>
+                            <li><a href="{{ url_for('main.analytics') }}">Analytics</a></li>
+                            <li><a href="{{ url_for('main.malaria') }}">Malaria</a></li>
+                            <li><a href="{{ url_for('main.hainfections') }}">Hospital Acquired Infections</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ url_for('main.research') }}">Publications</a></li>
+                            <li><a href="{{ url_for('main.publications') }}">Publications</a></li>
                         </ul>
 				</li>
 				{% if current_user.is_authenticated %}
@@ -86,9 +82,9 @@ lang="en"
 			<ul class="nav navbar-nav navbar-right">
 				{% if current_user.is_authenticated %}
 				<li class="dropdown" id="acc-dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.first_name}} {{current_user.last_name}}<b class="caret"></b></a>
+          <a id="userop" href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.first_name}} {{current_user.last_name}}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-								<li><a href="{{ url_for('auth.account_details') }}">Account Details</a></li>
+								<li><a id="accdet" href="{{ url_for('auth.account_details') }}">Account Details</a></li>
 								<li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
 								<li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
 								<li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
@@ -121,17 +117,17 @@ lang="en"
         {{ message }}
     </div>
     {% endfor %}
+</div>
+
+{% block page_content %}{% endblock %}
+
+<div class="container-fluid hidden-xs">
+    <div class="row">
+        <div class="span12" id="footer">
+            2016 Lewis Research Group © | All Rights Reserved
+        </div>
     </div>
-
-    	{% block page_content %}{% endblock %}
-
-		<div class="container-fluid hidden-xs">
-			<div class="row">
-				<div class="span12" id="footer">
-	    			2016 Lewis Research Group © | All Rights Reserved
-				</div>
-			</div>
-		</div>
+</div>
 {% endblock %}
 
 {% block scripts %}

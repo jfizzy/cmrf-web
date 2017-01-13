@@ -108,8 +108,10 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue(u2.email == 'susan@example.org')
 
     def test_roles_and_permissions(self):
-        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='john@example.com')
-        self.assertTrue(u.can(Permission.ALL_R))
+        u = User(UCID=00000000, first_name='Someone', last_name='Special', password='cat', email='john@example.com', role_id=3, email_conf=True)
+        db.session.add(u)
+        db.session.commit()
+        self.assertTrue(u.can(Permission.MAKE_R))
         self.assertFalse(u.can(Permission.ADMINISTER))
 
     def test_anonymous_user(self):
