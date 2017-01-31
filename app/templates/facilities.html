@@ -4,70 +4,94 @@
 {% block title %}{{super()}} - Facilities{% endblock %}
 
 {% block page_content %}
-<!-- Page Content -->
+<header id="faci-carousel" class="carousel slide">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#faci-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#faci-carousel" data-slide-to="1"></li>
+        <li data-target="#faci-carousel" data-slide-to="2"></li>
+        <li data-target="#faci-carousel" data-slide-to="3"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/c_faci_inst.jpg') }}');"></div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/facility.jpg') }}');"></div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/c_prokaryote_lab.png') }}');"></div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/c_eukaryote_lab.jpg') }}');"></div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#faci-carousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#faci-carousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</header>
+
 <div class="container">
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Facilities</h1>
-            <h1>
-                <small>Lewis Research Group</small>
-            </h1>
+            <h1 class="page-header">Facilities <small>Lewis Research Group</small></h1>
         </div>
-    </div>
-    <!-- /.row -->
-    <div class="row">
-        <div class="col-md-12">
-            <img class="img-responsive" src="../static/assets/f_main.jpg" alt="">
+        <div class="well">
+            <p>Short description of the facilites as a whole.</p>
         </div>
     </div>
     <!-- /.row -->
 </div>
 <!--/.container-->
-<div class="hidden-sm hidden-xs" style="text-align: center;">
-    <span class="glyphicon glyphicon-circle-arrow-down" style="font-size:4em; padding-top: 8px;"></span>
-</div>
 <hr>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'mass_spec.jpg')}}">
-                <img class="img" src="../static/assets/ft_mass_spec.jpg" alt="">
+            <a class="thumbnail" href="{{url_for('cmrf.index')}}">
+                <img class="img" src="{{ url_for('static', filename='assets/ft_mass_spec.jpg') }}" alt="">
             </a>
             <div class="caption">
-                    <a class="h4" href="{{url_for('cmrf.index')}}">Mass Spectrometry Facility (CMRF)<a>
-                    <p>This is a description of this facility</p>
-                </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'prokaryote_lab.png')}}">
-                <img class="img" src="../static/assets/ft_prok_lab.jpg" alt="">
-            </a>
-                <div class="caption">
-                    <h4>Prokaryotic Lab</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'eukaryote_lab.jpg')}}">
-                <img class="img" src="../static/assets/ft_euk_lab.jpg" alt="">
-            </a>
-                <div class="caption">
-                    <h4>Eukaryotic Lab</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = '600nmr.jpg')}}">
-                <img class="img" src="../static/assets/ft_600nmr.jpg" alt="">
-            </a>
-                <div class="caption">
-                    <h4>Nuclear Magnetic Resonance (NMR)</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-        </div>
-    </div>
-</div>
-<!-- /.container -->
-{% endblock %}
+                <a class="h4" href="{{url_for('cmrf.index')}}">Mass Spectrometry Facility (CMRF)<a>
+                        <p>This is a description of this facility</p>
+                        </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
+                            <a class="thumbnail" href="{{url_for('main.view_image', image = 'prokaryote_lab.png')}}">
+                                <img class="img" src="../static/assets/ft_prok_lab.jpg" alt="">
+                            </a>
+                            <div class="caption">
+                                <h4>Prokaryotic Lab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
+                            <a class="thumbnail" href="{{url_for('main.view_image', image = 'eukaryote_lab.jpg')}}">
+                                <img class="img" src="../static/assets/ft_euk_lab.jpg" alt="">
+                            </a>
+                            <div class="caption">
+                                <h4>Eukaryotic Lab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
+                            <a class="thumbnail" href="{{url_for('main.view_image', image = '600nmr.jpg')}}">
+                                <img class="img" src="../static/assets/ft_600nmr.jpg" alt="">
+                            </a>
+                            <div class="caption">
+                                <h4>Nuclear Magnetic Resonance (NMR)</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        <!-- /.container -->
+                        {% endblock %}
