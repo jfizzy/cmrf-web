@@ -25,6 +25,9 @@ __pycache__
 # Installer logs
 pip-log.txt
 
+# Other log files
+geckodriver.log
+
 # Unit test / coverage reports
 tmp
 .coverage

@@ -7,7 +7,7 @@
 <header class="carousel slide">
     <div class="carousel-inner">
         <div class="item active">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/prokaryote_lab.png') }}'); height: 383.5px;"></div>
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/r_hainfections.png') }}'); height: 383.5px;"></div>
         </div>
     </div>
 </header>
@@ -21,9 +21,9 @@
     
     <div class="row">
         <div class="col-lg-12">
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et molestiae similique eligendi reiciendis sunt distinctio odit? Quia, neque, ipsa, adipisci quisquam ullam deserunt accusantium illo iste exercitationem nemo voluptates asperiores.</p>
+            <p class="lead">One in every 25 patients who goes to the hospital will acquire an infection. 8,000 people die each year from these infections in Canada. Finding new ways to detect and control dangerous bacteria is both a Canadian and global health priority. Our research team is investigating the role that metabolism plays in the outcome of these infections. Up to 40% of Pseudomonas aeruginosa and Staphylococcus aureas strains isolated from human infections show evidence for metabolic adaptation. Although these metabolic changes are associated with clinical adaptation, it is still unclear how much of an impact these adaptations have on human morbidity and mortality. Understanding this link is of critical importance because significant metabolic/morbidity connections could be readily translated into a diagnostic tool for personalized antibiotic therapy. Recently, we launched a research program to systematically interrogate the relationship between metabolic changes, fitness of pathogens, clinical presentation, and mortality from common opportunistic pathogens.</p>
             <p>
-            <a class="btn btn-default btn-lg" href="#">Publications &raquo;</a>
+            <a class="btn btn-default btn-lg" href="{{url_for('main.publications')}}">Publications &raquo;</a>
             </p>
         </div>
     </div>

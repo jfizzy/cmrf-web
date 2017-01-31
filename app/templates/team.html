@@ -4,54 +4,55 @@
 {% block title %}{{super()}} - Team{% endblock %}
 
 {% block page_content %}
+
 <div class="container">
     <div class="row">
         <h1 class="well">Team</h1>
     </div>
 </div>
 <div class="container-full-background">
-	<div class="container">
-		<div class="row">
-			{% for post in posts %}
-				<div class="col-md-4 col-sm-6 col-xs-12">
-					<div class="thumbnail thumbnail4">
-						<div class="crop-img">
-							<img src="{{ post.pic }}" alt="">
-						</div>
-						<div class="caption">
-							<h> {{ post.name }} </h>
-							<h1> {{ post.title }} </h1>
-                            {% if post.caption %}
-							<p> 
-								{{ post.caption }}
-							</p>
+    <div class="container">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="thumbnail thumbnail4">
+                    <div class="crop-img">
+                        <img src="{{ post.pic }}" alt="">
+                    </div>
+                    <div class="caption">
+                        <h> {{ post.name }} </h>
+                        <h1> {{ post.title }} </h1>
+                        {% if post.caption %}
+                        <p> 
+                            {{ post.caption }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    {% if post.school == 'University of Calgary' %}
+                    <div class="popup" onclick="myFunction('{{ post.name }}')">Contact...
+                        <div class="popuptext" id="{{ post.name }}"> 
+                            {{ post.dept }} <br>
+                            {{ post.school }}<br>
+                            {{ post.address }}<br>
+                            {{ post.city }}<br>
+                            {{ post.postal }}<br>
+                            Tel: {{ post.tel }}<br>
+                            {% if post.name == 'Dr. Vishaldeep Sidhu' %}
+                            Fax: {{ post.fax }} <br>
                             {% endif %}
-						</div>
-						{% if post.school == 'University of Calgary' %}
-							<div class="popup" onclick="myFunction('{{ post.name }}')">Contact...
-								<div class="popuptext" id="{{ post.name }}"> 
-									{{ post.dept }} <br>
-									{{ post.school }}<br>
-									{{ post.address }}<br>
-									{{ post.city }}<br>
-									{{ post.postal }}<br>
-									Tel: {{ post.tel }}<br>
-									{% if post.name == 'Dr. Vishaldeep Sidhu' %}
-										Fax: {{ post.fax }} <br>
-									{% endif %}
-									e-mail: <a href"mailto:{{ post.emailaddress }}">{{ post.emailaddress }}</a><br>
-								</div>
-							</div>
-						{% endif %}
-					</div>
-				</div>
-                {% if loop.index0 == 2 or loop.index0 == 5 %}
+                            e-mail: <a href"mailto:{{ post.emailaddress }}">{{ post.emailaddress }}</a><br>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if loop.index0 == 2 or loop.index0 == 5 %}
         </div>
         <hr>
         <div class="row">
-                {% endif %}
-			{% endfor %}
+            {% endif %}
+            {% endfor %}
         </div>
-	</div>
+    </div>
 </div>
 {% endblock %}

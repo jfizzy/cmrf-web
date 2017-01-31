@@ -94,6 +94,10 @@ def team():
 def facilities():
     return render_template('facilities.html')
 
+@main.route('/location')
+def location():
+	return render_template('location.html')
+	
 @main.route('/research')
 def research():
     return render_template('research.html')

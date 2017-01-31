@@ -397,7 +397,6 @@ footer {
 
 .card > img {
   margin-bottom: .75rem;
-
 }
 
 .card-text {
@@ -425,26 +424,6 @@ footer {
 	background-size: cover;
 	background-attachment: fixed;
 	min-height: 100%;
-}
-
-#instruments {
-	position: relative;
-    background-image: url("../static/assets/f_main.jpg");
-	background-repeat: no-repeat;
-	background-position: center 0;
-	background-size: cover;
-	background-attachment: fixed;
-	min-height:800px;
-}
-
-#using_inst {
-	position: relative;
-    background-image: url("../static/assets/using_inst.jpg");
-	background-repeat: no-repeat;
-	background-position: center 0;
-	background-size: cover;
-	background-attachment: fixed;
-	min-height:650px;
 }
 
 .crop-img2 {
