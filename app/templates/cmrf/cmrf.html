@@ -4,35 +4,130 @@
 {% block title %}{{super()}} - Home{% endblock %}
 
 {% block page_content %}
-<section class="jumbotron text-xs-center">
-	<div class="container">
-		<h1 class="jumbotron-heading text-center">CMRF</h1>
-	</div>
-</section>
-<div class="container" >
-  <div class="row">
-    <div class="backdrop"> </div>
-    <div class="readable">
-      <div class="col-md-9 col-sm-9">
-        <h1 class="head-main">
-          {% if current_user.is_authenticated %}
-          Hi {{current_user.first_name}}, Welcome to the Calgary Metabolomic Research Facility!
-          {% else %}
-          Welcome to the Calgary Metabolomic Research Facility!
-          {% endif %}
-        </h1>
-        <span class="head-sub-main">
-          {% if not known %}
-          Pleased to meet you!
-          {% else %}
-          Welcome back!
-          {% endif %}
-        </span>
-        <div class="head-last">
-          This is the Calgary Metabolomic Research Facility
+<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">CMRF
+                    <small>Calgary Metabolomic Research Facility</small>
+                </h1>
+            </div>
         </div>
-      </div>
+		
+        <div class="row">
+
+            <div class="col-md-8">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/facility.jpg') }}" alt="">
+            </div>
+
+            <div class="col-md-4">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
+						<a href="http://www.ucalgary.ca/">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_ucal.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
+						<a href="#">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_cfi.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
+						<a href="#">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_aihs.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
+						<a href="#">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_cls.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
+						<a href="#">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_nserc.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
+						<a href="#">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_thermo.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<br>
+					<p>Services Offered by the Lab</p>
+					<a style="float: bottom-right;" class="btn btn-primary" href="{{url_for('auth.register')}}">Sign Up <span class="glyphicon glyphicon-chevron-right"></span></a>
+				
+            </div>
+
+        </div>
+		
+        <div class="row">
+			<div class="col-lg-12">
+				<h3>Facility Research Focus</h3>
+				<hr>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
+			</div>
+            <div class="col-lg-12">
+                <h3 class="page-header">Instruments</h3>
+            </div>
+		</div>
+
+        <div class="row">    
+            <div class="col-md-6 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3>
+                    Process 1
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            <div class="col-md-6 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3>
+                    Process 2
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3>
+                    Process 3
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            <div class="col-md-6 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                </a>
+                <h3>
+                    Process 4
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+        </div>
+	</div>
+	
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>The Calgary Metabolomic Research Facility</h3></div>
+            <div class="well">
+                <div class="panel-body hidden-md hidden-sm hidden-xs">
+                    <p>A Tour of the Facility</p>
+                </div>
+
+                <a class="lead btn btn-link hidden-lg" href="https://www.youtube.com/embed/rsJAqO9vmqM" target="_blank">Take a Tour of the Facility (Video Link)</a>
+                <div class="center-block embed-responsive embed-responsive-16by9 hidden-md hidden-sm hidden-xs" style="margin: auto">
+                    <iframe width="1128" height="640" src="https://www.youtube.com/embed/rsJAqO9vmqM?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+	
 {% endblock %}

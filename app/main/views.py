@@ -95,6 +95,10 @@ def facilities():
 def location():
 	return render_template('location.html')
 	
+@main.route('/news')
+def news():
+	return render_template('news.html')
+	
 @main.route('/research')
 def research():
     return render_template('research.html')

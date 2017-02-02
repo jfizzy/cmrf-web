@@ -10,102 +10,101 @@ lang="en"
 {% block head %}
 {{ super() }}
 
-	{% block metas %}
-	{{super()}}
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="cmrf web">
-	{% endblock %}
+{% block metas %}
+{{super()}}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="cmrf web">
+{% endblock %}
 
-	{% block styles %}
-	{{super()}}
-	<link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-	{% endblock %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+{% endblock %}
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 {% endblock %}
 
 {% block navbar %}
 <nav class="nav navbar-inverse navbar-fixed-top" role="navigation">
-	 <div class="container">
-		 <div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-				<span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-         </button>
-         <a href="http://www.ucalgary.ca"><img src="{{ url_for('static', filename='assets/uofclogo.png') }}"></a>
-		 </div>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://www.ucalgary.ca"><img src="{{ url_for('static', filename='assets/uofclogo.png') }}"></a>
+        </div>
 
-		<div class="navbar-collapse collapse" id="navbar">
-			<ul class="nav navbar-nav">
-				<li>
-					<a href="{{ url_for('main.index') }}">Home</a>
-				</li>
-				<li>
-					<a href="{{ url_for('main.facilities') }}">Facilities</a>
-				</li>
-				<li class="dropdown" id="acc-dropdown">
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="{{ url_for('main.index') }}">Home</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('main.facilities') }}">Facilities</a>
+                </li>
+                <li class="dropdown" id="acc-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('main.analytics') }}">Analytics</a></li>
-                            <li><a href="{{ url_for('main.malaria') }}">Malaria</a></li>
-                            <li><a href="{{ url_for('main.hainfections') }}">Hospital Acquired Infections</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="{{ url_for('main.publications') }}">Publications</a></li>
-                        </ul>
-				</li>
-				{% if current_user.is_authenticated %}
-					<li class="dropdown" id="acc-dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRF<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-									<li><a href="{{ url_for('cmrf.index') }}">CMRF Home</a></li>
-									<li><a href="{{ url_for('cmrf.requests') }}">My Requests</a></li>
-									<li><a href="{{ url_for('cmrf.make_request') }}">Make Request</a></li>
-									{% if current_user.can(Permission.ALL_R) %}
-										<li role="separator" class="divider"></li>
-										<li class="dropdown-header">Admin Tools</li>
-										<li><a href="{{ url_for('cmrf.all_requests') }}">All Requests</a></li>
-									{% endif %}
-							</ul>
-					</li>
-				{% else %}
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('main.analytics') }}">Analytics</a></li>
+                        <li><a href="{{ url_for('main.malaria') }}">Malaria</a></li>
+                        <li><a href="{{ url_for('main.hainfections') }}">Hospital Acquired Infections</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url_for('main.publications') }}">Publications</a></li>
+                    </ul>
+                </li>
 				<li>
-					<a href="{{ url_for('cmrf.index') }}">CMRF</a>
+					<a href="{{ url_for('main.location') }}">Location</a>
 				</li>
-				{% endif %}
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				{% if current_user.is_authenticated %}
-				<li class="dropdown" id="acc-dropdown">
-          <a id="userop" href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.first_name}} {{current_user.last_name}}<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-								<li><a id="accdet" href="{{ url_for('auth.account_details') }}">Account Details</a></li>
-								<li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
-								<li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
-								<li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
-                                {% if current_user.can(Permission.USER_ACC) %}
-                                    <li role="separator" class="divider"></li>
-                                    <li class="dropdown-header">Admin Tools</li>
-                                    <li><a href="{{ url_for('auth.all_accounts') }}">All User Accounts</a></li>
-                                {% endif %}
-						</ul>
-				</li>
-				{% else %}
-				<li>
-					<a href="{{ url_for('auth.login') }}">Login</a>
-				</li>
-				<li>
-					<a href="{{ url_for('auth.register') }}">Register</a>
-				</li>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
+                {% if current_user.is_authenticated %}
+                <li class="dropdown" id="acc-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRF<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('cmrf.index') }}">CMRF Home</a></li>
+                        <li><a href="{{ url_for('cmrf.requests') }}">My Requests</a></li>
+                        <li><a href="{{ url_for('cmrf.make_request') }}">Make Request</a></li>
+                        {% if current_user.can(Permission.ALL_R) %}
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Admin Tools</li>
+                        <li><a href="{{ url_for('cmrf.all_requests') }}">All Requests</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li class="dropdown" id="acc-dropdown">
+                    <a id="userop" href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.first_name}} {{current_user.last_name}}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="accdet" href="{{ url_for('auth.account_details') }}">Account Details</a></li>
+                        <li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
+                        <li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                        {% if current_user.can(Permission.USER_ACC) %}
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Admin Tools</li>
+                        <li><a href="{{ url_for('auth.all_accounts') }}">All User Accounts</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{{ url_for('auth.login') }}">Login</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('auth.register') }}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </nav>
 {% endblock %}
 
@@ -124,6 +123,7 @@ lang="en"
 <div class="container-fluid hidden-xs">
     <div class="row">
         <div class="span12" id="footer">
+            {% block footer_note %}{% endblock %}
             2017 Lewis Research Group © | All Rights Reserved
         </div>
     </div>
@@ -135,15 +135,15 @@ lang="en"
 {{ moment.include_moment() }}
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
-		$.extend( true, $.fn.dataTable.defaults, {
-				"searching": true,
-				"paging":   false,
-				"order": [[ 4, "desc" ]]
-		} );
+$.extend(true, $.fn.dataTable.defaults, {
+    "searching": true,
+    "paging": false,
+    "order": [[4, "desc"]]
+});
 
-		$(document).ready(function(){
-		    $('#all_req_table').DataTable();
-		});
+$(document).ready(function () {
+    $('#all_req_table').DataTable();
+});
 </script>
 <script>
     $('.carousel').carousel({
@@ -151,9 +151,9 @@ lang="en"
     })
 </script>
 <script>
-	function myFunction(name) {
-		var popup = document.getElementById(name);
-		popup.classList.toggle('show');
-	}
+    function myFunction(name) {
+        var popup = document.getElementById(name);
+        popup.classList.toggle('show');
+    }
 </script>
 {% endblock %}

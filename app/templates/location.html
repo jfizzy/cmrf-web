@@ -10,11 +10,11 @@
 
     <!-- Heading Row -->
     <div class="row">
-        <div class="col-md-8">
-            <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/rockies_lake.jpg') }}" alt="">
+        <div class="col-md-12">
+            <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/ucal_view.jpg') }}" alt="">
         </div>
         <!-- /.col-md-8 -->
-        <div class="col-md-4">
+        <div class="col-md-12">
             <div class="well">
                 <h2>Location </h2>
                 <p>We are located at the University of Calgary. Calgary marks the confluence of the Bow river and the Elbow river in southern Alberta. About 80 km (50 mi) west of the city, you find yourself in the front ranges of the Canadian Rockies!</p>
@@ -27,7 +27,37 @@
     <div class="row">
 
         <div class="col-lg-12">
-            <h3 class="page-header">Gallery <small>Calgary and the Rockies</small></h3>
+            <h3 class="page-header"><small>Calgary, the University and the Rockies</small></h3>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="http://www.ucalgary.ca/mediacentre/files/mediacentre/aerials_011a7179_fe.jpg">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/lt_campus.jpg') }}" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="http://www.ucalgary.ca/mediacentre/files/mediacentre/foothillscampus_011a0202_f.jpg">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/lt_foothills.jpg') }}" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="http://www.ucalgary.ca/mediacentre/files/mediacentre/tfdl_011a6808final.jpg">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/lt_tfdl.jpg') }}" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="http://www.ucalgary.ca/mediacentre/files/mediacentre/cdstroyer-dst_7509bli.jpg">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/lt_taylortlc.jpg') }}" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'calgary_dt.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_calgary_dt.jpg') }}" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{url_for('main.view_image', image = 'calgary_bow.jpg')}}">
+                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_calgary_bow.jpg') }}" alt="">
+            </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6 thumb">
             <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_sunrise.jpg')}}">
@@ -50,16 +80,6 @@
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'calgary_dt.jpg')}}">
-                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_calgary_dt.jpg') }}" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'calgary_bow.jpg')}}">
-                <img class="img-responsive" src="{{ url_for('static', filename='assets/t_calgary_bow.jpg') }}" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
             <a class="thumbnail" href="{{url_for('main.view_image', image = 'rockies_peak.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/t_rockies_peak.jpg') }}" alt="">
             </a>
@@ -73,4 +93,7 @@
     <!-- /.row -->
 </div>
 
+{% endblock %}
+{% block footer_note %}
+    Some images courtesy of University of Calgary | {{super()}}
 {% endblock %}

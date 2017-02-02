@@ -119,6 +119,19 @@ nav {
     .navbar-nav>li {
         float: none;
     }
+	.navbar-nav:before {
+		background-color: white;
+    	visibility: hidden;
+    	-webkit-transform: scaleX(0);
+    	transform: scaleX(0);
+    	-webkit-transition: all 0.5s ease-in-out 0s;
+    	transition: all 0.5s ease-in-out 0s;
+	}
+	.navbar-nav:before {
+		visibility: visible;
+    	-webkit-transform: scaleX(1);
+    	transform: scaleX(1);
+	}
     .navbar-nav>li>a {
         padding-top: 10px;
         padding-bottom: 10px;

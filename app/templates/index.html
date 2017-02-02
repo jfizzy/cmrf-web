@@ -11,7 +11,6 @@
         <li data-target="#home-carousel" data-slide-to="0" class="active"></li>
         <li data-target="#home-carousel" data-slide-to="1"></li>
         <li data-target="#home-carousel" data-slide-to="2"></li>
-        <li data-target="#home-carousel" data-slide-to="3"></li>
     </ol>
 
     <!-- Wrapper for slides -->
@@ -24,9 +23,6 @@
         </div>
         <div class="item">
             <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/facility.jpg') }}');"></div>
-        </div>
-        <div class="item">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/i_5_team.jpg') }}');"></div>
         </div>
     </div>
 
@@ -90,9 +86,9 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                <small>Research Topics</small>
-            </h1>
+            <h3 class="page-header"><span class="glyphicon glyphicon-book"> </span>
+				Research Topics
+            </h3>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -101,7 +97,7 @@
                 </div>
                 <div class="panel-body">
                     <p>The Lewis laboratory specializes in unraveling complex metabolic networks using high resolution mass spectrometry...</p>
-                    <a href="{{ url_for('main.analytics') }}" class="btn btn-primary">Continue</a>
+                    <a href="{{ url_for('main.analytics') }}" class="btn btn-primary">Continue Reading</a>
                 </div>
             </div>
         </div>
@@ -112,7 +108,7 @@
                 </div>
                 <div class="panel-body">
                     <p>Malaria is thought to have killed more people throughout time than any other disease. Today, more than 500 million people...</p>
-                    <a href="{{ url_for('main.malaria') }}" class="btn btn-primary">Continue</a>
+                    <a href="{{ url_for('main.malaria') }}" class="btn btn-primary">Continue Reading</a>
                 </div>
             </div>
         </div>
@@ -123,7 +119,7 @@
                 </div>
                 <div class="panel-body">
                     <p>One in every 25 patients who goes to the hospital will acquire an infection. 8,000 people die each year from these infections in Canada...</p>
-                    <a href="{{ url_for('main.hainfections') }}" class="btn btn-primary">Continue</a>
+                    <a href="{{ url_for('main.hainfections') }}" class="btn btn-primary">Continue Reading</a>
                 </div>
             </div>
         </div>
@@ -137,7 +133,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="page-header">Facilities Gallery</h3>
+            <h3 class="page-header"><span class="glyphicon glyphicon-picture"> </span> Gallery</h3>
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
@@ -186,20 +182,32 @@
 <hr>
 
 <div class="container">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3>The Calgary Metabolomic Research Facility</h3></div>
-            <div class="well">
-                <div class="panel-body hidden-md hidden-sm hidden-xs">
-                    <p>Take a look inside the facility</p>
+	<div class="row">
+	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 thumb">
+						<a href="http://www.ucalgary.ca/">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_ucal.jpg') }}" alt="">
+                		</a>
                 </div>
-
-                <a class="lead btn btn-link hidden-lg" href="https://www.youtube.com/embed/rsJAqO9vmqM" target="_blank">Take a look inside the facility! (Video Link)</a>
-                <div class="center-block embed-responsive embed-responsive-16by9 hidden-md hidden-sm hidden-xs" style="margin: auto">
-                    <iframe width="1128" height="640" src="https://www.youtube.com/embed/rsJAqO9vmqM?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 thumb">						<a href="https://www.innovation.ca/">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_cfi.jpg') }}" alt="">
+                		</a>
                 </div>
-            </div>
-        </div>
-    </div>
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 thumb">						<a href="http://www.aihealthsolutions.ca/">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_aihs.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 thumb">						<a href="http://www.calgarylabservices.com/">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_cls.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 thumb">						<a href="http://www.nserc-crsng.gc.ca/">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_nserc.jpg') }}" alt="">
+                		</a>
+                	</div>
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 thumb">						<a href="http://www.thermofisher.com/ca/en/home.html">
+                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_thermo.jpg') }}" alt="">
+                		</a>
+					</div>
+	</div>
 </div>
 {% endblock %}
