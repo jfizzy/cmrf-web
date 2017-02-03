@@ -61,15 +61,22 @@ class ReportForm(Form):
     file_loc = StringField('File Location (Results)', validators=[Optional()])
 
     submit = SubmitField("Submit")
+	
+class NewsItemForm(Form):
+	title = StringField('Title', validators=[Required(), Length(6, 64)])
+	desc = StringField('Description', validators=[Required(), Length(0, 200)], widget=TextArea())
+	url = StringField('URL', validators=[Optional()])
+	
+	submit = SubmitField("Publish")
 
 class AdminChangeRequest(Form):
     title = StringField('Title', validators=[Required(), Length(6, 64)])
     desc = StringField('Description', validators=[Required(), Length(0, 200)], widget=TextArea())
     no_samples = SelectField('Number of Samples', \
                                  validators=[Required()], \
-                                 choices=[(100,'100'),(200,'200'),(300,'300'), \
-                                          (400,'400'),(500,'500'),(600,'600'), \
-                                          (700,'700'),(800,'800'),(900,'900'), \
+                                 choices=[(10,'10'),(25,'25'),(50,'50'), \
+                                          (75,'75'),(100,'100'),(150,'150'), \
+                                          (200,'200'),(250,'250'),(500,'500'), \
                                           (1000,'1000')], coerce=int)
     tm = SelectMultipleField('Target Metabolites (Select all that apply)', \
                                                                    choices=[(0, 'Central Carbon Metabolism'), \

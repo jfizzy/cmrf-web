@@ -1,10 +1,10 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
-from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required
-from ..models import WorkOrder, User, Permission, FundingAccount, Report
+from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required
+from ..models import WorkOrder, User, Permission, FundingAccount, Report, NewsItem
 from . import cmrf
 from .. import db
-from .forms import RequestForm, ReportForm
+from .forms import RequestForm, ReportForm, NewsItemForm
 
 @cmrf.route('/', methods=['GET'])
 def index():
@@ -232,6 +232,18 @@ def report(id):
         if not current_user.can(Permission.ALL_R):
             abort(404)
     return render_template("cmrf/report.html", report=rp)
+	
+@cmrf.route('/add-news-item', methods=['GET', 'POST'])
+@login_required
+@add_article_required
+def add_news_item():
+	form = NewsItemForm()
+	if form.validate_on_submit():
+		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)
+		db.session.add(news)
+		db.session.commit()
+		return redirect(url_for('main.news'))
+	return render_template("cmrf/add_news_item.html", errors=form.errors.items(), form=form)	
 
 
 

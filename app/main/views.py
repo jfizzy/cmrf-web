@@ -1,6 +1,6 @@
 from flask import render_template, session, redirect, url_for, current_app, abort
 from .. import db
-from ..models import User
+from ..models import User, NewsItem
 from ..email import send_email
 from . import main
 from .forms import NameForm
@@ -97,7 +97,9 @@ def location():
 	
 @main.route('/news')
 def news():
-	return render_template('news.html')
+	newsitems = NewsItem.query.order_by(NewsItem.submit_date.desc()).all()
+	
+	return render_template('news.html', newsitems=newsitems)
 	
 @main.route('/research')
 def research():

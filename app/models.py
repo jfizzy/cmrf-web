@@ -169,6 +169,9 @@ class User(UserMixin, db.Model):
     def is_r_privileged(self):
         return self.can(Permission.ALL_R)
 
+	def is_n_privileged(self):
+		return self.can(Permission.ADD_ARTICLE)
+		
     def is_u_privileged(self):
         return self.can(Permission.USER_ACC)
 
@@ -318,6 +321,29 @@ class WorkOrder(db.Model):
     def is_approved(self):
         return (status is 'Approved' and self.ADM_ID is not None)
 
+class NewsItem(db.Model):
+	
+	__tablename__ = "NEWS_ITEM"
+	
+	ID = db.Column(db.Integer, db.Sequence('news_item_seq', start=0, increment=1),
+		primary_key=True, nullable=False)
+	UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
+	title = db.Column(db.String(64), nullable=False)
+	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
+	desc = db.Column(db.Text, nullable=True)
+	url = db.Column(db.Text, nullable=True)
+	
+	def __init__(self, ucid, title, desc=None, url=None):
+		self.UCID = ucid
+		self.title = title
+		if desc is not None:
+			self.desc = desc
+		if url is not None:
+			self.url = url
+	
+	def __repr__(self):
+		return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
+		
 class LogEntry(db.Model):
 
     __tablename__ = "LOG_ENTRY"
