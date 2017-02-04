@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
-from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required
+from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required, editing_required
 from ..models import WorkOrder, User, Permission, FundingAccount, Report, NewsItem
 from . import cmrf
 from .. import db
@@ -219,7 +219,7 @@ def make_report(id):
         wo.status = 'Complete'
         db.session.add(wo)
         db.session.commit()
-        flash('Report Submitted Successfully.')
+        flash('Report Submitted Successfully')
         return redirect(url_for('cmrf.request', id=wo.ID))
     return render_template("cmrf/make_report.html", form=form, request=wo)
 
@@ -242,8 +242,34 @@ def add_news_item():
 		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)
 		db.session.add(news)
 		db.session.commit()
+		flash('News Item Added Successfully')
 		return redirect(url_for('main.news'))
 	return render_template("cmrf/add_news_item.html", errors=form.errors.items(), form=form)	
+	
+@cmrf.route('/edit-news-item/<int:id>', methods=['GET', 'POST'])
+@login_required
+@editing_required
+def edit_news_item(id):
+	ni = NewsItem.query.get_or_404(id)
+	form = NewsItemForm(ni=ni)
+	if form.validate_on_submit():
+		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)
+		db.session.add(news)
+		db.session.commit()
+		flash('Changes Saved Successfully')
+		return redirect(url_for('main.news'))
+	form.title.data = ni.title
+	form.desc.data = ni.desc
+	form.url.data = ni.url
+	return render_template("cmrf/edit_news_item.html", errors=form.errors.items(), form=form, ni=ni)
+	
+@cmrf.route('/all_news_items', methods=['GET'])
+@login_required
+@editing_required
+def all_news_items():
+	newsitems = NewsItem.query.join(User, NewsItem.UCID==User.UCID).all()
+	return render_template("cmrf/all_news_items.html", newsitems=newsitems)
+	
 
 
 

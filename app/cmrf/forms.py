@@ -67,7 +67,7 @@ class NewsItemForm(Form):
 	desc = StringField('Description', validators=[Required(), Length(0, 200)], widget=TextArea())
 	url = StringField('URL', validators=[Optional()])
 	
-	submit = SubmitField("Publish")
+	submit = SubmitField("Submit")
 
 class AdminChangeRequest(Form):
     title = StringField('Title', validators=[Required(), Length(6, 64)])
