@@ -4,7 +4,7 @@ from flask_httpauth import HTTPBasicAuth
 from ..decorators import admin_required, user_acc_required
 from . import auth
 from .. import db
-from ..models import User, Role, AnonymousUser
+from ..models import User, Role, AnonymousUser, WorkOrder
 from ..email import send_email
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
     PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, ChangeAccountDetailsForm,\
@@ -226,3 +226,16 @@ def adm_change_account_details(id):
 def all_accounts():
     users = User.query.all()
     return render_template("auth/adm_all_accounts.html", users=users)
+	
+@auth.route('/delete-account/<int:id>', methods=['GET'])
+@login_required
+@admin_required
+def delete_account(id):
+	user = User.query.get_or_404(id)
+	requests = WorkOrder.query.filter_by(RSC_ID=id).all()
+	for request in requests:
+		db.session.delete(request)
+	db.session.delete(user)
+	db.session.commit()
+	flash('User Deleted as well as their Requests.')
+	return redirect(url_for('auth.all_accounts'))

@@ -14,21 +14,23 @@
             </h1>
 			{% if current_user.can(Permission.EDITING) %}
 				<a class="btn btn-warning" href="{{url_for('cmrf.all_news_items')}}">Admin News Table <span class="glyphicon glyphicon-pencil"></span></a>
+				<hr>
 			{% endif %}
         </div>
     </div>
-    <div class="row">
+</div>
+
+<div class="container">
+	<div class="list-group">
 	{% for newsitem in newsitems %}
-        <div class="well col-md-12">
-            <h3>{{newsitem.title}} <small>Submitted: {{newsitem.submit_date}}</small></h3>
-			<br>
-            <p class="lead">{{newsitem.desc}}</p>
-            <a class="btn btn-primary" href="{{newsitem.url}}">External Link <span class="glyphicon glyphicon-chevron-right"></span></a>
-        </div>
-    </div>
-    
-    <hr>
+        <a href="{{newsitem.url}}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{newsitem.title}} <small>Submitted: {{newsitem.submit_date}}</small></h5>
+            </div>
+            <p class="mb-1">{{newsitem.desc}}</p>
+        </a>
 	{% endfor %}
+	</div>
 </div>
 
 {% endblock %}

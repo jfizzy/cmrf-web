@@ -40,6 +40,19 @@ def request(id):
 	user = User.query.filter_by(UCID=request.RSC_ID).first()
 	return render_template('cmrf/request.html', request=request, owner=user)
 
+@cmrf.route('/delete-request/<int:id>')
+@login_required
+@admin_required
+def delete_request(id):
+	wo = WorkOrder.query.get_or_404(id)
+	rp = Report.query.filter_by(ID=wo.RPT_ID).first()
+	if rp is not None:
+		db.session.delete(rp)
+	db.session.delete(wo)
+	db.session.commit()
+	flash('Request Deleted as well as any Associated Reports.')
+	return redirect(url_for('cmrf.all_requests'))
+	
 @cmrf.route('/make-request', methods=['GET', 'POST'])
 @login_required
 @make_r_required
@@ -233,6 +246,20 @@ def report(id):
             abort(404)
     return render_template("cmrf/report.html", report=rp)
 	
+@cmrf.route('/delete-report/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def delete_report(id):
+	rp = Report.query.get_or_404(id)
+	wo = WorkOrder.query.filter_by(RPT_ID=rp.ID).first()
+	wo.RPT_ID = None
+	wo.status = 'Cancelled'
+	db.session.add(wo)
+	db.session.delete(rp)
+	db.session.commit()
+	flash('Report Deleted')
+	return redirect(url_for('cmrf.all_requests'))
+	
 @cmrf.route('/add-news-item', methods=['GET', 'POST'])
 @login_required
 @add_article_required
@@ -253,8 +280,10 @@ def edit_news_item(id):
 	ni = NewsItem.query.get_or_404(id)
 	form = NewsItemForm(ni=ni)
 	if form.validate_on_submit():
-		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)
-		db.session.add(news)
+		ni.title = form.title.data
+		ni.desc = form.desc.data
+		ni.url = form.url.data
+		db.session.add(ni)
 		db.session.commit()
 		flash('Changes Saved Successfully')
 		return redirect(url_for('main.news'))
@@ -263,6 +292,16 @@ def edit_news_item(id):
 	form.url.data = ni.url
 	return render_template("cmrf/edit_news_item.html", errors=form.errors.items(), form=form, ni=ni)
 	
+@cmrf.route('/delete-news-item/<int:id>', methods=['GET'])
+@login_required
+@editing_required
+def delete_news_item(id):
+	ni = NewsItem.query.get_or_404(id)
+	db.session.delete(ni)
+	db.session.commit()
+	flash('News Item Deleted.')
+	return redirect(url_for('cmrf.all_news_items'))
+
 @cmrf.route('/all_news_items', methods=['GET'])
 @login_required
 @editing_required

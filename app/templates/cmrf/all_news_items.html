@@ -16,7 +16,6 @@
         <tr>
           <th>ID</th>
           <th>Submitter UCID</th>
-          <th>Submitter Name</th>
           <th>Title</th>
           <th>Date Submitted</th>
           <th>URL</th>
@@ -31,13 +30,12 @@
             <td>{{newsitem.ID}}</td>
             <td><a href="{{ url_for('auth.adm_account_details', id=newsitem.UCID) }}">
                 {{newsitem.UCID}}</a></td>
-            <td>{{newsitem.first_name}} {{newsitem.last_name}}</td>
             <td>{% if newsitem.title|length > 17 %}{{newsitem.title[:15]+'...'}}{% else %}{{newsitem.title}}{% endif %}</td>
             <td>{{newsitem.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
             <td>{% if newsitem.url|length > 17 %}{{newsitem.url[:15]+'...'}}{% else %}{{newsitem.url}}{% endif %}</td>
             <td>{% if newsitem.desc|length > 17 %}{{newsitem.desc[:15]+'...'}}{% else %}{{newsitem.desc}}{% endif %}</td>
-			<td><a href="{{url_for('cmrf.edit_news_item', id=newsitem.ID)}}">Edit</a></td>
-            <td><a href="{{url_for('main.news')}}">Delete</a></td>
+			<td><a class="text-warning" href="{{url_for('cmrf.edit_news_item', id=newsitem.ID)}}">Edit</a></td>
+            <td><a class="text-danger" href="{{url_for('cmrf.delete_news_item', id=newsitem.ID)}}">Delete</a></td>
           </tr>
         {% endfor %}
       </tbody>

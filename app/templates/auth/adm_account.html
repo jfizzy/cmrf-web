@@ -41,7 +41,10 @@
         <hr>
         <br><br>
         <h3>Account Options:</h3><br><br>
-        <a href="{{url_for('auth.adm_change_account_details', id=selected_user.id)}}" class="btn btn-danger">Make Changes</a>
+        <a href="{{url_for('auth.adm_change_account_details', id=selected_user.id)}}" class="btn btn-warning">Make Changes</a>
+		{% if current_user.can(Permission.ADMINISTER) %}
+		<a href="{{url_for('auth.delete_account', id=selected_user.id)}}" class="btn btn-danger">Delete Account</a>
+		{% endif %}
     </div>
 </div>
 {% endblock %}

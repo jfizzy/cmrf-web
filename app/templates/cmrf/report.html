@@ -9,6 +9,10 @@
             <h1>Report</h1>
             <div class="well">
                 <h3>{% if current_user.is_r_privileged() %}ID: {{report.ID}}{% endif %}</h3>
+				{% if current_user.can(Permission.ADMINISTER) %}
+				<br>
+				<a class="btn btn-danger" href="{{url_for('cmrf.delete_report', id=report.ID)}}"> Delete Report</a>
+				{% endif %}
             </div>
         </div>
         <div class="panel-content">

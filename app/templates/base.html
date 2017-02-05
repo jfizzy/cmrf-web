@@ -63,9 +63,6 @@ lang="en"
 					<a href="{{ url_for('main.news') }}">News</a>
 				</li>
 				{% endif %}
-				<li>
-					<a href="{{ url_for('main.location') }}">Location</a>
-				</li>
 				<li class="dropdown" id="acc-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -76,6 +73,9 @@ lang="en"
                         <li><a href="{{ url_for('main.publications') }}">Publications</a></li>
                     </ul>
                 </li>
+				<li>
+					<a href="{{ url_for('main.location') }}">Location</a>
+				</li>
                 {% if current_user.is_authenticated %}
                 <li class="dropdown" id="acc-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRF<b class="caret"></b></a>

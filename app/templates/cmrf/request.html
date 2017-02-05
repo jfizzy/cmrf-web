@@ -37,20 +37,27 @@
       <br>
       
       {% if current_user.is_r_privileged() %}
-      {% if request.status != 'Complete' %}
+      
       <h6>Admin Options:</h6>
-          <a class="btn btn-primary" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
+	  	  {% if request.status != 'Complete' %}
+          <a class="btn btn-warning" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
+		  |
           <a class="btn btn-success" href="{{url_for('cmrf.approve_request', id=request.ID)}}"> Approve </a>
+		  |
           <a class="btn btn-danger" href="{{url_for('cmrf.cancel_request', id=request.ID)}}">  Cancel  </a>
-          <br>
-          <a class="btn btn-warning" href="{{url_for('cmrf.make_report', id=request.ID)}}"> Make Report </a>
+		  |
+          <a class="btn btn-primary" href="{{url_for('cmrf.make_report', id=request.ID)}}"> Make Report </a>
+		  |
+		  {% endif %}
+		  {% if current_user.can(Permission.ADMINISTER) %}
+	  	  <a class="btn btn-danger" href="{{url_for('cmrf.delete_request', id=request.ID)}}"> Delete Request</a>
+	  	  {% endif %}
       </div>
       </div>
       <br>
       {% else %}
       <a class="btn btn-success" href="{{url_for('cmrf.report', id=request.RPT_ID)}}"> View Report</a>
       
-      {% endif %}
       {% endif %}
     </div>
     <div class="panel-content">
@@ -111,5 +118,7 @@
       </ul>
     </div>
   </div>
+</div>
+</div>
 </div>
 {% endblock %}
