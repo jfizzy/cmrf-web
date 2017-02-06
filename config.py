@@ -4,20 +4,23 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'Km!Z6376=wq&X17qcPrJdMrk#xA?Z!ff2=g+a&_$'
+	SSL_DISABLE = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-
+	SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_RECORD_QUERIES = True
+	
     MAIL_SERVER = 'just65.justhost.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'no-reply@lewisresearchgroup.org'
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'hj3*+XX_3JkWr8Gzw?CfA#*a&udD2j'
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     CMRF_MAIL_SUBJECT_PREFIX = '[CMRF]'
     CMRF_MAIL_SENDER = 'CMRF Admin <no-reply@lewisresearchgroup.org>'
     CMRF_ADMIN = os.environ.get('CMRF_ADMIN')
-    SQLALCHEMY_RECORD_QUERIES = True
+	
     CMRF_SLOW_DB_QUERY_TIME = 0.5
-    SSL_DISABLE = True
+    
 
     @staticmethod
     def init_app(app):
@@ -27,8 +30,7 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'mysql+pymysql://root:helloworld@localhost/cmrf'
-
+        'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 
 class TestingConfig(Config):
     TESTING = True
@@ -63,13 +65,16 @@ class ProductionConfig(Config):
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 
-class DeploymentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-
 class HerokuConfig(ProductionConfig):
+	SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
+	
 	@classmethod
 	def init_app(cls, app):
 		ProductionConfig.init_app(app)
+		
+		# handle proxy server headers
+		from werkzeug.contrib.fixers import ProxyFix
+		app.wsgi_app = ProxyFix(app.wsgi_app)
 		
 		# log to stderr
 		import logging
@@ -77,17 +82,12 @@ class HerokuConfig(ProductionConfig):
 		file_handler = StreamHandler()
 		file_handler.setLevel(logging.WARNING)
 		app.logger.addHandler(file_handler)
-		
-		# handle proxy server headers
-		from werkzeug.contrib.fixers import ProxyFix
-		app.wsgi_app = ProxyFix(app.wsgi_app)
-		
-	SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
 	
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
 	'heroku': HerokuConfig,
+	
     'default': DevelopmentConfig
 }

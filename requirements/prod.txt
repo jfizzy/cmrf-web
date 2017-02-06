@@ -1,2 +1,1 @@
 -r common.txt
-PyMySQL==0.7.9
