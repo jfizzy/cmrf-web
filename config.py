@@ -39,8 +39,7 @@ class TestingConfig(Config):
     WTF_CSRF_ENABLED = False
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2" + os.environ.get('DATABASE_URL')[8:] + "?sslmode=require"
 
     @classmethod
     def init_app(cls, app):
