@@ -27,16 +27,16 @@ class Config:
         pass
 
 
-class DevelopmentConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
-
-class TestingConfig(Config):
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
-    WTF_CSRF_ENABLED = False
+#class DevelopmentConfig(Config):
+#    DEBUG = True
+ #   SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+ #       'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+#
+#class TestingConfig(Config):
+   # TESTING = True
+   # SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
+    #    'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+   # WTF_CSRF_ENABLED = False
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2" + os.environ.get('DATABASE_URL')[8:] + "?sslmode=require"
@@ -83,10 +83,10 @@ class HerokuConfig(ProductionConfig):
 		app.logger.addHandler(file_handler)
 	
 config = {
-    'development': DevelopmentConfig,
-    'testing': TestingConfig,
+    #'development': DevelopmentConfig,
+    #'testing': TestingConfig,
     'production': ProductionConfig,
 	'heroku': HerokuConfig,
 	
-    'default': DevelopmentConfig
+    'default': HerokuConfig
 }
