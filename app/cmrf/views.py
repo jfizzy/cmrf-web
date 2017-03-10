@@ -264,13 +264,18 @@ def delete_report(id):
 @login_required
 @add_article_required
 def add_news_item():
+	db.session.rollback()
 	form = NewsItemForm()
 	if form.validate_on_submit():
 		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)
 		db.session.add(news)
-		db.session.commit()
-		flash('News Item Added Successfully')
-		return redirect(url_for('main.news'))
+		try:
+			db.session.commit()
+			flash('News Item Added Successfully')
+		except:
+			db.session.rollback()
+		finally:
+			return redirect(url_for('main.news'))
 	return render_template("cmrf/add_news_item.html", errors=form.errors.items(), form=form)	
 	
 @cmrf.route('/edit-news-item/<int:id>', methods=['GET', 'POST'])
