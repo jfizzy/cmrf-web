@@ -284,9 +284,13 @@ def edit_news_item(id):
 		ni.desc = form.desc.data
 		ni.url = form.url.data
 		db.session.add(ni)
-		db.session.commit()
-		flash('Changes Saved Successfully')
-		return redirect(url_for('main.news'))
+		try:
+			db.session.commit()
+			flash('Changes Saved Successfully')
+		except:
+			db.session.rollback()
+		finally:
+			return redirect(url_for('main.news'))
 	form.title.data = ni.title
 	form.desc.data = ni.desc
 	form.url.data = ni.url
