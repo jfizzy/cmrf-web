@@ -244,7 +244,6 @@ def delete_report(id):
 @login_required
 @add_article_required
 def add_news_item():
-	db.session.rollback()
 	form = NewsItemForm()
 	if form.validate_on_submit():
 		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)

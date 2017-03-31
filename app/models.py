@@ -193,7 +193,7 @@ class Report(db.Model):
 
     __tablename__ = "REPORT"
 
-    ID = db.Column(db.Integer, db.Sequence('report_sequence', start=0, increment=1), primary_key=True, nullable=False)
+    ID = db.Column(db.Integer, db.Sequence('report_sequence', start=1, increment=1), primary_key=True, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     balance = db.Column(db.Numeric(6,2))
     desc = db.Column(db.Text, nullable=True)
@@ -217,7 +217,7 @@ class WorkOrder(db.Model):
 
     __tablename__ = "WORK_ORDER"
 
-    ID = db.Column(db.Integer, db.Sequence('work_order_seq', start=0, increment=1),
+    ID = db.Column(db.Integer, db.Sequence('work_order_seq', start=1, increment=1),
                    primary_key=True, nullable=False)
     submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
     title = db.Column(db.String(64), nullable=False)
@@ -299,7 +299,7 @@ class NewsItem(db.Model):
 	
 	__tablename__ = "NEWS_ITEM"
 	
-	ID = db.Column(db.Integer, db.Sequence('news_item_seq', start=0, increment=1),
+	ID = db.Column(db.Integer, db.Sequence('news_item_seq', start=1, increment=1),
 		primary_key=True, nullable=False)
 	UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
 	title = db.Column(db.String(64), nullable=False)

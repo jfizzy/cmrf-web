@@ -23,12 +23,17 @@
 <div class="container">
 	<div class="list-group">
 	{% for newsitem in newsitems %}
-        <a href="{{newsitem.url}}" class="list-group-item list-group-item-action flex-column align-items-start">
+		{% if newsitem.url %}
+        <a href="{{newsitem.url}}"{% else %}<div{% endif %} class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{newsitem.title}} {% if current_user.can(Permission.EDITING) %}<small>Submitted: {{newsitem.submit_date}}</small>{% endif %}</h5>
+                <h5 class="mb-1">{{newsitem.title}} {% if current_user.can(Permission.EDITING) %}<small>Submitted: {{newsitem.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</small>{% endif %}</h5>
             </div>
             <p class="mb-1">{{newsitem.desc}}</p>
+		{% if newsitem.url %}
         </a>
+		{% else %}
+		</div>
+		{% endif %}
 	{% endfor %}
 	</div>
 </div>
