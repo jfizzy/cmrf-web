@@ -1,7 +1,7 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
 from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required, editing_required
-from ..models import WorkOrder, User, Permission, FundingAccount, Report, NewsItem
+from ..models import WorkOrder, User, Permission, Report, NewsItem
 from . import cmrf
 from .. import db
 from .forms import RequestForm, ReportForm, NewsItemForm
@@ -57,17 +57,8 @@ def delete_request(id):
 @login_required
 @make_r_required
 def make_request():
-	userfa = FundingAccount.query.filter_by(RSC_ID=current_user.id).first()
 	form = RequestForm()
 	if form.validate_on_submit():
-		fa = FundingAccount(int(form.funding_acc_num.data), form.funding_acc_type.data, current_user.id, form.funding_acc_other.data)
-		if userfa is not None:
-			userfa.acc_no = fa.acc_no
-			userfa.acc_type = fa.acc_type
-			userfa.acc_other = fa.acc_other
-			db.session.add(userfa)
-		else:
-			db.session.add(fa)
 		wo = WorkOrder(title=form.title.data, no_samples=form.no_samples.data, \
 					   RSC_ID=current_user.UCID, desc=form.desc.data, \
 					   tm=form.tm.data, ri=form.ri.data, assistance=form.assistance.data)
@@ -108,17 +99,8 @@ def cancel_request(id):
 @user_acc_required
 def edit_request(id):
     wo = WorkOrder.query.get_or_404(id)
-    userfa = FundingAccount.query.filter_by(RSC_ID=current_user.id).first()
     form = RequestForm(fa=userfa, wo=wo)
     if form.validate_on_submit():
-        fa = FundingAccount(int(form.funding_acc_num.data), form.funding_acc_type.data, current_user.id, form.funding_acc_other.data)
-        if userfa is not None:
-            userfa.acc_no = fa.acc_no
-            userfa.acc_type = fa.acc_type
-            userfa.acc_other = fa.acc_other
-            db.session.add(userfa)
-        else:
-            db.session.add(fa)
         wo.title = form.title.data
         wo.no_samples = form.no_samples.data
         wo.desc = form.desc.data
@@ -151,8 +133,6 @@ def edit_request(id):
     form.title.data = wo.title
     form.no_samples.data = wo.no_samples
     form.desc.data = wo.desc
-    form.funding_acc_num.data = userfa.acc_no
-    form.funding_acc_other.data = userfa.acc_other
     form.assistance.data = wo.assistance
     return render_template("cmrf/edit_request.html", id=wo.RSC_ID, form=form)
 
@@ -269,13 +249,9 @@ def add_news_item():
 	if form.validate_on_submit():
 		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)
 		db.session.add(news)
-		try:
-			db.session.commit()
-			flash('News Item Added Successfully')
-		except:
-			db.session.rollback()
-		finally:
-			return redirect(url_for('main.news'))
+		db.session.commit()
+		flash('News Item Added Successfully')
+		return redirect(url_for('main.news'))
 	return render_template("cmrf/add_news_item.html", errors=form.errors.items(), form=form)	
 	
 @cmrf.route('/edit-news-item/<int:id>', methods=['GET', 'POST'])
@@ -289,13 +265,9 @@ def edit_news_item(id):
 		ni.desc = form.desc.data
 		ni.url = form.url.data
 		db.session.add(ni)
-		try:
-			db.session.commit()
-			flash('Changes Saved Successfully')
-		except:
-			db.session.rollback()
-		finally:
-			return redirect(url_for('main.news'))
+		db.session.commit()
+		flash('Changes Saved Successfully')
+		return redirect(url_for('main.news'))
 	form.title.data = ni.title
 	form.desc.data = ni.desc
 	form.url.data = ni.url

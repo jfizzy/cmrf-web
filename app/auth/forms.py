@@ -42,6 +42,7 @@ class RegistrationForm(Form):
 	password = PasswordField('Password', validators=[Required(), EqualTo('password_confirm',
 													 message='Passwords do not match')])
 	password_confirm = PasswordField('Confirm Password', validators=[Required()])
+	lab = StringField('Collaborators (Lab)', validators=[Required(), Length(1,64)])
 	phone = TelField('Phone Number (Optional)')
 
 	submit = SubmitField('Register')
@@ -84,6 +85,7 @@ class ChangeEmailForm(Form):
             raise ValidationError('Email already registered.')
 
 class ChangeAccountDetailsForm(Form):
+    lab = StringField('Collaborators (Lab)', validators=[Required(), Length(1,64)])
     phone = TelField('Phone Number')
     submit = SubmitField('Update')
 
@@ -98,6 +100,7 @@ class ChangeAccountDetailsAdminForm(Form):
                                              Email()])
     email_conf = BooleanField('Confirmed')
     role = SelectField('User Role', coerce=int)
+    lab = StringField('Collaborators (Lab)', validators=[Required(), Length(1,64)])
     phone = TelField('Phone Number (Optional)')
 
     submit = SubmitField('Confirm Changes')

@@ -20,7 +20,7 @@
                     <th>Email</th>
                     <th>Email Confirmed</th>
                     <th>Role</th>
-                    <th>Phone</th>
+                    <th>Lab</th>
                     <th>Date Joined</th>
                     <th>Requests</th>
                 </tr>
@@ -31,12 +31,12 @@
                     <tr class="warning">
                     {% else %}
                         {% if user.role_id == 2 %}
-                            <tr class="success">
+                            <tr class="danger">
                         {% else %}
                             {% if user.role_id == 4 %}
-                                <tr class="danger">
-                            {% else %}
                                 <tr class="active">
+                            {% else %}
+                                <tr class="success">
                             {% endif %}
                         {% endif %}
                     {% endif %}
@@ -50,15 +50,14 @@
                     {% if user.role_id == 2 %}
                     Lab Admin
                     {% else %}
-                    {% if user.role_id == 3 %}
+                    {% if user.role_id == 4 %}
                     Site Admin
                     {% else %}
                     Basic User
                     {% endif %}
                     {% endif %}
                     {% endif %}</td>
-                    <td>{% if user.phone %}{{user.phone}}
-                        {% else %}None{% endif %}</td>
+                    <td>{{user.lab}}</td>
                     <td>{{user.date_joined.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
                     <td><a href="{{ url_for('cmrf.adm_requests', id=user.UCID) }}">Requests</a></td>
                 {% endfor %}

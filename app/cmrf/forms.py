@@ -40,15 +40,6 @@ class RequestForm(Form):
 							 choices=[(0, 'QE-HF'), (1, 'QE-Basic'), \
 							 		  (2,'TSQ'), (3, 'Unknown')], \
 							 coerce=int)
-	funding_acc_num = StringField('UC Funding Account #', \
-								   validators=[Required(), \
-								   			   Length(6,20), \
-										   	   Regexp('^[0-9]*$', 0, 'Must be an Integer')])
-	funding_acc_type = RadioField(choices=[(0, 'NSERC'), (1, 'CIHR'), \
-										   (2, 'Provincial'), (3, 'Other')], \
-                                           coerce=int, default=0)
-	funding_acc_other = StringField('Other Account Type (If applicable)', \
-									validators=[Optional(), Length(4,20)])
 	assistance = RadioField('Assistance (Technician)', \
 							choices=[(0, 'Assistance Required (Technician)'), (1, 'No Assistance Required')], \
 							default=[0], coerce=int)
@@ -90,15 +81,6 @@ class AdminChangeRequest(Form):
                                                                    choices=[(0, 'QE-HF'), (1, 'QE-Basic'), \
                                                                             (2,'TSQ'), (3, 'Unknown')], \
                                                                    coerce=int)
-    funding_acc_num = StringField('UC Funding Account #', \
-                                                                        validators=[Required(), \
-                                                                                    Length(6,20), \
-                                                                                    Regexp('^[0-9]*$', 0, 'Must be an Integer')])
-    funding_acc_type = RadioField(choices=[(0, 'NSERC'), (1, 'CIHR'), \
-                                                                                 (2, 'Provincial'), (3, 'Other')], \
-                                                                        coerce=int, default=0)
-    funding_acc_other = StringField('Other Account Type (If applicable)', \
-                                                                          validators=[Optional(), Length(4,20)])
     assistance = RadioField('Assistance (Technician)', \
                                                                   choices=[(0, 'Assistance Required (Technician)'), (1, 'No Assistance Required')], \
                                                                   default=[0], coerce=int)

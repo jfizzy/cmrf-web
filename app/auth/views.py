@@ -43,13 +43,15 @@ def h_verify_password(email_or_token, password):
 @login_required
 def logout():
     logout_user()
+    flash('Successfully logged out.')
     return redirect(url_for('main.index'))
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user=User(UCID=int(form.UCID.data),first_name=form.first_name.data,last_name=form.last_name.data,password=form.password.data,email=form.email.data,phone=str(form.phone.data))
+        user=User(UCID=int(form.UCID.data),first_name=form.first_name.data,last_name=form.last_name.data,password=form.password.data,
+						email=form.email.data,lab=form.lab.data,phone=str(form.phone.data))
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
@@ -185,6 +187,7 @@ def adm_account_details(id):
 def change_account_details():
     form = ChangeAccountDetailsForm()
     if form.validate_on_submit():
+        current_user.lab = form.lab.data
         current_user.phone = form.phone.data
         db.session.add(current_user)
         flash('Your information was successfully updated.')
@@ -207,6 +210,8 @@ def adm_change_account_details(id):
         user.email = form.email.data
         user.email_conf = form.email_conf.data
         user.role = Role.query.get(form.role.data)
+        if user.lab != form.lab.data:
+            user.lab = form.lab.data
         if user.phone != form.phone.data:
             user.first_name = form.first_name.data
         db.session.add(user)
@@ -217,6 +222,7 @@ def adm_change_account_details(id):
     form.email.data = user.email
     form.email_conf.data = user.email_conf
     form.role.data = user.role_id
+    form.lab.data = user.lab
     form.phone.data = user.phone
     return render_template("auth/adm_change_account.html", form=form, selected_user=user)
 

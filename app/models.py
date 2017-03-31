@@ -63,6 +63,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('ROLE.id'))
     email_conf = db.Column(db.Boolean, default=False)
+    lab = db.Column(db.String(64), index=True)
     phone = db.Column(db.String(64))
     date_joined = db.Column(db.DateTime, default=datetime.datetime.now)
 
@@ -187,33 +188,6 @@ login_manager.anonymous_user = AnonymousUser
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-class FundingAccount(db.Model):
-
-    __tablename__ = 'FUNDING_ACCOUNT'
-
-    ID = db.Column(db.Integer, db.Sequence('funding_account_seq', start=0, increment=1),
-                   primary_key=True, nullable=False)
-    acc_no = db.Column(db.Integer, index=True, nullable=False)
-    acc_type = db.Column(db.String(64))
-    acc_other = db.Column(db.String(64))
-    RSC_ID = db.Column(db.Integer, db.ForeignKey("USER.UCID"))
-
-    def __init__(self, acc_no, acc_type, RSC_ID, acc_other=None):
-        self.acc_no = acc_no
-        if acc_type == 0:
-            self.acc_type = 'NSPRC'
-        elif acc_type == 1:
-            self.acc_type = 'CIHR'
-        elif acc_type == 2:
-            self.acc_type = 'Provincial'
-        else:
-            self.acc_type = 'Other'
-            self.acc_other=acc_other
-        self.RSC_ID = RSC_ID
-
-    def __repr__(self):
-        return '<Funding Account - Account Number: [%s], User ID: [%s]>' % (self.acc_no, self.RSC_ID)
 
 class Report(db.Model):
 
@@ -343,22 +317,3 @@ class NewsItem(db.Model):
 	
 	def __repr__(self):
 		return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
-		
-class LogEntry(db.Model):
-
-    __tablename__ = "LOG_ENTRY"
-
-    ID = db.Column(db.Integer, db.Sequence('log_entry_seq', start=0, increment=1),
-                   primary_key=True, nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
-    desc = db.Column(db.String(128))
-    UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
-
-    def __init__(self, ucid, desc=None):
-        self.UCID = ucid
-        if desc is not None:
-            self.desc = desc
-
-    def __repr__(self):
-        return '<Log Entry - Entry ID: [%s], UCID: [%s], Timestamp: [%s], Description: [%s]>' % (
-            self.ID, self.UCID, self.timestamp, self.desc)
