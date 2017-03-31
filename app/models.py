@@ -77,7 +77,7 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, password):
-        self.pw_hash = generate_password_hash(password,method='pbkdf2:sha1:1500',salt_length=22)
+        self.pw_hash = generate_password_hash(password,method='pbkdf2:sha256:1500',salt_length=22)
 
     def verify_password(self, password):
         return check_password_hash(self.pw_hash, password)
