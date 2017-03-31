@@ -47,3 +47,6 @@ nosetests.xml
 
 # Virtual environment
 venv
+
+# Deployment environment
+.env
