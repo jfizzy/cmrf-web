@@ -41,7 +41,7 @@ lang="en"
             <a href="http://www.ucalgary.ca"><img src="{{ url_for('static', filename='assets/uofclogo.png') }}"></a>
         </div>
 
-        <div class="navbar-collapse collapse" id="navbar">
+        <div class="navbar-collapse collapse" id="navbar" style="overflow-y: scroll;">
             <ul class="nav navbar-nav">
                 <li>
                     <a href="{{ url_for('main.index') }}">Home</a>
@@ -95,8 +95,8 @@ lang="en"
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
                 <li class="dropdown" id="acc-dropdown">
-                    <a id="userop" href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.first_name}} {{current_user.last_name}}<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.first_name}} {{current_user.last_name}}<b class="caret"></b></a>
+                    <ul class="dropdown-menu" style=>
                         <li><a id="accdet" href="{{ url_for('auth.account_details') }}">Account Details</a></li>
                         <li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
                         <li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
@@ -150,7 +150,7 @@ lang="en"
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-			$('#flashes').delay(10000).fadeOut(3000)
+		$('#flashes').delay(10000).fadeOut(3000)
 	});
 </script>
 <script>
