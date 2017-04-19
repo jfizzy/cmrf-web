@@ -56,10 +56,10 @@ def register():
         db.session.commit()
         token = user.generate_confirmation_token()
         send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token)
-        user = User.query.filter_by(email=form.email.data).first()
-        login_user(user,remember=True)
-        flash('Thanks for registering! Please confirm your account by clicking the link in the email we just sent.')
-        return redirect(url_for('auth.login'))
+        g.current_user = user
+        login_user(user)
+        flash('Thanks for registering! Please click the link in the email we just sent you in order to confirm your account.')
+        return redirect(url_for('cmrf.index'))
     else:
         return render_template('auth/register.html',form=form)
 

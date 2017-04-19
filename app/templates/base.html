@@ -123,9 +123,9 @@ lang="en"
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div id="flashes" class="container" style="width: 66%; position: absolute; left: 50%; margin-left: -33%;">
     {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning" style="z-index: 3; margin-top: 6px;">
+    <div class="alert alert-success" style="z-index: 3; margin-top: 6px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
     </div>
@@ -148,6 +148,11 @@ lang="en"
 {{ super() }}
 {{ moment.include_moment() }}
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+	$(document).ready(function() {
+			$('#flashes').delay(10000).fadeOut(3000)
+	});
+</script>
 <script>
 $.extend(true, $.fn.dataTable.defaults, {
     "searching": true,
