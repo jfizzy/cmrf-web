@@ -99,7 +99,7 @@ def cancel_request(id):
 @user_acc_required
 def edit_request(id):
     wo = WorkOrder.query.get_or_404(id)
-    form = RequestForm(fa=userfa, wo=wo)
+    form = RequestForm(wo=wo)
     if form.validate_on_submit():
         wo.title = form.title.data
         wo.no_samples = form.no_samples.data
