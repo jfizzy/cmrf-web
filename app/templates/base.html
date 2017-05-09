@@ -49,6 +49,9 @@ lang="en"
                 <li>
                     <a href="{{ url_for('main.facilities') }}">Facilities</a>
                 </li>
+				<li>
+					<a href="{{ url_for('main.team') }}">Team</a>
+				</li>
 				{% if current_user.can(Permission.EDITING) %}
 					<li class="dropdown" id="acc-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">News<b class="caret"></b></a>
@@ -90,6 +93,10 @@ lang="en"
                         {% endif %}
                     </ul>
                 </li>
+				{% else %}
+				<li>
+					<a href="{{ url_for('cmrf.index') }}">CMRF</a>
+				</li>	
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -150,7 +157,7 @@ lang="en"
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#flashes').delay(10000).fadeOut(3000)
+		$('#flashes').delay(5000).fadeOut(3000)
 	});
 </script>
 <script>

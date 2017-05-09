@@ -33,3 +33,4 @@ def editing_required(f):
 
 def user_acc_required(f):
     return permission_required(Permission.USER_ACC)(f)
+

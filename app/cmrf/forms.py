@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, IntegerField, SelectField, TextAreaField, SelectMultipleField, RadioField
 from wtforms.validators import Required, Optional, Length, Email, Regexp, EqualTo
-from wtforms.widgets import TextArea
+from wtforms.widgets import TextArea, ListWidget, CheckboxInput
 from wtforms import ValidationError
 from ..models import User, Role, WorkOrder
 
@@ -18,30 +18,30 @@ class Unique(object):
 		check = self.model.query.filter(self.field == field.data).first()
 		if check:
 			raise ValidationError(self.message)
+			
+class MultiCheckboxField(SelectMultipleField):
+	widget = ListWidget(prefix_label=False)
+	option_widget = CheckboxInput()
 
 class RequestForm(Form):
 	title = StringField('Title', validators=[Required(), Length(6, 64)])
 	desc = StringField('Description', validators=[Required(), Length(0, 200)], widget=TextArea())
-	no_samples = SelectField('Number of Samples', \
-							 validators=[Required()], \
-							 choices=[(1,'1'),(5,'5'),(10,'10'), \
-								      (15,'15'),(20,'20'),(25,'25'), \
-									  (50,'50'),(75,'75'),(100,'100'), \
-									  (200,'200')], coerce=int)
-	tm = SelectMultipleField('Target Metabolites (Select all that apply)', \
-							 choices=[(0, 'Central Carbon Metabolism'), \
-							 		  (1,'Peptides'), (2, 'Fatty Acids'), \
+	no_samples = IntegerField('Number of Samples', \
+							 validators=[Required()])
+	tm = MultiCheckboxField('Target Metabolites (Select all that apply)', \
+							choices=[(0, 'Central Carbon Metabolism'), \
+									  (1,'Peptides'), (2, 'Fatty Acids'), \
 									  (3, 'Amino Acids'), (4, 'Other')], \
-							 default=[0], \
-							 coerce=int)
+							default=[0], \
+							coerce=int)
 	other_tm = StringField('Other Target Metabolites (If applicable)', \
 						   validators=[Optional(), Length(4, 20)])
-	ri = SelectMultipleField('Required Instruments (Select all that apply)', \
+	ri = MultiCheckboxField('Required Instruments (Select all that apply)', \
 							 choices=[(0, 'QE-HF'), (1, 'QE-Basic'), \
 							 		  (2,'TSQ'), (3, 'Unknown')], \
-							 coerce=int)
-	assistance = RadioField('Assistance (Technician)', \
-							choices=[(0, 'Assistance Required (Technician)'), (1, 'No Assistance Required')], \
+							 default=[3], coerce=int)
+	assistance = RadioField('Assistance (Lab Technician)', \
+							choices=[(0, 'Assistance Required'), (1, 'No Assistance Required')], \
 							default=[0], coerce=int)
 
 	submit = SubmitField("Submit")
@@ -63,12 +63,8 @@ class NewsItemForm(Form):
 class AdminChangeRequest(Form):
     title = StringField('Title', validators=[Required(), Length(6, 64)])
     desc = StringField('Description', validators=[Required(), Length(0, 200)], widget=TextArea())
-    no_samples = SelectField('Number of Samples', \
-                                 validators=[Required()], \
-                                 choices=[(10,'10'),(25,'25'),(50,'50'), \
-                                          (75,'75'),(100,'100'),(150,'150'), \
-                                          (200,'200'),(250,'250'),(500,'500'), \
-                                          (1000,'1000')], coerce=int)
+    no_samples = IntegerField('Number of Samples', \
+							 validators=[Required()])
     tm = SelectMultipleField('Target Metabolites (Select all that apply)', \
                                                                    choices=[(0, 'Central Carbon Metabolism'), \
                                                                             (1,'Peptides'), (2, 'Fatty Acids'), \

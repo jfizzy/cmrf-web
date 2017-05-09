@@ -40,7 +40,7 @@ def request(id):
 	user = User.query.filter_by(UCID=request.RSC_ID).first()
 	return render_template('cmrf/request.html', request=request, owner=user)
 
-@cmrf.route('/delete-request/<int:id>')
+@cmrf.route('/delete-request/<int:id>', methods=['GET','POST'])
 @login_required
 @admin_required
 def delete_request(id):
@@ -59,10 +59,13 @@ def delete_request(id):
 def make_request():
 	form = RequestForm()
 	if form.validate_on_submit():
-		wo = WorkOrder(title=form.title.data, no_samples=form.no_samples.data, \
-					   RSC_ID=current_user.UCID, desc=form.desc.data, \
-					   tm=form.tm.data, ri=form.ri.data, assistance=form.assistance.data)
-
+		wo = WorkOrder(title=form.title.data,
+					   no_samples=form.no_samples.data,
+					   RSC_ID=current_user.UCID, 
+					   desc=form.desc.data,
+					   tm=form.tm.data, 
+					   ri=form.ri.data,
+					   assistance=form.assistance.data)
 		db.session.add(wo)
 		db.session.commit()
 		flash('Request Submitted.')
@@ -99,6 +102,7 @@ def cancel_request(id):
 @user_acc_required
 def edit_request(id):
     wo = WorkOrder.query.get_or_404(id)
+    woid = wo.ID
     form = RequestForm(wo=wo)
     if form.validate_on_submit():
         wo.title = form.title.data
@@ -134,7 +138,7 @@ def edit_request(id):
     form.no_samples.data = wo.no_samples
     form.desc.data = wo.desc
     form.assistance.data = wo.assistance
-    return render_template("cmrf/edit_request.html", id=wo.RSC_ID, form=form)
+    return render_template("cmrf/edit_request.html", id=wo.RSC_ID, form=form, woid=woid)
 
 @cmrf.route('/all-requests')
 @login_required

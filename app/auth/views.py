@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, url_for, flash, g, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_httpauth import HTTPBasicAuth
+from urllib import unquote
 from ..decorators import admin_required, user_acc_required
 from . import auth
 from .. import db

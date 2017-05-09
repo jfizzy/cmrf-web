@@ -8,8 +8,105 @@
     <div class="page-header">
         <h1>Edit Request</h1>
     </div>
-    <div class="col-md-4">
-    {{wtf.quick_form(form)}}
-    </div>
+    <div class="well col-md-6">
+		<form id="editRequest" method="POST" action="{{ url_for('cmrf.edit_request', id=woid )}}">
+			{{form.hidden_tag()}}
+			{# title #}
+			<div class="form-group ">
+				{{form.title.label}}:
+				{{form.title(class="form-control")}}
+			</div>
+			{% if form.title.errors %}
+	    	<ul class="errors" style="list-style: none;">{% for error in form.title.errors %}<li>{{ error }}</li>{% endfor %}
+			</ul>
+			{% endif %}
+			<hr>
+			
+			{# description #}
+			<div class="form-group ">
+				{{form.desc.label}}:
+				
+				<span>{{form.desc(class="form-control", rows="6")}}</span>
+			</div>
+			{% if form.desc.errors %}
+	    	<ul class="errors">{% for error in form.desc.errors %}<li>{{ error }}</li>{% endfor %}
+			</ul>
+			{% endif %}
+			<hr>
+			
+			{# number of samples #}
+			<div class="form-group ">
+				{{form.no_samples.label}}:
+				{{form.no_samples(class="form-control", type="number", min="1", max="1000", style="width: 20%;")}}
+			</div>
+			{% if form.no_samples.errors %}
+	    	<ul class="errors danger">{% for error in form.no_samples.errors %}<li>{{ error }}</li>{% endfor %}
+			</ul>
+			{% endif %}
+			<hr>
+			
+			{# target metabolites #}
+			<div class="form-group ">
+				{{form.tm.label}}:
+				{{form.tm(style="list-style: none;")}}
+			</div>
+			{% if form.tm.errors %}
+	    	<ul class="errors">{% for error in form.tm.errors %}<li>{{ error }}</li>{% endfor %}
+			</ul>
+			{% endif %}
+			
+			
+			{# other target metabolites #}
+			<div class="form-group ">
+				{{form.other_tm.label}}:
+				{{form.other_tm(class="form-control", disabled="disabled", style="width: 50%;")}}
+			</div>
+			{% if form.other_tm.errors %}
+	    	<ul class="errors">{% for error in form.other_tm.errors %}<li>{{ error }}</li>{% endfor %}
+			</ul>
+			{% endif %}
+			<hr>
+			
+			{# Required Instruments #}
+			<div class="form-group ">
+				{{form.ri.label}}:
+				{{form.ri(style="list-style: none;")}}
+			</div>
+			{% if form.ri.errors %}
+	    	<ul class="errors">{% for error in form.ri.errors %}<li>{{ error }}</li>{% endfor %}
+			</ul>
+			{% endif %}
+			<hr>
+			
+			{# Assistance #}
+			<div class="form-group ">
+				{{form.assistance.label}}:
+				{{form.assistance(style="list-style: none;")}}
+			</div>
+			{% if form.assistance.errors %}
+	    	<ul class="errors">{% for error in form.assistance.errors %}<li>{{ error }}</li>{% endfor %}
+			</ul>
+			{% endif %}
+			<hr>
+			
+			{# Submit #}
+			{{form.submit(class="btn btn-primary", type="submit", style="width: 40%; margin-left: 30%")}}
+		</form>
+  	</div>
 </div>
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script>
+	$(document).ready(function() {
+		$("#tm-4").change(function() {
+			if($("#tm-4").is(':checked')) {
+				$("#other_tm").prop('disabled', false)
+			}else{
+				$("#other_tm").val("")
+				$("#other_tm").prop('disabled', true)
+			}
+		})
+	});
+</script>
 {% endblock %}

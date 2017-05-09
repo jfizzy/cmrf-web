@@ -28,7 +28,7 @@ class LoginForm(Form):
     submit = SubmitField('Log In')
 
 class RegistrationForm(Form):
-	UCID = StringField('UCID', validators=[Required(), Length(8),
+	UCID = StringField('UCID', validators=[Required(), Length(8, 8),
 										   Regexp('^[0-9]*$', 0,
 										   'Must be an 8 digit integer'),
 										   Unique(User, User.UCID, 'UCID already registered')])
