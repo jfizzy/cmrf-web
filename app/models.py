@@ -317,3 +317,25 @@ class NewsItem(db.Model):
 	
 	def __repr__(self):
 		return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
+		
+		
+class Publication(db.Model):
+	
+	__tablename__ = "PUBLICATION"
+	
+	ID = db.Column(db.Integer, db.Sequence('publication_seq', start=1, increment=1),
+		primary_key=True, nullable=False)
+	UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
+	title = db.Column(db.String(64), nullable=False)
+	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
+	desc = db.Column(db.Text, nullable=False)
+	pdf = db.Column(db.PickleType, nullable=False)
+	
+	def __init__(self, ucid, title, desc, pdf):
+		self.UCID = ucid
+		self.title = title
+		self.desc = desc
+		self.pdf = pdf
+		
+	def __repr__(self):
+		return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
