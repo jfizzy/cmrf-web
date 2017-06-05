@@ -50,3 +50,4 @@ venv
 
 # Deployment environment
 .env
+cmrfweb.sock
