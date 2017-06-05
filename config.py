@@ -9,14 +9,14 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
     
-    MAIL_SERVER = 'just65.justhost.com'
+    MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     CMRF_MAIL_SUBJECT_PREFIX = '[CMRF]'
-    CMRF_MAIL_SENDER = 'CMRF Admin <no-reply@lewisresearchgroup.org>'
+    CMRF_MAIL_SENDER = 'CMRF Admin <cmrfnoreply@gmail.com>'
     CMRF_ADMIN = os.environ.get('CMRF_ADMIN')
 	
     CMRF_SLOW_DB_QUERY_TIME = 0.5
