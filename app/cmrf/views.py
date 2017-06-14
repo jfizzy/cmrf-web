@@ -1,10 +1,12 @@
+import os
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
 from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required, editing_required
-from ..models import WorkOrder, User, Permission, Report, NewsItem
+from ..models import WorkOrder, User, Permission, Report, NewsItem, Publication
 from . import cmrf
 from .. import db
-from .forms import RequestForm, ReportForm, NewsItemForm
+from .forms import RequestForm, ReportForm, NewsItemForm, PublicationForm
 
 @cmrf.route('/', methods=['GET'])
 def index():
@@ -292,7 +294,28 @@ def delete_news_item(id):
 def all_news_items():
 	newsitems = NewsItem.query.join(User, NewsItem.UCID==User.UCID).all()
 	return render_template("cmrf/all_news_items.html", newsitems=newsitems)
-	
+
+#function to check if file is one of the allowed types
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@cmrf.route('/add-publication', methods=['GET', 'POST'])
+@login_required
+@add_article_required
+def add_publication():
+	form = PublicationForm()
+	if form.validate_on_submit():
+                file = request.files['pdf']
+                if file and allowed_file(f.filename):
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(app.config['PUB_UPLOAD_FOLDER'], filename))
+		    publication = Publication(current_user.id, title=form.title.data, desc=form.desc.data, pdf=filename)
+		    db.session.add(publication)
+		    db.session.commit()
+		    flash('Publication Added Successfully')
+		    return redirect(url_for('main.publications'))
+                return render_template("cmrf/add_publication.html", errors=form.errors.items(), form=form)
+	return render_template("cmrf/add_publication.html", errors=form.errors.items(), form=form)
 
 
 

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}{{super()}} - Add Publication{% endblock %}
+
+{% block page_content %}
+<div class="container">
+  <div class="page-header">
+      <h1>New Publication</h1>
+  </div>
+  <div class="well col-md-6">
+	  <form id="newPublication" method="POST" enctype="multipart/form-data" action="{{ url_for('cmrf.add_publication') }}">
+		  {{form.hidden_tag()}}
+		  {# Title #}
+		  <div class="form-group">
+			  {{form.title.label}}
+			  {{form.title(class="form-control")}}	  
+		  </div>
+		  {% if form.title.errors %}
+		  <ul class="errors" style="list-style: none;">{% for error in form.title.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+		  {% endif %}
+		  <hr>
+
+		  {# Description #}
+		  <div class="form-group">
+		  	  {{form.desc.label}}
+
+			  <span>{{form.desc(class="form-control", rows="6")}}</span>
+		  </div>
+		  {% if form.desc.errors %}
+		  	<ul class="errors">{% for error in form.desc.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+		  {% endif %}
+		  <hr>
+
+		  {# PDF #}
+		  <div class="form-group">
+			  {{form.pdf.label}}
+			  {{form.pdf(class="form-control")}}
+		  </div>	
+		  {% if form.pdf.errors %}
+		  <ul class="errors" style="list-style: none;">{% for error in form.title.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+		  {% endif %}
+
+		  {# Submit #}
+		  {{form.submit(class="btn btn-primarry", type="submit", style="width: 40%; margin-left: 30%;")}}
+      </form>	      
+  </div>
+</div>
+{% endblock %}

@@ -1,7 +1,8 @@
 from flask_wtf import Form
+from flask_wtf.file import FileField
 from wtforms import StringField, SubmitField, IntegerField, SelectField, TextAreaField, SelectMultipleField, RadioField
 from wtforms.validators import Required, Optional, Length, Email, Regexp, EqualTo, URL
-from wtforms.widgets import TextArea, ListWidget, CheckboxInput
+from wtforms.widgets import TextArea, ListWidget, CheckboxInput, FileInput
 from wtforms import ValidationError
 from ..models import User, Role, WorkOrder
 
@@ -57,6 +58,13 @@ class NewsItemForm(Form):
 	title = StringField('Title', validators=[Required(), Length(6, 64)])
 	desc = StringField('Description', validators=[Required(), Length(0, 2000)], widget=TextArea())
 	url = StringField('URL', validators=[Optional(), URL(require_tld=False, message='Please enter a valid URL.')])
+	
+	submit = SubmitField("Submit")
+	
+class PublicationForm(Form):
+	title = StringField('Title', validators=[Required(), Length(6,64)])
+	desc = StringField('Description', validators=[Required(), Length(0, 2000)], widget=TextArea())
+	pdf = FileField('PDF', validators=[Required()], widget=FileInput())
 	
 	submit = SubmitField("Submit")
 
