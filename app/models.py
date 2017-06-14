@@ -329,7 +329,7 @@ class Publication(db.Model):
 	title = db.Column(db.String(64), nullable=False)
 	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
 	desc = db.Column(db.Text, nullable=False)
-	pdf = db.Column(db.PickleType, nullable=False)
+	pdf = db.Column(db.Text, nullable=False)
 	
 	def __init__(self, ucid, title, desc, pdf):
 		self.UCID = ucid
