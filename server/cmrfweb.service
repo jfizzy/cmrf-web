@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve cmrf-web
+After=network.target
+
+[Service]
+User=root
+Group=nginx
+WorkingDirectory=/cmrf-web
+Environment="PATH=/cmrf-web/venv/bin"
+ExecStart=/cmrf-web/venv/bin/gunicorn --workers 3 --bind unix:cmrfweb.sock -m 007 manage:app
+
+[Install]
+WantedBy=multi-user.target

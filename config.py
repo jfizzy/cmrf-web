@@ -3,20 +3,20 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'Km!Z6376=wq&X17qcPrJdMrk#xA?Z!ff2=g+a&_$'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     SSL_DISABLE = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
     
-    MAIL_SERVER = 'just65.justhost.com'
+    MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     CMRF_MAIL_SUBJECT_PREFIX = '[CMRF]'
-    CMRF_MAIL_SENDER = 'CMRF Admin <no-reply@lewisresearchgroup.org>'
+    CMRF_MAIL_SENDER = 'CMRF Admin <cmrfnoreply@gmail.com>'
     CMRF_ADMIN = os.environ.get('CMRF_ADMIN')
 	
     CMRF_SLOW_DB_QUERY_TIME = 0.5
@@ -29,8 +29,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-       'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') 
 
 class TestingConfig(Config):
     TESTING = True
@@ -39,7 +38,7 @@ class TestingConfig(Config):
     WTF_CSRF_ENABLED = False
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2" + os.environ.get('DATABASE_URL')[8:] + "?sslmode=require"
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
 
     @classmethod
     def init_app(cls, app):
