@@ -21,9 +21,17 @@ class Config:
 	
     CMRF_SLOW_DB_QUERY_TIME = 0.5
     
-    UPLOADED_FILES_DEST = '/uploads'
-    UPLOADED_FILES_ALLOW = set(['pdf', 'png', 'jpg', 'jpeg', 'gif', ])
     UPLOADS_DEFAULT_DEST = '/uploads'
+    UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
+
+    UPLOADED_DOCUMENTS_DEST = '/uploads/documents/'
+    UPLOADED_DOCUMENTS_URL = 'http://localhost:5000/uploads/documents/'
+    
+    UPLOADED_PHOTOS_DEST = '/uploads/photos/'
+    UPLOADED_PHOTOS_URL = 'http://localhost:5000/uploads/photos/'
+
+    ALLOWED_EXT_PHOTOS = set(['png', 'jpg', 'jpeg', 'gif'])
+    ALLOWED_EXT_DOCUMENTS = set(['pdf'])
 
     @staticmethod
     def init_app(app):
