@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required, editing_required
 from ..models import WorkOrder, User, Permission, Report, NewsItem, Publication
 from . import cmrf
-from .. import db
+from .. import db, documents
 from .forms import RequestForm, ReportForm, NewsItemForm, PublicationForm
 
 @cmrf.route('/', methods=['GET'])
@@ -34,7 +34,7 @@ def adm_requests(id):
 @cmrf.route('/request/<int:id>', methods=['GET'])
 @login_required
 @view_r_required
-def request(id):
+def view_request(id):
 	request = WorkOrder.query.filter_by(ID=str(id)).first_or_404()
 	if current_user.id != request.RSC_ID:
 		if not current_user.can(Permission.ALL_R):
@@ -288,16 +288,12 @@ def delete_news_item(id):
 	flash('News Item Deleted.')
 	return redirect(url_for('cmrf.all_news_items'))
 
-@cmrf.route('/all_news_items', methods=['GET'])
+@cmrf.route('/all-news-items', methods=['GET'])
 @login_required
 @editing_required
 def all_news_items():
 	newsitems = NewsItem.query.join(User, NewsItem.UCID==User.UCID).all()
 	return render_template("cmrf/all_news_items.html", newsitems=newsitems)
-
-#function to check if file is one of the allowed types
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @cmrf.route('/add-publication', methods=['GET', 'POST'])
 @login_required
@@ -305,17 +301,13 @@ def allowed_file(filename):
 def add_publication():
 	form = PublicationForm()
 	if form.validate_on_submit():
-                file = request.files['pdf']
-                if file and allowed_file(f.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['PUB_UPLOAD_FOLDER'], filename))
-		    publication = Publication(current_user.id, title=form.title.data, desc=form.desc.data, pdf=filename)
-		    db.session.add(publication)
-		    db.session.commit()
-		    flash('Publication Added Successfully')
-		    return redirect(url_for('main.publications'))
-                return render_template("cmrf/add_publication.html", errors=form.errors.items(), form=form)
+               filename = documents.save(request.files['file'])
+               url = documents.url(filename)
+	       publication = Publication(current_user.id, title=form.title.data, desc=form.desc.data, pdf_name=filename, pdf_url=url)
+               print publication
+	       db.session.add(publication)
+	       db.session.commit()
+	       flash('Publication Added Successfully')
+	       return redirect(url_for('main.publications'))
 	return render_template("cmrf/add_publication.html", errors=form.errors.items(), form=form)
-
-
 

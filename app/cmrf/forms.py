@@ -1,10 +1,11 @@
 from flask_wtf import Form
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, SubmitField, IntegerField, SelectField, TextAreaField, SelectMultipleField, RadioField
 from wtforms.validators import Required, Optional, Length, Email, Regexp, EqualTo, URL
 from wtforms.widgets import TextArea, ListWidget, CheckboxInput, FileInput
 from wtforms import ValidationError
 from ..models import User, Role, WorkOrder
+from .. import documents
 
 class Unique(object):
 	""" validator that checks field uniqueness """
@@ -64,7 +65,7 @@ class NewsItemForm(Form):
 class PublicationForm(Form):
 	title = StringField('Title', validators=[Required(), Length(6,64)])
 	desc = StringField('Description', validators=[Required(), Length(0, 2000)], widget=TextArea())
-	pdf = FileField('PDF', validators=[Required()], widget=FileInput())
+	file = FileField('PDF', validators=[FileRequired(), FileAllowed(documents, 'Only PDFs may be uploaded.')])
 	
 	submit = SubmitField("Submit")
 

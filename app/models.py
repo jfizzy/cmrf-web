@@ -329,13 +329,15 @@ class Publication(db.Model):
 	title = db.Column(db.String(64), nullable=False)
 	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
 	desc = db.Column(db.Text, nullable=False)
-	pdf = db.Column(db.Text, nullable=False)
-	
-	def __init__(self, ucid, title, desc, pdf):
+	pdf_name = db.Column(db.Text, nullable=False)
+	pdf_url = db.Column(db.Text, nullable=False)
+
+	def __init__(self, ucid, title, desc, pdf_name, pdf_url):
 		self.UCID = ucid
 		self.title = title
 		self.desc = desc
-		self.pdf = pdf
+		self.pdf_name = pdf_name
+                self.pdf_url = pdf_url
 		
 	def __repr__(self):
-		return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
+		return '<Publication - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)

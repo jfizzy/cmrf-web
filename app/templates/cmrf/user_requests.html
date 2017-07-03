@@ -42,7 +42,7 @@
             <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
             <td>{{request.no_samples}}</td>
             <td>{% if request.status == 'Pending Approval' %}<span class="glyphicon glyphicon-warning-sign">{% else %}{% if request.status == 'Complete' %}<span class="glyphicon glyphicon-ok">{% else %}{% if request.status == 'In Progress' %}<span class="glyphicon glyphicon-time">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}{% endif %}{% endif %}</span> {{request.status}}</td>
-            <td><a href="{{url_for('cmrf.request', id=request.ID)}}">View</a></td>
+            <td><a href="{{url_for('cmrf.view_request', id=request.ID)}}">View</a></td>
           </tr>
         {% endfor %}
       </tbody>
