@@ -52,3 +52,6 @@ venv
 .env
 cmrfweb.sock
 server/sysdenv
+
+# File uploads
+app/uploads
