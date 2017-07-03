@@ -21,14 +21,14 @@ class Config:
 	
     CMRF_SLOW_DB_QUERY_TIME = 0.5
     
-    UPLOADS_DEFAULT_DEST = '/uploads'
-    UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
+    UPLOADS_DEFAULT_DEST = './app/uploads'
+    UPLOADS_DEFAULT_URL = 'http://localhost:5000/app/uploads/'
 
-    UPLOADED_DOCUMENTS_DEST = '/uploads/documents/'
-    UPLOADED_DOCUMENTS_URL = 'http://localhost:5000/uploads/documents/'
+    UPLOADED_DOCUMENTS_DEST = './app/uploads/documents'
+    UPLOADED_DOCUMENTS_URL = 'http://localhost:5000/app/uploads/documents/'
     
-    UPLOADED_PHOTOS_DEST = '/uploads/photos/'
-    UPLOADED_PHOTOS_URL = 'http://localhost:5000/uploads/photos/'
+    UPLOADED_PHOTOS_DEST = './app/uploads/photos'
+    UPLOADED_PHOTOS_URL = 'http://localhost:5000/app/uploads/photos/'
 
     ALLOWED_EXT_PHOTOS = set(['png', 'jpg', 'jpeg', 'gif'])
     ALLOWED_EXT_DOCUMENTS = set(['pdf'])
