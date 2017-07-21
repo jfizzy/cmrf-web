@@ -132,7 +132,7 @@ def show_pub(id):
 		pdf_content = pdf.read()
 		response = make_response(pdf_content)
 		response.headers['Content-Type'] = 'application/pdf'
-		response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'yourfilename'
+		response.headers['Content-Disposition'] = 'inline; filename=%s' % doc.pdf_name
 		return response
 
 @main.route('/view-image/<image>')
