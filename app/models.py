@@ -146,7 +146,7 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         return True
 
-    def generate_auth_token(self, expiration):
+    def generate_auth_token(self, expiration=604800):
         s = Serializer(current_app.config['SECRET_KEY'],
                        expires_in=expiration)
         return s.dumps({'id': self.UCID}).decode('ascii')
@@ -193,7 +193,7 @@ class Report(db.Model):
 
     __tablename__ = "REPORT"
 
-    ID = db.Column(db.Integer, db.Sequence('report_sequence', start=1, increment=1), primary_key=True, nullable=False)
+    ID = db.Column(db.Integer, primary_key=True, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     balance = db.Column(db.Numeric(6,2))
     desc = db.Column(db.Text, nullable=True)
@@ -217,8 +217,7 @@ class WorkOrder(db.Model):
 
     __tablename__ = "WORK_ORDER"
 
-    ID = db.Column(db.Integer, db.Sequence('work_order_seq', start=1, increment=1),
-                   primary_key=True, nullable=False)
+    ID = db.Column(db.Integer, primary_key=True, nullable=False)
     submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
     title = db.Column(db.String(64), nullable=False)
     no_samples = db.Column(db.Integer, nullable=False)
@@ -297,47 +296,45 @@ class WorkOrder(db.Model):
 
 class NewsItem(db.Model):
 	
-	__tablename__ = "NEWS_ITEM"
+    __tablename__ = "NEWS_ITEM"
 	
-	ID = db.Column(db.Integer, db.Sequence('news_item_seq', start=1, increment=1),
-		primary_key=True, nullable=False)
-	UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
-	title = db.Column(db.String(64), nullable=False)
-	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
-	desc = db.Column(db.Text, nullable=True)
-	url = db.Column(db.Text, nullable=True)
+    ID = db.Column(db.Integer, primary_key=True, nullable=False)
+    UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
+    title = db.Column(db.String(64), nullable=False)
+    submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
+    desc = db.Column(db.Text, nullable=True)
+    url = db.Column(db.Text, nullable=True)
 	
-	def __init__(self, ucid, title, desc=None, url=None):
-		self.UCID = ucid
-		self.title = title
-		if desc is not None:
-			self.desc = desc
-		if url is not None:
-			self.url = url
-	
-	def __repr__(self):
-		return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
+    def __init__(self, ucid, title, desc=None, url=None):
+	self.UCID = ucid
+	self.title = title
+	if desc is not None:
+	    self.desc = desc
+	if url is not None:
+	    self.url = url
+
+    def __repr__(self):
+	return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
 		
 		
 class Publication(db.Model):
 	
-	__tablename__ = "PUBLICATION"
-	
-	ID = db.Column(db.Integer, db.Sequence('publication_seq', start=1, increment=1),
-		primary_key=True, nullable=False)
-	UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
-	title = db.Column(db.String(64), nullable=False)
-	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
-	desc = db.Column(db.Text, nullable=False)
-	pdf_name = db.Column(db.Text, nullable=False)
-	pdf_url = db.Column(db.Text, nullable=False)
+    __tablename__ = "PUBLICATION"
 
-	def __init__(self, ucid, title, desc, pdf_name, pdf_url):
-		self.UCID = ucid
-		self.title = title
-		self.desc = desc
-		self.pdf_name = pdf_name
-                self.pdf_url = pdf_url
+    ID = db.Column(db.Integer, primary_key=True, nullable=False)
+    UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
+    title = db.Column(db.String(64), nullable=False)
+    submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
+    desc = db.Column(db.Text, nullable=False)
+    pdf_name = db.Column(db.Text, nullable=False)
+    pdf_url = db.Column(db.Text, nullable=False)
+
+    def __init__(self, ucid, title, desc, pdf_name, pdf_url):
+	self.UCID = ucid
+	self.title = title
+	self.desc = desc
+	self.pdf_name = pdf_name
+        self.pdf_url = pdf_url
 		
-	def __repr__(self):
-		return '<Publication - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
+    def __repr__(self):
+	return '<Publication - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)

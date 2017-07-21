@@ -303,7 +303,7 @@ def add_publication():
 	if form.validate_on_submit():
                filename = documents.save(request.files['file'])
                url = documents.url(filename)
-	       publication = Publication(current_user.id, title=form.title.data, desc=form.desc.data, pdf_name=filename, pdf_url=url)
+	       publication = Publication(current_user.id, form.title.data, form.desc.data, filename, url)
                print publication
 	       db.session.add(publication)
 	       db.session.commit()

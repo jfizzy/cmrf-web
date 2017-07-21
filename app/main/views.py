@@ -1,6 +1,7 @@
-from flask import render_template, session, redirect, url_for, current_app, abort
+from flask import render_template, session, redirect, url_for, current_app, abort, make_response
+import os
 from .. import db
-from ..models import User, NewsItem
+from ..models import User, NewsItem, Publication
 from ..email import send_email
 from . import main
 from .forms import NameForm
@@ -119,7 +120,20 @@ def hainfections():
 
 @main.route('/publications')
 def publications():
-    return render_template('publications.html')
+	publications = Publication.query.order_by(Publication.submit_date.desc()).all()
+	
+	return render_template('publications.html', publications=publications)
+	
+@main.route('/publication/<id>')
+def show_pub(id):
+	doc = Publication.query.filter_by(ID=str(id)).first_or_404()
+	#get binary document data
+	with open('./app/uploads/documents/' + doc.pdf_name, mode='rb') as pdf:
+		pdf_content = pdf.read()
+		response = make_response(pdf_content)
+		response.headers['Content-Type'] = 'application/pdf'
+		response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'yourfilename'
+		return response
 
 @main.route('/view-image/<image>')
 def view_image(image):
