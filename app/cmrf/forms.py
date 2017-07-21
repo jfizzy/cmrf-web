@@ -63,7 +63,7 @@ class NewsItemForm(Form):
 	submit = SubmitField("Submit")
 	
 class PublicationForm(Form):
-	title = StringField('Title', validators=[Required(), Length(6,64)])
+	title = StringField('Title', validators=[Required(), Length(6,200)])
 	desc = StringField('Description', validators=[Required(), Length(0, 2000)], widget=TextArea())
 	file = FileField('PDF', validators=[FileRequired(), FileAllowed(documents, 'Only PDFs may be uploaded.')])
 	
