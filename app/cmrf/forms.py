@@ -4,8 +4,8 @@ from wtforms import StringField, SubmitField, IntegerField, SelectField, TextAre
 from wtforms.validators import Required, Optional, Length, Email, Regexp, EqualTo, URL
 from wtforms.widgets import TextArea, ListWidget, CheckboxInput, FileInput
 from wtforms import ValidationError
-from ..models import User, Role, WorkOrder
-from .. import documents
+from ..models import User, Role, WorkOrder, Person
+from .. import documents, photos
 
 class Unique(object):
 	""" validator that checks field uniqueness """
@@ -66,6 +66,14 @@ class PublicationForm(Form):
 	title = StringField('Title', validators=[Required(), Length(6,64)])
 	desc = StringField('Description', validators=[Required(), Length(0, 2000)], widget=TextArea())
 	file = FileField('PDF', validators=[FileRequired(), FileAllowed(documents, 'Only PDFs may be uploaded.')])
+	
+	submit = SubmitField("Submit")
+	
+class PersonForm(Form):
+	name = StringField('Name', validators=[Required(), Length(6, 64)])
+	title = StringField('Title', validators=[Required(), Length(6, 64)])
+	email = StringField('Email (Optional)', validators=[Length(1, 64), Email(), Unique(Person, Person.email, 'Email already added to other Person')])
+	file = FileField('Photo (png, jpg, gif) (Optional) ', validators=[FileAllowed(photos, 'Only images of approved types may be uploaded.')])
 	
 	submit = SubmitField("Submit")
 

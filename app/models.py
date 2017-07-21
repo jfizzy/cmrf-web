@@ -338,3 +338,27 @@ class Publication(db.Model):
 		
     def __repr__(self):
 	return '<Publication - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)
+	
+class Person(db.Model):
+	
+	__tablename__ = "PERSON"
+	
+	ID = db.Column(db.Integer, primary_key=True, nullable=False)
+	UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
+	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
+	name = db.Column(db.String(64), nullable=False)
+	title = db.Column(db.String(64), nullable=False)
+	email = db.Column(db.String(64), nullable=True, default=None)
+	photo_name = db.Column(db.Text, nullable=True, default=None)
+	photo_url = db.Column(db.Text, nullable=True, default=None)
+	
+	def __init__(self, ucid, name, title, email=None, photo_name=None, photo_url=None):
+		self.UCID = ucid
+		self.name=name
+		self.title=title
+		self.email=email
+		self.photo_name=photo_name
+		self.photo_url=photo_url
+		
+	def __repr__(self):
+		return '<Person - ID: [%s], UCID: [%s], Name: [%s]>' % (self.ID, self.UCID, self.name)

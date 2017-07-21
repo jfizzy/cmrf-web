@@ -20,7 +20,11 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and h_verify_password(user.email, form.password.data):
             login_user(user, form.remember_me.data)
-            return redirect(url_for('cmrf.index'))
+            next = request.args.get('next')
+            if next:
+                return redirect(next)
+            else:
+                return redirect(url_for('cmrf.index'))
         flash('Invalid email or password.')
     return render_template('auth/login.html', form=form)
 

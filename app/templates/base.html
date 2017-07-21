@@ -50,7 +50,16 @@ lang="en"
                     <a href="{{ url_for('main.facilities') }}">Facilities</a>
                 </li>
 				<li>
-					<a href="{{ url_for('main.team') }}">Team</a>
+				{% if current_user.can(Permission.EDITING) %}
+					<li class="dropdown" id="acc-dropdown">
+                    	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Team<b class="caret"></b></a>
+                    	<ul class="dropdown-menu">
+                        	<li><a href="{{ url_for('main.team') }}">Team</a></li>
+                        	<li role="separator" class="divider"></li>
+                        	<li><a href="{{ url_for('cmrf.add_person') }}">Add Person</a></li>
+                    	</ul>
+					</li>
+				{% endif %}
 				</li>
 				{% if current_user.can(Permission.EDITING) %}
 					<li class="dropdown" id="acc-dropdown">
@@ -74,9 +83,11 @@ lang="en"
                         <li><a href="{{ url_for('main.hainfections') }}">Hospital Acquired Infections</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ url_for('main.publications') }}">Publications</a></li>
+						{% if current_user.can(Permission.EDITING) %}
 						<li role="separator" class="divider"></li>
                         <li class="dropdown-header">Admin Tools</li>
 						<li><a href="{{ url_for('cmrf.add_publication') }}">Add Publication</a></li>
+						{% endif %}
                     </ul>
                 </li>
 				<li>

@@ -3,10 +3,10 @@ from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required, editing_required
-from ..models import WorkOrder, User, Permission, Report, NewsItem, Publication
+from ..models import WorkOrder, User, Permission, Report, NewsItem, Publication, Person
 from . import cmrf
-from .. import db, documents
-from .forms import RequestForm, ReportForm, NewsItemForm, PublicationForm
+from .. import db, documents, photos
+from .forms import RequestForm, ReportForm, NewsItemForm, PublicationForm, PersonForm
 
 @cmrf.route('/', methods=['GET'])
 def index():
@@ -301,13 +301,26 @@ def all_news_items():
 def add_publication():
 	form = PublicationForm()
 	if form.validate_on_submit():
-               filename = documents.save(request.files['file'])
-               url = documents.url(filename)
-	       publication = Publication(current_user.id, form.title.data, form.desc.data, filename, url)
-               print publication
-	       db.session.add(publication)
-	       db.session.commit()
-	       flash('Publication Added Successfully')
-	       return redirect(url_for('main.publications'))
+		filename = documents.save(request.files['file'])
+		url = documents.url(filename)
+		publication = Publication(current_user.id, form.title.data, form.desc.data, filename, url)
+		db.session.add(publication)
+		db.session.commit()
+		flash('Publication Added Successfully')
+		return redirect(url_for('main.publications'))
 	return render_template("cmrf/add_publication.html", errors=form.errors.items(), form=form)
-
+	
+@cmrf.route('/add-person', methods=['GET', 'POST'])
+@login_required
+@editing_required
+def add_person():
+	form = PersonForm()
+	if form.validate_on_submit():
+		filename = photos.save(request.files['file'])
+		url = photos.url(filename)
+		person = Person(current_user.id, form.name.data, form.title.data, form.email.data, filename, url)
+		db.session.add(person)
+		db.session.commit()
+		flash('Person Added Successfully')
+		return redirect(url_for('main.team'))
+	return render_template("cmrf/add_person.html", errors=form.errors.items(), form=form)
