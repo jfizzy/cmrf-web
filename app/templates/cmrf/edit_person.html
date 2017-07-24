@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
+
+{% block title %}{{super()}} - Edit Person{% endblock %}
+
+{% block page_content %}
+<div class="container">
+  <div class="page-header">
+      <h1>Editing Person with ID : {{per.ID}}</h1>
+  </div>
+  <div class="well col-md-6">
+	  <form method="post" enctype="multipart/form-data" action="{{ url_for('cmrf.edit_person', id=per.ID) }}">
+		  {{form.hidden_tag()}}
+		  
+		  {# Name #}
+		  {{ render_field(form.name, with_label="Name", class_="form-control") }}
+		  <hr>
+
+		  {# Description #}
+		  {{ render_field(form.title, with_label="Title", class_="form-control") }}
+		  <hr>
+		  
+		  {# Caption #}
+		  {{ render_field(form.caption, with_label="Caption", class_="form-control") }}
+		  <hr>
+		  
+		  {# Email #}
+		  {{ render_field(form.email, with_label="Email", class_="form-control") }}
+		  <hr>
+		  
+		  {# Photo #}
+		  {{ render_field(form.file, with_label="Photo", accept=".png,.jpg,.jpe,.jpeg,.gif") }}
+
+		  {# Submit #}
+		  {{form.submit(class="btn btn-primary", type="submit", style="width: 40%; margin-left: 30%;")}}
+      </form>	      
+  </div>
+</div>
+{% endblock %}

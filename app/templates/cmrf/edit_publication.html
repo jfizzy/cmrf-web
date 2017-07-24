@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
+
+{% block title %}{{super()}} - Edit Publication{% endblock %}
+
+{% block page_content %}
+<div class="container">
+  <div class="page-header">
+      <h1>Editing Publication with ID : {{p.ID}}</h1>
+  </div>
+  <div class="well col-md-6">
+	  <form method="post" enctype="multipart/form-data" action="{{ url_for('cmrf.edit_publication', id=p.ID) }}">
+		  {{form.hidden_tag()}}
+		  
+		  {# Title #}
+		  {{ render_field(form.title, with_label="Title", class_="form-control") }}
+		  <hr>
+
+		  {# Description #}
+		  {{ render_field(form.desc, with_label="Description", rows="6", class_="form-control") }}
+		  <hr>
+
+		  {# PDF #}
+		  {{ render_field(form.file, with_label="PDF (Adding a file replaces the old one.)", accept=".pdf") }}
+
+		  {# Submit #}
+		  {{form.submit(class="btn btn-primary", type="submit", style="width: 40%; margin-left: 30%;")}}
+      </form>	      
+  </div>
+</div>
+{% endblock %}

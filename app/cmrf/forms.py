@@ -73,7 +73,7 @@ class PersonForm(Form):
 	name = StringField('Name', validators=[Required(), Length(6, 64)])
 	title = StringField('Title', validators=[Required(), Length(6, 64)])
 	caption = TextAreaField('Caption', validators=[Optional(), Length(6,300)])
-	email = StringField('Email (Optional)', validators=[Optional(), Length(5, 64), Email(), Unique(Person, Person.email, 'Email already added to other Person')])
+	email = StringField('Email (Optional)', validators=[Optional(), Length(5, 64), Email()])
 	file = FileField('Photo (png, jpg, gif) (Optional) ', validators=[FileAllowed(photos, 'Only images of approved types may be uploaded.')])
 	
 	submit = SubmitField("Submit")

@@ -295,6 +295,8 @@ def all_news_items():
 	newsitems = NewsItem.query.join(User, NewsItem.UCID==User.UCID).all()
 	return render_template("cmrf/all_news_items.html", newsitems=newsitems)
 
+# Publication management routes
+
 @cmrf.route('/add-publication', methods=['GET', 'POST'])
 @login_required
 @add_article_required
@@ -310,6 +312,42 @@ def add_publication():
 		return redirect(url_for('main.publications'))
 	return render_template("cmrf/add_publication.html", errors=form.errors.items(), form=form)
 	
+@cmrf.route('/edit-publication/<int:id>', methods=['GET', 'POST'])
+@login_required
+@editing_required
+def edit_publication(id):
+	p = Publication.query.get_or_404(id)
+	form = PublicationForm(p=p)
+	if form.validate_on_submit():
+		if request.files['file']:
+			os.remove(os.path.join('./app/uploads/documents/' + p.pdf_name))
+			filename = documents.save(request.files['file'])
+			url = documents.url(filename)
+			p.pdf_name = filename
+			p.pdf_url = url
+		p.title = form.title.data
+		p.desc = form.desc.data
+		db.session.add(p)
+		db.session.commit()
+		flash('Changes Saved Successfully')
+		return redirect(url_for('main.publications'))
+	form.title.data = p.title
+	form.desc.data = p.desc
+	return render_template("cmrf/edit_publication.html", errors=form.errors.items(), form=form, p=p)
+
+@cmrf.route('/delete-publication/<int:id>', methods=['GET', 'POST'])
+@login_required
+@editing_required
+def delete_publication(id):
+	p = Publication.query.get_or_404(id)
+	os.remove(os.path.join('./app/uploads/documents/' + p.pdf_name))
+	db.session.delete(p)
+	db.session.commit()
+	flash('Publication Successfully removed')
+	return redirect(url_for('main.publications'))
+
+# Person management routes
+
 @cmrf.route('/add-person', methods=['GET', 'POST'])
 @login_required
 @editing_required
@@ -328,3 +366,39 @@ def add_person():
 		flash('Person Added Successfully')
 		return redirect(url_for('main.team'))
 	return render_template("cmrf/add_person.html", errors=form.errors.items(), form=form)
+	
+@cmrf.route('/edit-person/<int:id>', methods=['GET', 'POST'])
+@login_required
+@editing_required
+def edit_person(id):
+	per = Person.query.get_or_404(id)
+	form = PersonForm(per=per)
+	if form.validate_on_submit():
+		if request.files['file']:
+			os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))
+			per.photo_name = photos.save(request.files['file'])
+			per.photo_url = photos.url(per.photo_name)
+		per.name = form.name.data
+		per.title = form.title.data
+		per.caption = form.caption.data
+		per.email = form.email.data
+		db.session.add(per)
+		db.session.commit()
+		flash('Person Updated Successfully')
+		return redirect(url_for('main.team'))
+	form.name.data = per.name
+	form.title.data = per.title
+	form.caption.data = per.caption
+	form.email.data = per.email
+	return render_template("cmrf/edit_person.html", errors=form.errors.items(), form=form, per=per)
+	
+@cmrf.route('/delete-person/<int:id>', methods=['GET', 'POST'])
+@login_required
+@editing_required
+def delete_person(id):
+	per = Person.query.get_or_404(id)
+	os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))
+	db.session.delete(per)
+	db.session.commit()
+	flash('Person Successfully removed')
+	return redirect(url_for('main.team'))
