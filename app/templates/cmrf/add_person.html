@@ -20,9 +20,14 @@
 		  {# Description #}
 		  {{ render_field(form.title, with_label="Title", class_="form-control") }}
 		  <hr>
-
+		  
+		  {# Caption #}
+		  {{ render_field(form.caption, with_label="Caption", class_="form-control") }}
+		  <hr>
+		  
 		  {# Email #}
 		  {{ render_field(form.email, with_label="Email", class_="form-control") }}
+		  <hr>
 		  
 		  {# Photo #}
 		  {{ render_field(form.file, with_label="Photo", accept=".png,.jpg,.jpe,.jpeg,.gif") }}

@@ -13,100 +13,33 @@
 <div class="container-full-background">
     <div class="container">
         <div class="row">
-            {% for post in posts %}
+            {% for person in people %}
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="thumbnail thumbnail4">
                     <div class="crop-img">
-                        <img src="{{ post.pic }}" alt="">
+						{% if person.photo_name %}
+                        <img src="photo/{{person.ID}}" alt="">
+						{% else %}
+						<img src="{{ url_for('static', filename='assets/placeholder.jpg') }}" alt="">
+						{% endif %}
                     </div>
-                    <div class="caption">
-                        <h> {{ post.name }} </h>
-                        <h1> {{ post.title }} </h1>
-                        {% if post.caption %}
-                        <p> 
-                            {{ post.caption }}
-                        </p>
-                        {% endif %}
-                    </div>
-                    {% if post.school == 'University of Calgary' %}
-                    <div class="popup" onclick="myFunction('{{ post.name }}')">Contact...
-                        <div class="popuptext" id="{{ post.name }}"> 
-                            {{ post.dept }} <br>
-                            {{ post.school }}<br>
-                            {{ post.address }}<br>
-                            {{ post.city }}<br>
-                            {{ post.postal }}<br>
-                            Tel: {{ post.tel }}<br>
-                            {% if post.name == 'Dr. Vishaldeep Sidhu' %}
-                            Fax: {{ post.fax }} <br>
-                            {% endif %}
-                            e-mail: <a href"mailto:{{ post.emailaddress }}">{{ post.emailaddress }}</a><br>
-                        </div>
-                    </div>
-                    {% endif %}
+                    <div class="caption" style="text-align: center;">
+                        <h> {{ person.name }} </h>
+                        <h1> {{ person.title }} 
+						{% if person.email %}
+						<br><small><a href="mailto:{{person.email}}">{{person.email}}</a></small></h1>
+						{% endif %}
+						{% if person.caption %}
+                    	<p>{{person.caption}}</p>
+						{% endif %}
+					</div>
                 </div>
             </div>
-            {% if loop.index0 == 2 or loop.index0 == 5 %}
-        </div>
-        <hr>
-        <div class="row">
-            {% endif %}
             {% endfor %}
         </div>
     </div>
 </div>
 
-<!--<div class="container">
-    <div class="row">
-        <h1 class="well">Alumni</h1>
-    </div>
-</div>
-<div class="container-full-background">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="thumbnail thumbnail4">
-                    <div class="crop-img">
-                        <img src="{{ url_for('static', filename='assets/placeholder.jpg') }}" alt="">
-                    </div>
-                    <div class="caption">
-                        <h> Name </h>
-                        <h1> Title </h1>
-                        <p> 
-                            Short bio...
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="thumbnail thumbnail4">
-                    <div class="crop-img">
-                        <img src="{{ url_for('static', filename='assets/placeholder.jpg') }}" alt="">
-                    </div>
-                    <div class="caption">
-                        <h> Name </h>
-                        <h1> Title </h1>
-                        <p> 
-                            Short bio...
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="thumbnail thumbnail4">
-                    <div class="crop-img">
-                        <img src="{{ url_for('static', filename='assets/placeholder.jpg') }}" alt="">
-                    </div>
-                    <div class="caption">
-                        <h> Name </h>
-                        <h1> Title </h1>
-                        <p> 
-                            Short bio...
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
+<!--<h1 class="well">Alumni</h1>-->
+
 {% endblock %}

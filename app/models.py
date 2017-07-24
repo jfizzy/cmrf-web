@@ -348,14 +348,16 @@ class Person(db.Model):
 	submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
 	name = db.Column(db.String(64), nullable=False)
 	title = db.Column(db.String(64), nullable=False)
+	caption = db.Column(db.Text, nullable=True)
 	email = db.Column(db.String(64), nullable=True, default=None)
 	photo_name = db.Column(db.Text, nullable=True, default=None)
 	photo_url = db.Column(db.Text, nullable=True, default=None)
 	
-	def __init__(self, ucid, name, title, email=None, photo_name=None, photo_url=None):
+	def __init__(self, ucid, name, title, caption=None, email=None, photo_name=None, photo_url=None):
 		self.UCID = ucid
 		self.name=name
 		self.title=title
+		self.caption=caption
 		self.email=email
 		self.photo_name=photo_name
 		self.photo_url=photo_url

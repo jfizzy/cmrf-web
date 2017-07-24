@@ -316,9 +316,13 @@ def add_publication():
 def add_person():
 	form = PersonForm()
 	if form.validate_on_submit():
-		filename = photos.save(request.files['file'])
-		url = photos.url(filename)
-		person = Person(current_user.id, form.name.data, form.title.data, form.email.data, filename, url)
+		if request.files['file']:
+			filename = photos.save(request.files['file'])
+			url = photos.url(filename)
+		else:
+			filename = None
+			url = None
+		person = Person(current_user.id, form.name.data, form.title.data, form.caption.data, form.email.data, filename, url)
 		db.session.add(person)
 		db.session.commit()
 		flash('Person Added Successfully')
