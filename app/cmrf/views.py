@@ -255,7 +255,9 @@ def add_news_item():
 		if request.files['file']:
 			filename = photos.save(request.files['file'])
 			url = photos.url(filename)
-		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data, image=(filename or None))
+			news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data, image=filename)
+		else:
+			news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data, image=None)
 		db.session.add(news)
 		db.session.commit()
 		flash('News Item Added Successfully')
