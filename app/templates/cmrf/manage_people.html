@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{super()}} - Manage People{% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+  <div class="page-header">
+    <h1>Manage People</h1>
+  </div>
+</div>
+
+<div class="container">
+	<div class="container">
+	<div class="table-responsive">
+		<table id="ppl_mgmt_table" class="table table-hover cell-border">
+			<thead class="thead-inverse">
+        		<tr>
+	          		<th>ID</th>
+	          		<th>Submitter UCID</th>
+					<th>Name</th>
+	          		<th>Title</th>
+					<th>Email</th>
+	          		<th>Date Submitted</th>
+	          		<th>Photo Filename</th>
+	          		<th>Edit</th>
+	          		<th>Delete</th>
+        		</tr>
+			</thead>
+			<tbody>
+				{% for p in ppl %}
+				<tr>
+					<td>{{p.ID}}</td>
+					<td><a href="{{ url_for('auth.adm_account_details', id=p.UCID) }}">
+						{{p.UCID}}</a></td>
+					<td>{{p.name}}</td>
+					<td>{% if p.title|length > 17 %}{{p.title[:15]+'...'}}{% else %}{{p.title}}{% endif %}</td>
+					<td>{{p.email}}</td>
+					<td>{{p.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
+					<td><a href="{{ url_for('main.show_pic', id=p.ID) }}">{{p.photo_name}}</a></td>
+					<td><a href="{{ url_for('cmrf.edit_person', id=p.ID) }}">Edit</a></td>
+					<td><a href="{{ url_for('cmrf.delete_person', id=p.ID) }}">Delete</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+</div>
+
+{% endblock %}

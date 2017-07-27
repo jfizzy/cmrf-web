@@ -21,20 +21,25 @@
 </div>
 
 <div class="container">
-	<div class="list-group">
-	{% for newsitem in newsitems %}
-		{% if newsitem.url %}
-        <a href="{{newsitem.url}}"{% else %}<div{% endif %} class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{newsitem.title}} {% if current_user.can(Permission.EDITING) %}<small>Submitted: {{newsitem.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</small>{% endif %}</h5>
-            </div>
-            <p class="mb-1">{{newsitem.desc}}</p>
-		{% if newsitem.url %}
-        </a>
-		{% else %}
-		</div>
-		{% endif %}
-	{% endfor %}
+	<div class="col-md-12 list-group">
+		{% for newsitem in newsitems %}
+			<div class="media mb-1 list-group-item list-group-item-action flex-column align-items-start">
+				<div class="media-left waves-light">
+					{% if newsitem.image %}
+					<img class="news pull-left" src="{{ url_for('main.show_thumb', id=newsitem.ID) }}" style="height: 150px; width= 150px; margin-right: 20px;">
+					{% else %}
+					<img class="news pull-left" src="{{ url_for('static', filename='assets/lrg_logo.jpg') }}" style="height: 150px; width= 150px; margin-right: 20px;">
+					{% endif %}
+				</div>
+				<div class="media-body">
+					<a href="{{newsitem.url}}" style="text-decoration: none;">
+						<h4 class="media-heading">{{newsitem.title}}</h4>
+					</a>
+					<small class="text-muted">{{newsitem.submit_date.strftime('%b %-d %Y')}}</small>
+					<p>{{newsitem.desc}}</p>
+				</div>
+			</div>
+		{% endfor %}
 	</div>
 </div>
 

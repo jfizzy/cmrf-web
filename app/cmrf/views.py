@@ -252,7 +252,10 @@ def delete_report(id):
 def add_news_item():
 	form = NewsItemForm()
 	if form.validate_on_submit():
-		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data)
+		if request.files['file']:
+			filename = photos.save(request.files['file'])
+			url = photos.url(filename)
+		news = NewsItem(current_user.id, title=form.title.data, desc=form.desc.data, url=form.url.data, image=(filename or None))
 		db.session.add(news)
 		db.session.commit()
 		flash('News Item Added Successfully')
@@ -266,6 +269,10 @@ def edit_news_item(id):
 	ni = NewsItem.query.get_or_404(id)
 	form = NewsItemForm(ni=ni)
 	if form.validate_on_submit():
+		if request.files['file']:
+			filename = photos.save(request.files['file'])
+			url = photos.url(filename)
+			ni.image = filename
 		ni.title = form.title.data
 		ni.desc = form.desc.data
 		ni.url = form.url.data
@@ -283,6 +290,8 @@ def edit_news_item(id):
 @editing_required
 def delete_news_item(id):
 	ni = NewsItem.query.get_or_404(id)
+	if ni.image is not None:
+		os.remove(os.path.join('./app/uploads/photos/' + ni.image))
 	db.session.delete(ni)
 	db.session.commit()
 	flash('News Item Deleted.')
@@ -335,7 +344,7 @@ def edit_publication(id):
 	form.desc.data = p.desc
 	return render_template("cmrf/edit_publication.html", errors=form.errors.items(), form=form, p=p)
 
-@cmrf.route('/delete-publication/<int:id>', methods=['GET', 'POST'])
+@cmrf.route('/delete-publication/<int:id>', methods=['POST'])
 @login_required
 @editing_required
 def delete_publication(id):
@@ -345,6 +354,13 @@ def delete_publication(id):
 	db.session.commit()
 	flash('Publication Successfully removed')
 	return redirect(url_for('main.publications'))
+	
+@cmrf.route('/manage-publications', methods=['GET'])
+@login_required
+@editing_required
+def manage_publications():
+	pubs = Publication.query.order_by(Publication.submit_date.desc()).all()
+	return render_template("cmrf/manage_publications.html", pubs=pubs)
 
 # Person management routes
 
@@ -392,7 +408,7 @@ def edit_person(id):
 	form.email.data = per.email
 	return render_template("cmrf/edit_person.html", errors=form.errors.items(), form=form, per=per)
 	
-@cmrf.route('/delete-person/<int:id>', methods=['GET', 'POST'])
+@cmrf.route('/delete-person/<int:id>', methods=['POST'])
 @login_required
 @editing_required
 def delete_person(id):
@@ -402,3 +418,10 @@ def delete_person(id):
 	db.session.commit()
 	flash('Person Successfully removed')
 	return redirect(url_for('main.team'))
+	
+@cmrf.route('/manage-people', methods=['GET'])
+@login_required
+@editing_required
+def manage_people():
+	ppl = Person.query.order_by(Person.submit_date.desc()).all()
+	return render_template("cmrf/manage_people.html", ppl=ppl)

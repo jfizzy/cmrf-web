@@ -55,7 +55,9 @@ lang="en"
                     	<ul class="dropdown-menu">
                         	<li><a href="{{ url_for('main.team') }}">Team</a></li>
                         	<li role="separator" class="divider"></li>
+							<li class="dropdown-header">Admin Tools</li>
                         	<li><a href="{{ url_for('cmrf.add_person') }}">Add Person</a></li>
+							<li><a href="{{ url_for('cmrf.manage_people') }}">Manage People </a></li>
                     	</ul>
 					</li>
 				{% else %}
@@ -69,7 +71,9 @@ lang="en"
                     <ul class="dropdown-menu">
                         <li><a href="{{ url_for('main.news') }}">News</a></li>
                         <li role="separator" class="divider"></li>
+						<li class="dropdown-header">Admin Tools</li>
                         <li><a href="{{ url_for('cmrf.add_news_item') }}">Add News</a></li>
+                        <li><a href="{{ url_for('cmrf.all_news_items') }}">Manage News</a></li>
                     </ul>
                 </li>
 				{% else %}
@@ -89,6 +93,7 @@ lang="en"
 						<li role="separator" class="divider"></li>
                         <li class="dropdown-header">Admin Tools</li>
 						<li><a href="{{ url_for('cmrf.add_publication') }}">Add Publication</a></li>
+						<li><a href="{{ url_for('cmrf.manage_publications') }}">Manage Publications</a></li>
 						{% endif %}
                     </ul>
                 </li>

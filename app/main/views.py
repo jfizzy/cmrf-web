@@ -59,7 +59,7 @@ def publications():
 	
 	return render_template('publications.html', publications=publications)
 	
-@main.route('/publication/<id>')
+@main.route('/publication/<int:id>')
 def show_pub(id):
 	doc = Publication.query.filter_by(ID=str(id)).first_or_404()
 	#get binary document data
@@ -70,7 +70,7 @@ def show_pub(id):
 		response.headers['Content-Disposition'] = 'inline; filename=%s' % doc.pdf_name
 		return response
 
-@main.route('/photo/<id>')
+@main.route('/photo/<int:id>')
 def show_pic(id):
 	person = Person.query.filter_by(ID=str(id)).first_or_404()
 	with open('./app/uploads/photos/' + person.photo_name, mode='rb') as pic:
@@ -80,6 +80,15 @@ def show_pic(id):
 		response.headers['Content-Disposition'] = 'inline; filename=%s' % person.photo_name
 		return response
 
+@main.route('/thumb/<int:id>')
+def show_thumb(id):
+	ni = NewsItem.query.filter_by(ID=str(id)).first_or_404()
+	with open('./app/uploads/photos/' + ni.image, mode='rb') as pic:
+		pic_content = pic.read()
+		response = make_response(pic_content)
+		response.headers['Content-Type'] = 'image'
+		response.headers['Content-Disposition'] = 'inline; filename=%s' % ni.image
+		return response
 
 @main.route('/view-image/<image>')
 def view_image(image):

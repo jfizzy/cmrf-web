@@ -304,14 +304,17 @@ class NewsItem(db.Model):
     submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
     desc = db.Column(db.Text, nullable=True)
     url = db.Column(db.Text, nullable=True)
+    image= db.Column(db.Text, nullable=True)
 	
-    def __init__(self, ucid, title, desc=None, url=None):
+    def __init__(self, ucid, title, desc=None, url=None, image=None):
 	self.UCID = ucid
 	self.title = title
 	if desc is not None:
 	    self.desc = desc
 	if url is not None:
 	    self.url = url
+	if image is not None:
+	    self.image = image
 
     def __repr__(self):
 	return '<News Item - ID: [%s], UCID: [%s], Title: [%s]>' % (self.ID, self.UCID, self.title)

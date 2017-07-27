@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
 
 {% block title %}{{super()}} - Edit News Item{% endblock %}
 
@@ -8,8 +9,28 @@
   <div class="page-header">
       <h1>Edit News Item - ID: {{ni.ID}}</h1>
   </div>
-  <div class="col-md-4">
-    {{ wtf.quick_form(form) }}
+  <div class="well col-md-6">
+	  <form method="post" enctype="multipart/form-data" action="{{ url_for('cmrf.edit_news_item', id=ni.ID) }}">
+		  {{form.hidden_tag()}}
+		  
+		  {# Title #}
+		  {{ render_field(form.title, with_label="Title", class_="form-control") }}
+		  <hr>
+		  
+		  {# Description #}
+		  {{ render_field(form.desc, with_label="Caption", class_="form-control") }}
+		  <hr>
+		  
+		  {# URL #}
+		  {{ render_field(form.url, with_label="Email", class_="form-control") }}
+		  <hr>
+		  
+		  {# Image #}
+		  {{ render_field(form.file, with_label="Image", accept=".png,.jpg,.jpe,.jpeg,.gif") }}
+
+		  {# Submit #}
+		  {{form.submit(class="btn btn-primary", type="submit", style="width: 40%; margin-left: 30%;")}}
+      </form>	      
   </div>
 </div>
 {% endblock %}
