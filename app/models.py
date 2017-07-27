@@ -300,7 +300,7 @@ class NewsItem(db.Model):
 	
     ID = db.Column(db.Integer, primary_key=True, nullable=False)
     UCID = db.Column(db.Integer, db.ForeignKey("USER.UCID"), nullable=False)
-    title = db.Column(db.String(64), nullable=False)
+    title = db.Column(db.Text, nullable=False)
     submit_date = db.Column(db.DateTime, default=datetime.datetime.now)
     desc = db.Column(db.Text, nullable=True)
     url = db.Column(db.Text, nullable=True)
