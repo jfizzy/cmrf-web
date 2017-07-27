@@ -25,9 +25,9 @@
                     </div>
                     <div class="caption" style="text-align: center;">
                         <h> {{ person.name }} </h>
-                        <h1> {{ person.title }} 
+                        <h1>{{ person.title }}</h1>
 						{% if person.email %}
-						<br><small><a href="mailto:{{person.email}}">{{person.email}}</a></small></h1>
+						<h1><small><a href="mailto:{{person.email}}">{{person.email}}</a></small></h1>
 						{% endif %}
 						{% if person.caption %}
                     	<p>{{person.caption}}</p>
