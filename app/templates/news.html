@@ -12,8 +12,13 @@
             <h1 class="page-header">Latest News<br>
                 <small>Lewis Research Group</small>
             </h1>
+			{% if current_user.can(Permission.ADD_ARTICLE) %}
+				<a class="btn btn-primary" href="{{url_for('cmrf.add_news_item')}}">Add News Item</a>
+			{% endif %}
 			{% if current_user.can(Permission.EDITING) %}
-				<a class="btn btn-warning" href="{{url_for('cmrf.all_news_items')}}">Admin News Table <span class="glyphicon glyphicon-pencil"></span></a>
+				<a class="btn btn-primary" href="{{url_for('cmrf.all_news_items')}}">Admin News Table</a>
+			{% endif %}
+			{% if current_user.can(Permission.EDITING) or current_user.can(Permission.ADD_ARTICLE) %}
 				<hr>
 			{% endif %}
         </div>
@@ -23,22 +28,20 @@
 <div class="container">
 	<div class="col-md-12 list-group">
 		{% for newsitem in newsitems %}
-			<div class="media mb-1 list-group-item list-group-item-action flex-column align-items-start">
-				<div class="media-left waves-light">
-					{% if newsitem.image %}
-					<img class="news pull-left" src="{{ url_for('main.show_thumb', id=newsitem.ID) }}" style="height: 150px; width= 150px; margin-right: 20px;">
-					{% else %}
-					<img class="news pull-left" src="{{ url_for('static', filename='assets/lrg_logo.jpg') }}" style="height: 150px; width= 150px; margin-right: 20px;">
-					{% endif %}
-				</div>
-				<div class="media-body">
-					<a href="{{newsitem.url}}" style="text-decoration: none;">
-						<h4 class="media-heading">{{newsitem.title}}</h4>
-					</a>
-					<small class="text-muted">{{newsitem.submit_date.strftime('%b %-d %Y')}}</small>
-					<p>{{newsitem.desc}}</p>
-				</div>
+		<a href="{{newsitem.url}}" class="media mb-1 list-group-item list-group-item-action flex-column align-items-start">
+			<div class="media-left waves-light">
+				{% if newsitem.image %}
+				<img class="news pull-left" src="{{ url_for('main.show_thumb', id=newsitem.ID) }}" style="height: 150px; width= 150px; margin-right: 20px;">
+				{% else %}
+				<img class="news pull-left" src="{{ url_for('static', filename='assets/lrg_logo.jpg') }}" style="height: 150px; width= 150px; margin-right: 20px;">
+				{% endif %}
 			</div>
+			<div class="media-body">
+				<h4 class="media-heading">{{newsitem.title}}</h4>
+				<small class="text-muted">{{newsitem.submit_date.strftime('%b %-d %Y')}}</small>
+				<p style="margin-top: 1em;">{{newsitem.desc}}</p>
+			</div>
+		</a>
 		{% endfor %}
 	</div>
 </div>
