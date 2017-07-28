@@ -162,7 +162,7 @@ lang="en"
 
 {% block page_content %}{% endblock %}
 
-<div class="container-fluid hidden-xs">
+<div class="container-fluid">
     <div class="row">
         <div class="span12" id="footer">
             {% block footer_note %}{% endblock %}
@@ -197,10 +197,17 @@ $(document).ready(function () {
         interval: 5000 //changes the speed
     })
 </script>
+<script src="{{url_for('static', filename='scripts/jquery.matchHeight-min.js')}}"></script>
 <script>
-    function myFunction(name) {
-        var popup = document.getElementById(name);
-        popup.classList.toggle('show');
-    }
+    (function() {
+            $(function() {
+                $('.thumbnail').matchHeight({
+                    byRow: true,
+                    property: 'height',
+                    target: null,
+                    remove: false
+                });
+            });
+		})();
 </script>
 {% endblock %}

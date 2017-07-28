@@ -28,7 +28,22 @@ class FlaskClientTestCase(unittest.TestCase):
             'first_name': 'John',
             'last_name': 'Doe',
             'email': 'john@example.com',
-            'password': 'cat',
-            'password_confirm': 'cat'
+            'password': 'helloworld',
+            'password_confirm': 'helloworld',
+            'lab': 'Somewhere'
+        })
+        self.assertTrue(response.status_code == 302)
+
+    def test_register_and_login_w_phone(self):
+        # register a new account with a phone number
+        response = self.client.post(url_for('auth.register'), data={
+            'UCID': 11111111,
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'email': 'john@example.com',
+            'password': 'helloworld',
+            'password_confirm': 'helloworld',
+            'lab': 'Somewhere',
+            'phone': '1234567890'
         })
         self.assertTrue(response.status_code == 302)

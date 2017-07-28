@@ -7,36 +7,42 @@
 
 <div class="container">
     <div class="row">
-        <h1 class="well">Team</h1>
-    </div>
-</div>
-<div class="container-full-background">
-    <div class="container">
-        <div class="row">
-            {% for person in people %}
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="thumbnail thumbnail4">
-                    <div class="crop-img">
-						{% if person.photo_name %}
-                        <img src="photo/{{person.ID}}" alt="">
-						{% else %}
-						<img src="{{ url_for('static', filename='assets/placeholder.jpg') }}" alt="">
-						{% endif %}
-                    </div>
-                    <div class="caption" style="text-align: center;">
-                        <h> {{ person.name }} </h>
-                        <h1>{{ person.title }}</h1>
-						{% if person.email %}
-						<h1><small><a href="mailto:{{person.email}}">{{person.email}}</a></small></h1>
-						{% endif %}
-						{% if person.caption %}
-                    	<p>{{person.caption}}</p>
-						{% endif %}
-					</div>
-                </div>
-            </div>
-            {% endfor %}
+        <div class="col-md-12">
+            <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/5_team.jpg') }}" alt="">
         </div>
+        <div class="col-md-12">
+            <div class="well">
+                <h2>Team </h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+		
+		<div class="col-lg-12">
+            <h3 class="page-header"><small>Meet the Lewis Research Group</small></h3>
+        </div>
+		
+		{% for person in people %}
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 thumb">
+            <div class="thumbnail">
+				{% if person.photo_name %}
+                <img class="img-responsive" src="photo/{{person.ID}}" alt="">
+				{% else %}
+				<img src="{{ url_for('static', filename='assets/placeholder.jpg') }}" alt="">
+				{% endif %}
+				<div class="caption" style="text-align: center;">
+					<h> {{ person.name }} </h>
+	                <h1>{{ person.title }}</h1>
+					{% if person.email %}
+					<h1><small><a href="mailto:{{person.email}}">{{person.email}}</a></small></h1>
+					{% endif %}
+					{% if person.caption %}
+	            	<p>{{person.caption}}</p>
+					{% endif %}
+				</div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 

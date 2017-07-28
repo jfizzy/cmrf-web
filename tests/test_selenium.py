@@ -2,7 +2,7 @@ import re
 import threading
 import time
 import unittest
-from selenium import webdriver
+from selenium import webdriver.Chrome
 from app import create_app, db
 from app.models import Role, User
 
@@ -11,9 +11,9 @@ class SeleniumTestCase(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        # start Firefox
+        # start Chrome
         try:
-            cls.client = webdriver.Firefox()
+            cls.client = Chrome()
         except:
             pass
         
@@ -35,20 +35,24 @@ class SeleniumTestCase(unittest.TestCase):
             user = User(UCID=11111111, 
                         first_name='Jane', 
                         last_name='Doe', 
-                        password='doggy', 
-                        email='jane@example.com', 
+                        password='doggy',
+                        password_confirm='doggy',
+                        email='jane@example.com',
+                        lab='Somewhere',
                         confirmed=True)
             db.session.add(user)
             db.session.commit()
             
             # add an administrator user
-            admin_role = 2
+            admin_role = 4
             admin = User(UCID=99999999, 
                          first_name='Arnold', 
                          last_name='Schwartz', 
-                         password='illbeback', 
-                         email='arnold@example.com', 
-                         confirmed=True, 
+                         password='illbeback',
+                         password_confirm='illbeback',
+                         email='arnold@example.com',
+                         lab='Somewhere',
+                         confirmed=True,
                          role_id=admin_role)
             db.session.add(admin)
             db.session.commit()

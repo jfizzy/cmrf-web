@@ -51,15 +51,15 @@ class RequestForm(Form):
 class ReportForm(Form):
     balance = StringField('Balance For Request ($):', validators=[Required(), Length(2,20), Regexp('^[0-9]*$', 0, 'Must be an Integer')])
     desc = StringField('Notes', validators=[Required(), Length(0, 200)], widget=TextArea())
-    file_loc = StringField('File Location (Results)', validators=[Optional()])
+    file_loc = StringField('File Location of Results (Optional)', validators=[Optional()])
 
     submit = SubmitField("Submit")
 	
 class NewsItemForm(Form):
 	title = StringField('Title', validators=[Required(), Length(1, 400)])
 	desc = StringField('Description', validators=[Required(), Length(0, 2000)], widget=TextArea())
-	url = StringField('URL', validators=[Optional(), URL(require_tld=False, message='Please enter a valid URL.')])
-	file = FileField('Image', validators=[Optional(), FileAllowed(photos, 'Only images of approved types may be uploaded.')])
+	url = StringField('URL (Optional)', validators=[Optional(), URL(require_tld=False, message='Please enter a valid URL')])
+	file = FileField('Image (Optional)', validators=[Optional(), FileAllowed(photos, 'Only images of approved types may be uploaded.')])
 	
 	submit = SubmitField("Submit")
 	
@@ -73,7 +73,7 @@ class PublicationForm(Form):
 class PersonForm(Form):
 	name = StringField('Name', validators=[Required(), Length(6, 64)])
 	title = StringField('Title', validators=[Required(), Length(6, 64)])
-	caption = TextAreaField('Caption', validators=[Optional(), Length(6,300)])
+	caption = TextAreaField('Caption (Optional)', validators=[Optional(), Length(6,300)])
 	email = StringField('Email (Optional)', validators=[Optional(), Length(5, 64), Email()])
 	file = FileField('Photo (png, jpg, gif) (Optional) ', validators=[FileAllowed(photos, 'Only images of approved types may be uploaded.')])
 	
