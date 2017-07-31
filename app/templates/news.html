@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Latest News<br>
+            <h1 class="page-header">Latest News 
                 <small>Lewis Research Group</small>
             </h1>
 			{% if current_user.can(Permission.ADD_ARTICLE) %}
@@ -29,7 +29,7 @@
 	<div class="col-md-12 list-group">
 		{% for newsitem in newsitems %}
 		<a href="{{newsitem.url}}" class="media mb-1 list-group-item list-group-item-action flex-column align-items-start">
-			<div class="media-left waves-light">
+			<div class="media-left waves-light hidden-xs">
 				{% if newsitem.image %}
 				<img class="news pull-left" src="{{ url_for('main.show_thumb', id=newsitem.ID) }}" style="height: 150px; width= 150px; margin-right: 20px;">
 				{% else %}
