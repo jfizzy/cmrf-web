@@ -1,93 +1,91 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}{{super()}} - Home{% endblock %}
+{% block title %}{{super()}} - CMRF{% endblock %}
 
 {% block page_content %}
 <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">CMRF
-                    <small>Calgary Metabolomics Research Facility</small>
-                </h1>
+    <div class="row">
+        <div class="col-md-5 col-xs-6">
+            <div class="imgholder">
+                <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/f_inst.jpg') }}" alt="">
             </div>
         </div>
-		
-        <div class="row">
-
-            <div class="col-md-8">
-                <img class="img-responsive" src="{{ url_for('static', filename='assets/facility.jpg') }}" alt="">
+        <div class="col-md-2 hidden-sm hidden-xs">
+            <div class="midholder">
+                <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/spon_wcmc.jpg') }}" alt="">
             </div>
-			<hr class="hidden-lg hidden-md">
-            <div class="col-md-4">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
-						<a href="http://www.lewisresearchgroup.org">
-                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/lrg_logo.jpg') }}" alt="">
-                		</a>
-                	</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 thumb">
-						<a href="http://www.snyder.ucalgary.ca/resources/western-canadian-microbiome-centre">
-                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_wcmc.jpg') }}" alt="">
-                		</a>
-                	</div>
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 thumb">
-						<a href="https://www.innovation.ca/">
-                    		<img class="img-responsive" src="{{ url_for('static', filename='assets/spon_cfi.jpg') }}" alt="">
-                		</a>
-                	</div>
-					<br>
-					Lab Services: 
-					<a style="float: bottom-right;" class="btn btn-primary" href="{{url_for('auth.register')}}">Sign Up <span class="glyphicon glyphicon-chevron-right"></span></a>
-				
+            <div class="midholder">
+                <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/spon_cfi.jpg') }}" alt="">
             </div>
-
         </div>
-		
-        <div class="row">
-			<div class="col-lg-12">
-				<h3>Facility</h3>
-				<hr>
-				<p>The Calgary Metabolomics Research Facility (CMRF) is a state-of-the-art mass spectrometry and computational laboratory built specifically for unravelling the complex metabolic interactions that occur during human infections. These projects are supported by three independent analytical platforms, extensive bioinformatic resources, and expert staff who assist in the training and use of the specialized infrastructure.</p>
-			</div>
-            <div class="col-lg-12">
-                <h3 class="page-header">Instruments</h3>
+        <div class="col-md-5 col-xs-6">
+            <div class="imgholder">
+                <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/f_inst_2.jpg') }}" alt="">
             </div>
+        </div>
+        <div class="col-xs-12">
+            <h1 class="page-header">CMRF
+                <small>Calgary Metabolomics Research Facility</small>
+            </h1>
+        </div>
+    </div>
+		
+    <div class="row">
+		<div class="col-lg-12">
+			<p class="lead">The Calgary Metabolomics Research Facility (CMRF) is a state-of-the-art mass spectrometry and computational laboratory built specifically for unravelling the complex metabolic interactions that occur during human infections. These projects are supported by three independent analytical platforms, extensive bioinformatic resources, and expert staff who assist in the training and use of the specialized infrastructure.</p>
 		</div>
-
-        <div class="row">    
-            <div class="col-md-6 portfolio-item">
-				<img class="img-responsive" src="{{ url_for('static', filename='assets/fp_met_disc_plat.jpg') }}" alt="">
-                <h3>
-                    Metabolite Discovery Platform
-                </h3>
-                <p>Our discovery platform was designed to accommodate challenging metabolite identification projects. The platform includes a Thermo-Fisher Scientific Q-Exactive HF (QE-HF) high-resolution mass spectrometer and a Thermo-Fisher Vanquish ultrahigh performance liquid chromatography (UHPLC) separation system.</p>
-            </div>
-            <div class="col-md-6 portfolio-item">
-                    <img class="img-responsive" src="{{ url_for('static', filename='assets/fp_met_prof_plat.jpg') }}" alt="">
-                <h3>
-                    Metabolite Profiling Platform
-                </h3>
-                <p>Our generalized metabolic profiling platform is built around a dedicated high-resolution mass spectrometer, a Thermo Fisher Scientific Q-Exactive Basic (QE-B), coupled to a Vanquish Flex UHPLC configured for ion-pairing chromatography. This configuration is ideal for quantifying central carbon metabolites and tracks over 250 metabolites covering core metabolic pathways.</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 well">
+			<h4 style="text-align: center;">Register an account with us to begin booking the facility online!</h4>
+            <div class="text-center">
+            <a class="btn btn-lg btn-primary" href="{{url_for('auth.register')}}">Sign Up <span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-6 portfolio-item">
-				<img class="img-responsive" src="{{ url_for('static', filename='assets/fp_tar_anal_plat.jpg') }}" alt="">
-                <h3>
-                    Targeted Analysis Platform
-                </h3>
-                <p>For targeted projects, we use a dedicated Thermo Fisher Quantum Access Max triple quadrupole mass spectrometer (QqQ) coupled to a Vanquish Flex UHPLC. This system is ideal for quantitative analyses and for confirming metabolite assignments.</p>
-            </div>
-            <div class="col-md-6 portfolio-item">
-                <img class="img-responsive" src="{{ url_for('static', filename='assets/fp_bio_syst.jpg') }}" alt="">
-                <h3>
-                    Bioinformatics System
-                </h3>
-                <p>Each of our high-resolution metabolomics platforms can generate >1 GB of data per hour. We have a suite of bioinformatics tools, including 80 TB of storage and dedicated processing sever, for translating this stream of data into biologically meaningful information about pathogenic organisms.</p>
-            </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Instruments</h3>
         </div>
 	</div>
+
+    <div class="row">    
+        <div class="col-md-6 portfolio-item">
+			<img class="img-responsive img-rounded well" src="{{ url_for('static', filename='assets/fp_met_disc_plat.jpg') }}" alt="">
+            <h3>
+                Metabolite Discovery Platform
+            </h3>
+            <p class="lead">Our discovery platform was designed to accommodate challenging metabolite identification projects. The platform includes a Thermo-Fisher Scientific Q-Exactive HF (QE-HF) high-resolution mass spectrometer and a Thermo-Fisher Vanquish ultrahigh performance liquid chromatography (UHPLC) separation system.</p>
+        </div>
+        <div class="col-md-6 portfolio-item">
+                <img class="img-responsive img-rounded well" src="{{ url_for('static', filename='assets/fp_met_prof_plat.jpg') }}" alt="">
+            <h3>
+                Metabolite Profiling Platform
+            </h3>
+            <p class="lead">Our generalized metabolic profiling platform is built around a dedicated high-resolution mass spectrometer, a Thermo Fisher Scientific Q-Exactive Basic (QE-B), coupled to a Vanquish Flex UHPLC configured for ion-pairing chromatography. This configuration is ideal for quantifying central carbon metabolites and tracks over 250 metabolites covering core metabolic pathways.</p>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-md-6 portfolio-item">
+			<img class="img-responsive img-rounded well" src="{{ url_for('static', filename='assets/fp_tar_anal_plat.jpg') }}" alt="">
+            <h3>
+                Targeted Analysis Platform
+            </h3>
+            <p class="lead">For targeted projects, we use a dedicated Thermo Fisher Quantum Access Max triple quadrupole mass spectrometer (QqQ) coupled to a Vanquish Flex UHPLC. This system is ideal for quantitative analyses and for confirming metabolite assignments.</p>
+        </div>
+        <div class="col-md-6 portfolio-item">
+            <img class="img-responsive img-rounded well" src="{{ url_for('static', filename='assets/fp_bio_syst.jpg') }}" alt="">
+            <h3>
+                Bioinformatics System
+            </h3>
+            <p class="lead">Each of our high-resolution metabolomics platforms can generate >1 GB of data per hour. We have a suite of bioinformatics tools, including 80 TB of storage and dedicated processing sever, for translating this stream of data into biologically meaningful information about pathogenic organisms.</p>
+        </div>
+    </div>
+</div>
 	
 <div class="container">
     <div class="row">

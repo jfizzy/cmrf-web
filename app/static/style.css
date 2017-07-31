@@ -578,5 +578,25 @@ footer {
 }
 
 /***************************************/
-/* RESEARCH TOPIC STYLES */
+/* FACILITIES STYLES */
 /***************************************/
+
+.imgholder {
+    display: inline;
+}
+
+.imgholder img {
+    width: 500px;
+    height: 375px;
+    object-fit: cover;
+}
+
+.midholder {
+    display: inline;
+}
+
+.midholder img {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+}

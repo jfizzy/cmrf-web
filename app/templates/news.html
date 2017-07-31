@@ -39,7 +39,7 @@
 			<div class="media-body">
 				<h4 class="media-heading">{{newsitem.title}}</h4>
 				<small class="text-muted">{{newsitem.submit_date.strftime('%b %-d %Y')}}</small>
-				<p style="margin-top: 1em;">{{newsitem.desc}}</p>
+				<p class="lead" style="margin-top: 0.2em;"><small>{{newsitem.desc}}</small></p>
 			</div>
 		</a>
 		{% endfor %}
