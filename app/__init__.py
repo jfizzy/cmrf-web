@@ -16,7 +16,7 @@ moment = Moment()
 db = SQLAlchemy()
 
 login_manager = LoginManager()
-login_manager.session_protection = 'strong'
+login_manager.session_protection = 'basic' #Basic allows persistent sessions. Strong stops this.
 login_manager.login_view = 'auth.login'
 login_manager.refresh_view = 'auth.reauthenticate'
 login_manager.needs_refresh_message = (
