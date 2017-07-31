@@ -23,10 +23,15 @@ class Unique(object):
 
 class LoginForm(Form):
     email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
-    password = PasswordField('Password', validators=[Required(), Length(8, 64)])
+    password = PasswordField('Password', validators=[Required(), Length(4, 64)])
     remember_me = BooleanField('Remember me')
     submit = SubmitField('Log In')
 
+class ReAuthForm(Form):
+    email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
+    password = PasswordField('Password', validators=[Required(), Length(4, 64)])
+    submit = SubmitField('Authenticate')
+    
 class RegistrationForm(Form):
 	UCID = StringField('UCID', validators=[Required(), Length(8, 8),
 										   Regexp('^[0-9]*$', 0,

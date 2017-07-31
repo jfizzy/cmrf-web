@@ -18,6 +18,11 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
+login_manager.refresh_view = 'auth.reauthenticate'
+login_manager.needs_refresh_message = (
+	u'As a security feature, we require that you reauthenticate to access this page.'
+)
+login_manager.needs_refresh_message_category = 'info'
 
 documents = UploadSet('documents', set(['pdf']))
 photos = UploadSet('photos', set(['png', 'jpg', 'jpe', 'jpeg', 'gif']))

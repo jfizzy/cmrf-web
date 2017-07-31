@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, url_for, flash, g, jsonify
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required, current_user, confirm_login, fresh_login_required, login_fresh
 from flask_httpauth import HTTPBasicAuth
 from urllib import unquote
 from ..decorators import admin_required, user_acc_required
@@ -7,7 +7,7 @@ from . import auth
 from .. import db
 from ..models import User, Role, AnonymousUser, WorkOrder
 from ..email import send_email
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
+from .forms import LoginForm, ReAuthForm, RegistrationForm, ChangePasswordForm,\
     PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, ChangeAccountDetailsForm,\
     ChangeAccountDetailsAdminForm
 
@@ -27,6 +27,21 @@ def login():
                 return redirect(url_for('cmrf.index'))
         flash('Invalid email or password.')
     return render_template('auth/login.html', form=form)
+
+@auth.route('/reauthenticate', methods=['GET', 'POST'])
+def reauthenticate():
+    form = ReAuthForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None and h_verify_password(user.email, form.password.data):
+            confirm_login()
+            next = request.args.get('next')
+            if next:
+                return redirect(next)
+            else:
+                return redirect(url_for('cmrf.index'))
+        flash('Invalid email or password.')
+    return render_template('auth/reauthenticate.html', form=form)    
 
 @httpauth.verify_password
 def h_verify_password(email_or_token, password):
@@ -104,7 +119,7 @@ def resend_confirmation():
 	return redirect(url_for('cmrf.index'))
 
 @auth.route('/change-password', methods=['GET', 'POST'])
-@login_required
+@fresh_login_required
 def change_password():
 	form = ChangePasswordForm()
 	if form.validate_on_submit():
@@ -118,6 +133,7 @@ def change_password():
 	return render_template("auth/change_password.html", form=form)
 
 @auth.route('/reset', methods=['GET', 'POST'])
+@fresh_login_required
 def password_reset_request():
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
@@ -136,6 +152,7 @@ def password_reset_request():
     return render_template('auth/reset_password.html', form=form)
 
 @auth.route('/reset/<token>', methods=['GET', 'POST'])
+@fresh_login_required
 def password_reset(token):
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
@@ -152,7 +169,7 @@ def password_reset(token):
     return render_template('auth/reset_password.html', form=form)
 
 @auth.route('/change-email', methods=['GET', 'POST'])
-@login_required
+@fresh_login_required
 def change_email_request():
     form = ChangeEmailForm()
     if form.validate_on_submit():
@@ -170,7 +187,7 @@ def change_email_request():
     return render_template("auth/change_email.html", form=form)
 
 @auth.route('/change-email/<token>')
-@login_required
+@fresh_login_required
 def change_email(token):
     if current_user.change_email(token):
         flash('Your email address has been updated.')
@@ -180,18 +197,19 @@ def change_email(token):
 
 @auth.route('/account', methods=['GET'])
 @login_required
+@fresh_login_required
 def account_details():
     return render_template("auth/account.html")
 
 @auth.route('/account/<int:id>', methods=['GET'])
-@login_required
+@fresh_login_required
 @admin_required
 def adm_account_details(id):
     user = User.query.get_or_404(id)
     return render_template("auth/adm_account.html", selected_user=user)
 
 @auth.route('/change-account', methods=['GET','POST'])
-@login_required
+@fresh_login_required
 def change_account_details():
     form = ChangeAccountDetailsForm()
     if form.validate_on_submit():
@@ -203,7 +221,7 @@ def change_account_details():
     return render_template("auth/change_account.html", form=form)
 
 @auth.route('/change-account/<int:id>', methods=['GET','POST'])
-@login_required
+@fresh_login_required
 @user_acc_required
 def adm_change_account_details(id):
     user = User.query.get_or_404(id)
@@ -235,14 +253,14 @@ def adm_change_account_details(id):
     return render_template("auth/adm_change_account.html", form=form, selected_user=user)
 
 @auth.route('/all-accounts', methods=['GET'])
-@login_required
+@fresh_login_required
 @user_acc_required
 def all_accounts():
     users = User.query.all()
     return render_template("auth/adm_all_accounts.html", users=users)
 	
 @auth.route('/delete-account/<int:id>', methods=['GET'])
-@login_required
+@fresh_login_required
 @admin_required
 def delete_account(id):
 	user = User.query.get_or_404(id)
