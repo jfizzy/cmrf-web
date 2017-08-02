@@ -22,13 +22,13 @@ class Unique(object):
 			raise ValidationError(self.message)
 
 class LoginForm(Form):
-    email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
+    email = StringField('Email address', validators=[Required(), Length(4, 64), Email()])
     password = PasswordField('Password', validators=[Required(), Length(4, 64)])
     remember_me = BooleanField('Remember me')
     submit = SubmitField('Log In')
 
 class ReAuthForm(Form):
-    email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
+    email = StringField('Email', validators=[Required(), Length(4, 64), Email()])
     password = PasswordField('Password', validators=[Required(), Length(4, 64)])
     submit = SubmitField('Authenticate')
     

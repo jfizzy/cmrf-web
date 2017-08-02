@@ -19,8 +19,7 @@
         {% if field.type == 'BooleanField' %}
             <div class="checkbox">
                 <label>
-                    {{ field(class_=class_, **kwargs) }}
-                    {{ field.label.text|safe }}
+                    {{ field(class_=class_, **kwargs) }} {{ field.label.text }}
                 </label>
             </div>
 
