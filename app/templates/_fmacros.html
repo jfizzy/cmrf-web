@@ -1,14 +1,21 @@
 {% macro render_field(field) -%}
     {% set with_label = kwargs.pop('with_label', False) %}
+    {% set with_icon = kwargs.pop('with_icon', False) %}
+    {% set with_ph = kwargs.pop('with_ph', False) %}
     {% set placeholder = '' %}
-    {% if not with_label %}
-        {% set placeholder = field.label.text %}
+    {% if with_ph %}
+        {% set placeholder = with_ph %}
     {% endif %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         {% if with_label %}
             <label for="{{ field.id }}" class="control-label">
-                {{ field.label.text }}
+                {{ with_label }}
             </label>
+        {% endif %}
+        
+        {% if with_icon %}
+            <div class="input-group">
+                <span class="input-group-addon"><i class="{{ with_icon }}" aria-hidden="true"></i></span>
         {% endif %}
         
         {% set class_ = kwargs.pop('class_', '') %}
@@ -40,6 +47,11 @@
             {% endif %}
       
         {% endif %}
+        
+        {% if with_icon %}
+            </div>
+        {% endif %}
+        
         {% if field.errors %}
             <p class="help-block">{{ field.errors|join(', ') }}</p>
         {% endif %}

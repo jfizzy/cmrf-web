@@ -34,7 +34,7 @@ def reauthenticate():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and h_verify_password(user.email, form.password.data):
-            confirm_login()
+            confirm_login() #marks the user session as fresh
             next = request.args.get('next')
             if next:
                 return redirect(next)

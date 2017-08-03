@@ -1,15 +1,39 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
 
 {% block title %}{{super()}} - Reauthenticate{% endblock %}
 
 {% block page_content %}
 <div class="container">
-<div class="page-header">
-  <h1>Reauthenticate</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
-</div>
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Reauthenticate</h1>
+                </div>
+            </div>
+            <div class="logincard well">
+                <form method="post" class="form-signin" action="{{ url_for('auth.reauthenticate')}}">
+                    {{form.hidden_tag()}}
+                    
+                    {# Email #}
+                    {{ render_field(form.email, class_="form-control", type="email", tabindex=1, with_icon="fa fa-envelope fa-fw", with_label="Email Address", with_ph="Email")}}
+                    
+                    {# Password #}
+                    {{ render_field(form.password, class_="form-control", type="password", tabindex=2, with_icon="fa fa-lock fa-fw", with_label="Password", with_ph="Password")}}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                
+                    {# Submit #}
+                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=3) }}
+                </form>
+                <br>
+                <p>Forgot your password? <br><a href="{{ url_for('auth.password_reset_request') }}">Click here to reset it</a>.</p>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
 </div>
 {% endblock %}

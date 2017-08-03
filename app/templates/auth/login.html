@@ -19,10 +19,12 @@
                     {{form.hidden_tag()}}
                     
                     {# Email #}
-                    {{ render_field(form.email, class_="form-control", type="email", tabindex=1)}}
+                    {{ render_field(form.email, class_="form-control", type="email", tabindex=1, with_icon="fa fa-envelope fa-fw", with_label="Email Address", with_ph="Email")}}
                     
                     {# Password #}
-                    {{ render_field(form.password, class_="form-control", type="password", tabindex=2)}}
+                    {{ render_field(form.password, class_="form-control", type="password", tabindex=2, with_icon="fa fa-lock fa-fw", with_label="Password", with_ph="Password")}}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     
                     {# Remember Me #}
                     {{ render_field(form.remember_me, class_="checkbox") }}

@@ -1,15 +1,76 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
 
 {% block title %}{{super()}} - Register{% endblock %}
 
 {% block page_content %}
 <div class="container">
-<div class="page-header">
-    <h1>Register</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
-</div>
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Register</h1>
+                </div>
+            </div>
+            <div class="registercard well">
+                <form method="post" class="form-register" action="{{ url_for('auth.register')}}">
+                    {{form.hidden_tag()}}
+                    
+                    {# UCID #}
+                    {{ render_field(form.UCID, class_="form-control", type="text", tabindex=1, onkeypress="return event.charCode >= 48 && event.charCode <= 57", maxlength="8", with_icon="fa fa-users fa-fw", with_label="UCalgary ID", with_ph="UCID")}}
+                    
+                    {# First and Last Name #}
+                    <div class="nopadding col-xs-12 col-sm-6">
+                        {{ render_field(form.first_name, class_="form-control", with_icon="fa fa-user fa-fw", type="text", tabindex=2, with_label="First Name", with_ph="First Name")}}
+                    </div>
+                    <div class="nopadding col-xs-12 col-sm-6">
+                        {{ render_field(form.last_name, class_="form-control", with_icon="fa fa-user fa-fw", type="text", tabindex=3, with_label="Last Name", with_ph="Last Name")}}
+                    </div>
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
+                    <p class="text-muted">Login Credentials</p>
+                    
+                    {# Email #}
+                    {{ render_field(form.email, class_="form-control", with_icon="fa fa-envelope fa-fw", type="email", tabindex=4, with_label="Email Address", with_ph="Email")}}
+                    
+                    {# Password #}
+                    {{ render_field(form.password, class_="form-control", type="password", with_icon="fa fa-lock fa-fw", tabindex=5, with_label="Password", with_ph="Password")}}
+                    
+                    <ul id="validinfo" class="col-xs-12 fa-ul hidden">
+                        <li><i id="8char" class="fa-li fa fa-times" style="color: red;"></i> 8 Chars Long</li>
+                        <li><i id="ucase" class="fa-li fa fa-times" style="color: red;"></i> One Uppercase Letter</li>
+                        <li><i id="lcase" class="fa-li fa fa-times" style="color: red;"></i> One Lowercase Letter</li>
+                        <li><i id="num" class="fa-li fa fa-times" style="color: red;"></i> One Number</li>
+                    </ul>
+                    
+                    {# Confirm Password #}
+                    {{ render_field(form.password_confirm, class_="form-control", type="password", with_icon="fa fa-lock fa-fw", tabindex=6, with_label="Confirm Password", with_ph="Confirm")}}
+                    
+                    <ul id="validmatch" class="col-xs-12 fa-ul hidden">
+                        <li><i id="pwmatch" class="fa-li fa fa-times" style="color: red;"></i> Passwords Match</li>
+                    </ul>
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
+                    {# Lab #}
+                    {{ render_field(form.lab, class_="form-control", type="text", tabindex=7, with_icon="fa fa-university fa-fw", with_label="Laboratory", with_ph="Lab")}}
+                    
+                    {# phone #}
+                    {{ render_field(form.phone, class_="form-control", type="tel", tabindex=8, onkeypress="return event.charCode >= 48 && event.charCode <= 57", maxlength="15", with_icon="fa fa-phone fa-fw", with_label="Phone Number (Optional)", with_ph="Phone")}}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
+                    {# Submit #}
+                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=9) }}
+                </form>
+                <br>
+                <p>Already registered? <br><a href="{{ url_for('auth.login') }}">Click here to log in</a>.</p>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
 </div>
 {% endblock %}

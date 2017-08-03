@@ -33,7 +33,7 @@ class ReAuthForm(Form):
     submit = SubmitField('Authenticate')
     
 class RegistrationForm(Form):
-	UCID = StringField('UCID', validators=[Required(), Length(8, 8),
+	UCID = StringField('UCID', validators=[Required(), Length(min=8,max=8),
 										   Regexp('^[0-9]*$', 0,
 										   'Must be an 8 digit integer'),
 										   Unique(User, User.UCID, 'UCID already registered')])
@@ -47,7 +47,7 @@ class RegistrationForm(Form):
 	password = PasswordField('Password', validators=[Required(), EqualTo('password_confirm',
 													 message='Passwords do not match')])
 	password_confirm = PasswordField('Confirm Password', validators=[Required()])
-	lab = StringField('Collaborators (Lab)', validators=[Required(), Length(1,64)])
+	lab = StringField('Lab', validators=[Required(), Length(1,64)])
 	phone = TelField('Phone Number (Optional)')
 
 	submit = SubmitField('Register')
