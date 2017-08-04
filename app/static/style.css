@@ -712,7 +712,7 @@ footer {
 .form-admchangeacct input[type=text],
 .form-admchangeacct input[type=text],
 .form-admchangeacct input[type=email],
-.form-admchangeacct input[type=checkbox],
+.form-admchangeacct input[type=text],
 .form-admchangeacct input[type=text],
 .form-admchangeacct input[type=tel],
 .form-admchangeacct button {
@@ -766,4 +766,9 @@ footer {
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+}
+
+.trimbutton {
+    padding-left: 3px;
+    padding-right: 3px;
 }

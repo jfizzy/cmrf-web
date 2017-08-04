@@ -156,7 +156,7 @@ lang="en"
     {% for message in get_flashed_messages() %}
     <div class="alert alert-info" style="z-index: 3; margin-top: 6px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
+        <p class="lead">{{ message }}</p>
     </div>
     {% endfor %}
 </div>
@@ -197,19 +197,6 @@ $(document).ready(function () {
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
-</script>
-<script src="{{url_for('static', filename='scripts/jquery.matchHeight-min.js')}}"></script>
-<script>
-    (function() {
-            $(function() {
-                $('.thumbnail').matchHeight({
-                    byRow: true,
-                    property: 'height',
-                    target: null,
-                    remove: false
-                });
-            });
-		})();
 </script>
 <script>
 $("#password").focusin(function() {

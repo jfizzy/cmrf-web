@@ -4,55 +4,63 @@
 
 {% block page_content %}
 <div class="container">
-  <div class="page-header">
-    <h1>Account Details</h1>
-  </div>
-  <br>
-  	<div class="account-info">
-  		<div class="row">
-      		<div class="col-md-3"><h3>UCID:</h3></div> <div class="col-md-2"><p>{{current_user.id}}</p></div>
-      	</div>
-    <hr>
-    <br>
-      	<div class="row">
-      		<div class="col-md-3"><h3>First Name:</h3></div> <div class="col-md-2"><p>{{current_user.first_name}}</p></div>
-      	</div>
-    <hr>
-    <br>
-      	<div class="row">
-      		<div class="col-md-3"><h3>Last Name:</h3></div> <div class="col-md-2"><p>{{current_user.last_name}}</p></div>
-      	</div>
-      	<hr>
-      <br>
-      	<div class="row">
-      		<div class="col-md-3"><h3>Email:</h3></div> <div class="col-md-2"><p>{{current_user.email}}</p></div>
-      	</div>
-      	<hr>
-	  <br>
-	  	<div class="row">
-      		<div class="col-md-3"><h3>Lab:</h3></div>
-
-			<div class="col-md-2"><p>{{current_user.lab}}</p></div>
-		</div>
-		<hr>
-      <br>
-      	<div class="row">
-      		<div class="col-md-3"><h3>Phone Number:</h3></div>
-
-			<div class="col-md-2"><p>{% if current_user.phone %}
-			{{current_user.phone}}
-			{% else %}
-			Nothing on file.
-			{% endif %}</p></div>
-		</div>
-		<hr>
-      <br><br>
-      <h3>Account Options:</h3><br><br>
-    </div>
-    <div class="btn-group-vertical">
-      <a href="{{url_for('auth.change_account_details')}}" class="btn btn-info">Edit Information</a>
-      <a href="{{url_for('auth.change_password')}}" class="btn btn-info">Change Password</a>
-      <a href="{{url_for('auth.change_email_request')}}" class="btn btn-info">Change Email</a>
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Account Details</h1>
+                </div>
+            </div>
+            <div class="usermgmtcard well">
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td><b>UCalgary ID: </b></td>
+                            <td>{{current_user.id}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>First Name: </b></td>
+                            <td>{{current_user.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Last Name: </b></td>
+                            <td>{{current_user.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Email: </b></td>
+                            <td>{{current_user.email}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Laboratory: </b></td>
+                            <td>{{current_user.lab}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Phone Number:</b></td>
+                            <td>{% if current_user.phone %}
+                                    {{current_user.phone}}
+                                {% else %}
+                                    Nothing on file.
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                
+                <h3><small>Account Options:</small></h3>
+                <div class="row">
+                    <div class="col-xs-3"></div>
+                    <div class="col-xs-6 btn-group-vertical">
+                        <a href="{{url_for('auth.change_account_details')}}" class="btn btn-info trimbutton">Edit Information</a>
+                        <a href="{{url_for('auth.change_password')}}" class="btn btn-info trimbutton">Change Password</a>
+                        <a href="{{url_for('auth.change_email_request')}}" class="btn btn-info trimbutton">Change Email</a>
+                    </div>
+                    <div class="col-xs-3"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -205,7 +205,8 @@ def account_details():
 @admin_required
 def adm_account_details(id):
     user = User.query.get_or_404(id)
-    return render_template("auth/adm_account.html", selected_user=user)
+    role = Role.query.filter_by(id=user.role_id).first()
+    return render_template("auth/adm_account.html", selected_user=user, role=role.name)
 
 @auth.route('/change-account', methods=['GET','POST'])
 @fresh_login_required

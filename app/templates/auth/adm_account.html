@@ -3,53 +3,107 @@
 {% block title %}{{super()}} - Account{% endblock %}
 
 {% block page_content %}
+
 <div class="container">
-    <div class="page-header">
-        <h1>Account Details</h1>
-    </div>
-    <br>
-    <div class="account-info">
-        <div class="row">
-            <div class="col-md-3"><h3>UCID:</h3></div> <div class="col-md-2"><p>{{selected_user.id}}</p></div>
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Account Details for {{selected_user.id}}</h1>
+                </div>
+            </div>
+            <div class="usermgmtcard well">
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td><b>UCalgary ID: </b></td>
+                            <td>{{selected_user.id}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>First Name: </b></td>
+                            <td>{{selected_user.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Last Name: </b></td>
+                            <td>{{selected_user.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Email: </b></td>
+                            <td>{{selected_user.email}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>User Permissions:</b></td>
+                            <td>{{role}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Laboratory: </b></td>
+                            <td>{{selected_user.lab}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Phone Number:</b></td>
+                            <td>{% if selected_user.phone %}
+                                    {{selected_user.phone}}
+                                {% else %}
+                                    Nothing on file.
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                
+                <h3><small>Account Options:</small></h3>
+                <div class="row">
+                    <div class="col-xs-3"></div>
+                    <div class="col-xs-6 btn-group-vertical">
+                        <a href="{{url_for('auth.adm_change_account_details', id=selected_user.id)}}" class="btn btn-warning">Make Changes</a>
+                        {% if current_user.can(Permission.ADMINISTER) %}
+                        <a href="{{url_for('auth.delete_account', id=selected_user.id)}}" class="btn btn-danger del-butt" id="delbutton">Delete Account</a>
+                        
+                        {% endif %}
+                    </div>
+                    <div class="col-xs-3"></div>
+                </div>
+            </div>
         </div>
-        <hr>
-        <br>
-        <div class="row">
-            <div class="col-md-3"><h3>First Name:</h3></div> <div class="col-md-2"><p>{{selected_user.first_name}}</p></div>
-        </div>
-        <hr>
-        <br>
-        <div class="row">
-            <div class="col-md-3"><h3>Last Name:</h3></div> <div class="col-md-2"><p>{{selected_user.last_name}}</p></div>
-        </div>
-        <hr>
-        <br>
-        <div class="row">
-            <div class="col-md-3"><h3>Email:</h3></div> <div class="col-md-2"><p>{{selected_user.email}}</p></div>
-        </div>
-        <hr>
-		<br>
-		<div class="row">
-            <div class="col-md-3"><h3>Lab:</h3></div> <div class="col-md-2"><p>{{selected_user.lab}}</p></div>
-        </div>
-        <hr>
-        <br>
-        <div class="row">
-            <div class="col-md-3"><h3>Phone Number:</h3></div>
-            
-            <div class="col-md-2"><p>{% if selected_user.phone %}
-                {{selected_user.phone}}
-                {% else %}
-                Nothing on file.
-                {% endif %}</p></div>
-        </div>
-        <hr>
-        <br><br>
-        <h3>Account Options:</h3><br><br>
-        <a href="{{url_for('auth.adm_change_account_details', id=selected_user.id)}}" class="btn btn-warning">Make Changes</a>
-		{% if current_user.can(Permission.ADMINISTER) %}
-		<a href="{{url_for('auth.delete_account', id=selected_user.id)}}" class="btn btn-danger">Delete Account</a>
-		{% endif %}
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+$("#delbutton").one('mouseover, focusin', function() {
+    $("#delbutton").addClass("disabled");
+    $("#delbutton").empty();
+    $("#delbutton").append("5 ");
+    $("#delbutton").append("<i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("4 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 1000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("3 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 2000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("2 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 3000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("1 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 4000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("0 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 4999);
+    window.setTimeout(function() {
+        $("#delbutton").empty();
+        $("#delbutton").append("Delete Account");
+        $("#delbutton").removeClass("disabled");
+    }, 5000);
+});
+</script>
 {% endblock %}
