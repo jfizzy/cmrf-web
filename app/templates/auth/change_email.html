@@ -1,15 +1,38 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
 
 {% block title %}{{super()}} - Change Email{% endblock %}
 
 {% block page_content %}
 <div class="container">
-<div class="page-header">
-    <h1>Change Your Email Address</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
-</div>
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Change Your Email Address</h1>
+                </div>
+            </div>
+            <div class="usermgmtcard well">
+                <form method="post" class="form-changeem" action="{{ url_for('auth.change_email_request')}}">
+                    {{form.hidden_tag()}}
+                    
+                    {# Email #}
+                    {{ render_field(form.email, class_="form-control", with_icon="fa fa-envelope fa-fw", type="email", tabindex=1, with_label="New Email Address", with_ph="New Email")}}
+                    
+                    {# Password #}
+                    {{ render_field(form.password, class_="form-control", type="password", with_icon="fa fa-lock fa-fw", tabindex=2, with_label="Password", with_ph="Password")}}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
+                    {# Submit #}
+                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=3, with_label="Update Email Address") }}
+                    
+                </form>
+            </div>
+            <div class="col-xs-0 col-sm-3"></div>
+        </div>    
+    </div>
 </div>
 {% endblock %}

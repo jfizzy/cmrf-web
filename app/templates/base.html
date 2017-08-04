@@ -154,7 +154,7 @@ lang="en"
 {% block content %}
 <div id="flashes" class="container" style="width: 66%; position: absolute; left: 50%; margin-left: -33%;">
     {% for message in get_flashed_messages() %}
-    <div class="alert alert-success" style="z-index: 3; margin-top: 6px;">
+    <div class="alert alert-info" style="z-index: 3; margin-top: 6px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
     </div>
@@ -263,7 +263,7 @@ $("#password").focusin(function() {
     		$("#num").css("color","red");
     	}
     	
-    	if($("#password").val() == $("#password_confirm").val()){
+    	if($("#password").val() == $("#password_confirm").val() && $("#password_confirm").val()){
     		$("#pwmatch").removeClass("fa-times");
     		$("#pwmatch").addClass("fa-check");
     		$("#pwmatch").css("color","green");

@@ -14,7 +14,7 @@
                     <h1>Register</h1>
                 </div>
             </div>
-            <div class="registercard well">
+            <div class="usermgmtcard well">
                 <form method="post" class="form-register" action="{{ url_for('auth.register')}}">
                     {{form.hidden_tag()}}
                     
@@ -40,7 +40,8 @@
                     {{ render_field(form.password, class_="form-control", type="password", with_icon="fa fa-lock fa-fw", tabindex=5, with_label="Password", with_ph="Password")}}
                     
                     <ul id="validinfo" class="col-xs-12 fa-ul hidden">
-                        <li><i id="8char" class="fa-li fa fa-times" style="color: red;"></i> 8 Chars Long</li>
+                        <p class="text-muted">Suggestions for a strong password:</p>
+                        <li><i id="8char" class="fa-li fa fa-times" style="color: red;"></i> 8 Characters Long</li>
                         <li><i id="ucase" class="fa-li fa fa-times" style="color: red;"></i> One Uppercase Letter</li>
                         <li><i id="lcase" class="fa-li fa fa-times" style="color: red;"></i> One Lowercase Letter</li>
                         <li><i id="num" class="fa-li fa fa-times" style="color: red;"></i> One Number</li>

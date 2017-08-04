@@ -90,7 +90,7 @@ class ChangeEmailForm(Form):
             raise ValidationError('Email already registered.')
 
 class ChangeAccountDetailsForm(Form):
-    lab = StringField('Collaborators (Lab)', validators=[Required(), Length(1,64)])
+    lab = StringField('Laboratory', validators=[Required(), Length(1,64)])
     phone = TelField('Phone Number')
     submit = SubmitField('Update')
 

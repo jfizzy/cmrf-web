@@ -1,26 +1,62 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
 
 {% block title %}{{super()}} - Edit Account{% endblock %}
 
 {% block page_content %}
 <div class="container">
-    <div class="page-header">
-        <h1>Account Details</h1>
-    </div>
-    <br>
-    <div class="col-md-4">
-        <h4>
-            UCID: {{current_user.id}}
-            <br>
-            First Name: {{current_user.first_name}}
-            <br>
-            Last Name: {{current_user.last_name}}
-            <br>
-            Email: {{current_user.email}}
-            <hr>
-            {{wtf.quick_form(form)}}
-        </h4>
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Account Details</h1>
+                </div>
+            </div>
+            <div class="usermgmtcard well">
+                
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td><b>UCalgary ID: </b></td>
+                            <td>{{current_user.id}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>First Name: </b></td>
+                            <td>{{current_user.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Last Name: </b></td>
+                            <td>{{current_user.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Email: </b></td>
+                            <td>{{current_user.email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                
+                <form method="post" class="form-changeacct" action="{{ url_for('auth.change_account_details')}}">
+                    {{form.hidden_tag()}}
+                    
+                    {# Lab #}
+                    {{ render_field(form.lab, class_="form-control", type="text", tabindex=7, with_icon="fa fa-university fa-fw", with_label="Laboratory", with_ph="Lab")}}
+                    
+                    {# phone #}
+                    {{ render_field(form.phone, class_="form-control", type="tel", tabindex=8, onkeypress="return event.charCode >= 48 && event.charCode <= 57", maxlength="15", with_icon="fa fa-phone fa-fw", with_label="Phone Number (Optional)", with_ph="Phone")}}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
+                    {# Submit #}
+                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", with_label="Update Information", tabindex=4) }}
+                    
+                </form>
+            </div>
+            <div class="col-xs-0 col-sm-3"></div>
+        </div>    
     </div>
 </div>
 

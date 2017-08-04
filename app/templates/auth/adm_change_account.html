@@ -1,20 +1,67 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
 
 {% block title %}{{super()}} - Edit User Account{% endblock %}
 
 {% block page_content %}
 <div class="container">
-    <div class="page-header">
-        <h1>Selected Account Details</h1>
-    </div>
-    <br>
-    <div class="col-md-4">
-        <h4>
-            UCID: {{selected_user.id}}
-            <br>
-            {{wtf.quick_form(form)}}
-        </h4>
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Account Details for {{selected_user.id}}</h1>
+                </div>
+            </div>
+            <div class="usermgmtcard well">
+                
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td><b>UCalgary ID: </b></td>
+                            <td>{{selected_user.id}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                
+                <form method="post" class="form-admchangeacct" action="{{ url_for('auth.adm_change_account_details', id=selected_user.id)}}">
+                    {{form.hidden_tag()}}
+                    
+                    {# First and Last Name #}
+                    <div class="nopadding col-xs-12 col-sm-6">
+                        {{ render_field(form.first_name, class_="form-control", with_icon="fa fa-user fa-fw", type="text", tabindex=1, with_label="First Name", with_ph="First Name")}}
+                    </div>
+                    <div class="nopadding col-xs-12 col-sm-6">
+                        {{ render_field(form.last_name, class_="form-control", with_icon="fa fa-user fa-fw", type="text", tabindex=2, with_label="Last Name", with_ph="Last Name")}}
+                    </div>
+                    
+                    {# Email #}
+                    {{ render_field(form.email, class_="form-control", with_icon="fa fa-envelope fa-fw", type="email", tabindex=3, with_label="Email Address", with_ph="Email")}}
+                    
+                    {# Email Confirmation #}
+                    {{ render_field(form.email_conf, class_="checkbox", tabindex=4)}}
+                    
+                    {# Role #}
+                    {{ render_field(form.role, class_="form-control", tabindex=5, with_icon="fa fa-key fa-fw", with_label="User Role") }}
+                    
+                    {# Lab #}
+                    {{ render_field(form.lab, class_="form-control", type="text", tabindex=6, with_icon="fa fa-university fa-fw", with_label="Laboratory", with_ph="Lab")}}
+                    
+                    {# phone #}
+                    {{ render_field(form.phone, class_="form-control", type="tel", tabindex=7, onkeypress="return event.charCode >= 48 && event.charCode <= 57", maxlength="15", with_icon="fa fa-phone fa-fw", with_label="Phone Number (Optional)", with_ph="Phone")}}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
+                    {# Submit #}
+                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", with_label="Confirm Changes", tabindex=8) }}
+                    
+                </form>
+            </div>
+            <div class="col-xs-0 col-sm-3"></div>
+        </div>    
     </div>
 </div>
 {% endblock %}
