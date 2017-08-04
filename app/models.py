@@ -30,10 +30,13 @@ class Role(db.Model):
         roles = {
             'User' : (Permission.MAKE_R |
                       Permission.VIEW_R, True),
-            'Assistant' : (Permission.VIEW_R |
+            'Lab Member' : (Permission.MAKE_R |
+                           Permission.VIEW_R |
                            Permission.ADD_ARTICLE |
-                           Permission.ALL_R, False),
-            'LabAdmin' : (Permission.VIEW_R |
+                           Permission.ALL_R |
+                           Permission.EDITING, False),
+            'Lab Staff' : (Permission.MAKE_R |
+                          Permission.VIEW_R |
                           Permission.ADD_ARTICLE |
                           Permission.ALL_R |
                           Permission.EDITING |
