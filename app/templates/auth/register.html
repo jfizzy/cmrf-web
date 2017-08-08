@@ -37,7 +37,7 @@
                     {{ render_field(form.email, class_="form-control", with_icon="fa fa-envelope fa-fw", type="email", tabindex=4, with_label="Email Address", with_ph="Email")}}
                     
                     {# Password #}
-                    {{ render_field(form.password, class_="form-control", type="password", with_icon="fa fa-lock fa-fw", tabindex=5, with_label="Password", with_ph="Password")}}
+                    {{ render_field(form.password, class_="form-control", type="password", with_icon="fa fa-lock fa-fw", tabindex=5, with_label="Password ( 6 or More Characters )", with_ph="Password")}}
                     
                     <ul id="validinfo" class="col-xs-12 fa-ul hidden">
                         <p class="text-muted">Suggestions for a strong password:</p>
@@ -64,8 +64,12 @@
                     
                     <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     
+                    <div class="col-md-offset-3">
+                        <div class="g-recaptcha" data-theme="light" data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+                    </div>
+                    
                     {# Submit #}
-                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=9) }}
+                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=10) }}
                 </form>
                 <br>
                 <p>Already registered? <br><a href="{{ url_for('auth.login') }}">Click here to log in</a>.</p>

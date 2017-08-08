@@ -33,11 +33,11 @@ class Config:
     ALLOWED_EXT_PHOTOS = set(['png', 'jpg', 'jpeg', 'gif'])
     ALLOWED_EXT_DOCUMENTS = set(['pdf'])
 
-    RECAPTCHA_ENABLED = True
+    RECAPTCHA_USE_SSL = True
     RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
     RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
-    RECAPTCHA_TYPE = "image"
-    RECAPTCHA_SIZE = "compact"
+    RECAPTCHA_TYPE = 'image'
+    RECAPTCHA_SIZE = 'compact'
     
     @staticmethod
     def init_app(app):

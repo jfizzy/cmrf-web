@@ -44,12 +44,12 @@ class RegistrationForm(Form):
 													   Regexp('^[A-Za-z -]*$', 0,
 													   'Name contains invalid characters')])
 	email = StringField('Email', validators=[Required(), Length(1, 64), Email(), Unique(User, User.email, 'Email already registered')])
-	password = PasswordField('Password', validators=[Required(), EqualTo('password_confirm',
+	password = PasswordField('Password', validators=[Required(), Length(6,64), EqualTo('password_confirm',
 													 message='Passwords do not match')])
 	password_confirm = PasswordField('Confirm Password', validators=[Required()])
 	lab = StringField('Lab', validators=[Required(), Length(1,64)])
 	phone = TelField('Phone Number (Optional)')
-
+    
 	submit = SubmitField('Register')
 
 class ChangePasswordForm(Form):
