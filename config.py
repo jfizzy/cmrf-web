@@ -33,7 +33,6 @@ class Config:
     ALLOWED_EXT_PHOTOS = set(['png', 'jpg', 'jpeg', 'gif'])
     ALLOWED_EXT_DOCUMENTS = set(['pdf'])
 
-    RECAPTCHA_USE_SSL = True
     RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
     RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
     RECAPTCHA_TYPE = 'image'
