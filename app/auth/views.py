@@ -69,22 +69,24 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    if request.method == 'POST' and recaptcha.verify():
-        if form.validate_on_submit():
-            user=User(UCID=int(form.UCID.data), first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, email=form.email.data, lab=form.lab.data, phone=str(form.phone.data))
-            db.session.add(user)
-            db.session.commit()
-            token = user.generate_confirmation_token()
-            send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token)
-            g.current_user = user
-            login_user(user)
-            flash('Thanks for registering! Please click the link in the email we just sent you in order to confirm your account.')
-            return redirect(url_for('cmrf.index'))
+    if request.method == 'POST':
+        if recaptcha.verify():
+            if form.validate_on_submit():
+                user=User(UCID=int(form.UCID.data), first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, email=form.email.data, lab=form.lab.data, phone=str(form.phone.data))
+                db.session.add(user)
+                db.session.commit()
+                token = user.generate_confirmation_token()
+                send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token)
+                g.current_user = user
+                login_user(user)
+                flash('Thanks for registering! Please click the link in the email we just sent you in order to confirm your account.')
+                return redirect(url_for('cmrf.index'))
+            else:
+                return render_template('auth/register.html',form=form)
         else:
+            flash('The CAPTCHA is required.')
             return render_template('auth/register.html',form=form)
     else:
-        if request.method == 'POST':
-            flash('The CAPTCHA is required.')
         return render_template('auth/register.html',form=form)
 
 @auth.route('/confirm/<token>')
@@ -141,22 +143,26 @@ def password_reset_request():
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
     form = PasswordResetRequestForm()
-    if request.method == 'POST' and recaptcha.verify():
-        if form.validate_on_submit():
-            user = User.query.filter_by(email=form.email.data).first()
-            if user:
-                token = user.generate_reset_token()
-                send_email(user.email, 'Reset Your Password',
-                       'auth/email/reset_password',
-                       user=user, token=token,
-                       next=request.args.get('next'))
-            flash('An email with instructions to reset your password has been '
-              'sent to you.')
-            return redirect(url_for('auth.login'))
-            
     if request.method == 'POST':
-        flash('The CAPTCHA is required.')
-    return render_template('auth/reset_password_req.html', form=form)
+        if recaptcha.verify():
+            if form.validate_on_submit():
+                user = User.query.filter_by(email=form.email.data).first()
+                if user:
+                    token = user.generate_reset_token()
+                    send_email(user.email, 'Reset Your Password',
+                           'auth/email/reset_password',
+                           user=user, token=token,
+                           next=request.args.get('next'))
+                flash('An email with instructions to reset your password has been '
+                  'sent to you.')
+                return redirect(url_for('auth.login'))
+            else:
+                return render_template('auth/reset_password_req.html', form=form)
+        else:
+            flash('The CAPTCHA is required.')
+            return render_template('auth/reset_password_req.html', form=form)
+    else:
+        return render_template('auth/reset_password_req.html', form=form)
 
 @auth.route('/reset/<token>', methods=['GET', 'POST'])
 def password_reset(token):
