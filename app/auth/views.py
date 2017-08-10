@@ -69,7 +69,7 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    if recaptcha.verify():
+    if request.method == 'POST' and recaptcha.verify():
         if form.validate_on_submit():
             user=User(UCID=int(form.UCID.data), first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, email=form.email.data, lab=form.lab.data, phone=str(form.phone.data))
             db.session.add(user)
@@ -141,7 +141,7 @@ def password_reset_request():
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
     form = PasswordResetRequestForm()
-    if recaptcha.verify():
+    if request.method == 'POST' and recaptcha.verify():
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
             if user:
