@@ -7,7 +7,7 @@ User=root
 Group=nginx
 WorkingDirectory=/cmrf-web
 Environment="PATH=/cmrf-web/venv/bin"
-EnvironmentFile=/cmrf-web/sysdenv
+EnvironmentFile=/cmrf-web/server/sysdenv
 ExecStart=/cmrf-web/venv/bin/gunicorn --workers 3 --bind unix:cmrfweb.sock -m 007 manage:app
 
 [Install]
