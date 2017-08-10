@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, url_for, flash, g, jsonify
 from flask_login import login_user, logout_user, login_required, current_user, confirm_login, fresh_login_required, login_fresh
 from flask_httpauth import HTTPBasicAuth
 from urllib import unquote
+import requests
 from ..decorators import admin_required, user_acc_required
 from . import auth
 from .. import db, recaptcha
@@ -70,7 +71,7 @@ def logout():
 def register():
     form = RegistrationForm()
     if request.method == 'POST':
-        if recaptcha.verify():
+        if recaptcha_verify_custom(recaptcha, request):
             if form.validate_on_submit():
                 user=User(UCID=int(form.UCID.data), first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, email=form.email.data, lab=form.lab.data, phone=str(form.phone.data))
                 db.session.add(user)
@@ -88,6 +89,18 @@ def register():
             return render_template('auth/register.html',form=form)
     else:
         return render_template('auth/register.html',form=form)
+        
+def recaptcha_verify_custom(recaptcha, request):
+    if recaptcha.is_enabled:
+        data = {
+            "secret": recaptcha.secret_key,
+            "response": request.form.get('g-recaptcha-response'),
+            "remoteip": request.remote_addr 
+        }
+        
+        r = requests.get(recaptcha.VERIFY_URL, params=data)
+        return r.json()["success"] if r.status_code == 200 else False
+    return True
 
 @auth.route('/confirm/<token>')
 @login_required
@@ -144,7 +157,7 @@ def password_reset_request():
         return redirect(url_for('main.index'))
     form = PasswordResetRequestForm()
     if request.method == 'POST':
-        if recaptcha.verify():
+        if recaptcha_verify_custom(recaptcha, request):
             if form.validate_on_submit():
                 user = User.query.filter_by(email=form.email.data).first()
                 if user:
