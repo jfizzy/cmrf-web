@@ -36,6 +36,7 @@ def adm_requests(id):
 @view_r_required
 def view_request(id):
 	request = WorkOrder.query.filter_by(ID=str(id)).first_or_404()
+
 	if current_user.id != request.RSC_ID:
 		if not current_user.can(Permission.ALL_R):
 			abort(404)
@@ -219,7 +220,7 @@ def make_report(id):
         db.session.add(wo)
         db.session.commit()
         flash('Report Submitted Successfully')
-        return redirect(url_for('cmrf.request', id=wo.ID))
+        return redirect(url_for('cmrf.report', id=report.id))
     return render_template("cmrf/make_report.html", form=form, request=wo)
 
 @cmrf.route('/report/<int:id>', methods=['GET'])

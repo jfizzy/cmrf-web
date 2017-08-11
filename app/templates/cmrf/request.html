@@ -3,122 +3,156 @@
 {% block title %}{{super()}} - Request{% endblock %}
 
 {% block page_content %}
+
 <div class="container">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h1>Request</h1>
-      <div class="well">
-      <h3>{% if current_user.is_r_privileged() %}ID: {{request.ID}}{% endif %} - {{request.title}}</h3>
-      <br>
-      <h3>Submitted by: {{owner.first_name}} {{owner.last_name}} - UCID:
-          {% if current_user.is_u_privileged() %}
-          <a href="{{url_for('auth.adm_account_details', id=owner.UCID)}}">
-          {{owner.UCID}}</a>
-          {% else %}<a href="{{url_for('auth.account_details')}}">{{owner.UCID}}</a>{% endif %}</h3>
-      </div>
-      <br>
-      <div class="well">
-      <div class="container">
-          <h4>Current Status:
-      {% if request.status == 'Pending Approval' %}
-      <div class="text-warning">
-      {% else %}
-      {% if request.status == 'Complete' %}
-      <div class="text-success">
-      {% else %}
-      {% if request.status == 'In Progress' %}
-      <div class="text-primary">
-      {% else %}
-      <div class="text-danger">
-      {% endif %}
-      {% endif %}
-      {% endif %}
-      {{request.status}}</div></h4>
-      <br>
-      
-      {% if current_user.is_r_privileged() %}
-      
-      <h6>Admin Options:</h6>
-	  	  {% if request.status != 'Complete' %}
-          <a class="btn btn-warning" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
-		  |
-          <a class="btn btn-success" href="{{url_for('cmrf.approve_request', id=request.ID)}}"> Approve </a>
-		  |
-          <a class="btn btn-danger" href="{{url_for('cmrf.cancel_request', id=request.ID)}}">  Cancel  </a>
-		  |
-          <a class="btn btn-primary" href="{{url_for('cmrf.make_report', id=request.ID)}}"> Make Report </a>
-		  |
-		  {% endif %}
-		  {% if current_user.can(Permission.ADMINISTER) %}
-	  	  <a class="btn btn-danger" href="{{url_for('cmrf.delete_request', id=request.ID)}}"> Delete Request</a>
-	  	  {% endif %}
-      </div>
-      </div>
-      <br>
-      {% else %}
-      <a class="btn btn-success" href="{{url_for('cmrf.report', id=request.RPT_ID)}}"> View Report</a>
-      
-      {% endif %}
+    <div id="row">
+        <div class="col-xs-0 col-sm-2"></div>
+        <div class="col-xs-12 col-sm-8">
+            <div class="page-header">
+                <div class="text-center">
+                    <h1>Request Details{% if current_user.is_r_privileged() %} for {{request.ID}}{% endif %}</h1>
+                </div>
+            </div>
+            <div class="cmrfcard well">
+                <h3>Submitted by: {{owner.first_name}} {{owner.last_name}} - UCID:
+                    {% if current_user.is_u_privileged() %}
+                    <a href="{{url_for('auth.adm_account_details', id=owner.UCID)}}">
+                    {{owner.UCID}}</a>
+                    {% else %}<a href="{{url_for('auth.account_details')}}">
+                        {{owner.UCID}}</a>{% endif %}
+                </h3>
+                <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><b>Title: </b></td>
+                            <td>{{request.title}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Submission Date: </b></td>
+                            <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Number of Samples: </b></td>
+                            <td>{{request.no_samples}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Current Status: </b></td>
+                            <td>{% if request.status == 'Pending Approval' %}
+                                  <div class="text-warning">
+                                  {% else %}
+                                  {% if request.status == 'Complete' %}
+                                  <div class="text-success">
+                                  {% else %}
+                                  {% if request.status == 'In Progress' %}
+                                  <div class="text-primary">
+                                  {% else %}
+                                  <div class="text-danger">
+                                  {% endif %}
+                                  {% endif %}
+                                  {% endif %}
+                                  {{request.status}}</div></td>
+                        </tr>
+                        <tr>
+                            <td><b>Description: </b></td>
+                            <td>{{request.desc}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Required Instruments: </b></td>
+                            <td>
+                                <ul class="fa-ul" style="list-style: none;">
+                                    <li>QEHF{% if request.ri_qehf %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                    <li>QE Basic{% if request.ri_qeb %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                    <li>TSQ{% if request.ri_tsq %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                    <li>Unknown{% if request.ri_unk %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                </ul>
+                           </td>
+                        </tr>
+                        <tr>
+                            <td><b>Target Metabolites: </b></td>
+                            <td>
+                                <ul class="fa-ul" style="list-style: none;">
+                                    <li>Central Carbon Metabolism{% if request.tm_ccm %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                    <li>Peptides{% if request.tm_pep %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                    <li>Fatty Acids{% if request.tm_fa %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                    <li>Amino Acids{% if request.tm_aa %}<i class="fa-li fa fa-check" style="color: green;"></i>{% else %}<i class="fa-li fa fa-times" style="color: red;"></i>{% endif %}</li>
+                                    {% if request.tm_unk %}
+                                    <li>Others Specified - {{ request.tm_oth_txt }}</li>
+                                    {% endif %}
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Assistance Required: </b></td>
+                            <td>{% if request.assistance %}<i class="fa fa-check" style="color: green;"></i>{% else %}<i class="fa fa-times" style="color: red;"></i>{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                {% if current_user.is_r_privileged() %}
+                    <h3><small>Admin Options:</small></h3>
+                    <div class="row">
+                        <div class="col-xs-3"></div>
+                        <div class="col-xs-6 btn-group-vertical">
+                            {% if request.status != 'Complete' %}
+                              <a class="btn btn-warning" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
+                    		  |
+                              <a class="btn btn-success" href="{{url_for('cmrf.approve_request', id=request.ID)}}"> Approve </a>
+                    		  |
+                              <a class="btn btn-danger" href="{{url_for('cmrf.cancel_request', id=request.ID)}}">  Cancel  </a>
+                    		  |
+                              <a class="btn btn-primary" href="{{url_for('cmrf.make_report', id=request.ID)}}"> Make Report </a>
+                    		  |
+                    		  {% else %}
+                              <a class="btn btn-success" href="{{url_for('cmrf.report', id=request.RPT_ID)}}"> View Report</a>
+                            {% endif %}
+                    		{% if current_user.can(Permission.ADMINISTER) %}
+                    	  	  <a class="btn btn-danger" id="delbutton" href="{{url_for('cmrf.delete_request', id=request.ID)}}">Delete Request</a>
+                    	  	{% endif %}
+                        </div>
+                        <div class="col-xs-3"></div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-xs-0 col-sm-2"></div>
+        </div>
     </div>
-    <div class="panel-content">
-      <br>
-      <ul>
-        <li>Title: <p>{{request.title}}</p></li>
-        <br>
-        <li>Submission Date: <p>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</p></li>
-        <br>
-        <li>Number of Samples: <p>{{request.no_samples}}</p></li>
-        <br>
-        <li>Current Status:
-          {% if request.status == 'Pending Approval' %}
-          <p class="text-warning">
-          {% else %}
-          {% if request.status == 'Complete' %}
-          <p class="text-success">
-          {% else %}
-          {% if request.status == 'In Progress' %}
-          <p class="text-primary">
-          {% else %}
-          <p class="text-danger">
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {{request.status}}</p></li>
-        <br>
-        <li>Description: <br><p>{{request.desc}}</p></li>
-        <br>
-        <li>Required Instruments:
-          <p>
-            <ul>
-              {% if request.ri_unk %}Unknown{% else %}
-              <li>QEHF: {{request.ri_qehf}}</li>
-              <li>QE Basic: {{request.ri_qeb}}</li>
-              <li>TSG: {{request.ri_tsq}}</li>
-              {% endif %}
-            </ul>
-          </p>
-        </li>
-        <br>
-        <li>Target Metabolites: <br>
-            <ul>
-              {% if request.tm_unk %}
-                Other - "{{ request.tm_oth_txt }}"
-              {% else %}
-              <li>Central Carbon Metabolism: {{request.tm_ccm}}</li>
-              <li>Peptides: {{request.tm_pep}}</li>
-              <li>Fatty Acids: {{request.tm_fa}}</li>
-              <li>Amino Acids: {{request.tm_aa}}</li>
-              {% endif %}
-            </ul>
-        </li>
-        <br>
-        <li>
-          <p>{% if request.assistance %}Technician's assistance is required.{% else %}No assistance required.{% endif %}</p>
-        </li>
-      </ul>
-    </div>
-  </div>
 </div>
-</div>
-</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+$(document).ready(function() {
+    $("#delbutton").addClass("disabled");
+    $("#delbutton").empty();
+    $("#delbutton").append("5 ");
+    $("#delbutton").append("<i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("4 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 1000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("3 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 2000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("2 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 3000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("1 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 4000);
+    window.setTimeout(function(){
+        $("#delbutton").empty();
+        $("#delbutton").append("0 <i class=\"fa fa-spinner fa-spin fa-fw\"></i>");
+    }, 4999);
+    window.setTimeout(function() {
+        $("#delbutton").empty();
+        $("#delbutton").append("Delete Account");
+        $("#delbutton").removeClass("disabled");
+    }, 5000);
+});
+</script>
 {% endblock %}

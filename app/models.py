@@ -208,7 +208,6 @@ class Report(db.Model):
             self.desc = desc
         if file_loc is not None:
             self.file_loc = file_loc
-        self.WKO_ID = woid
 
     def __repr__(self):
         return '<Report - ID: [%s], Work Order ID: [%s], Date: [%s], File Location: [%s]>'% (
