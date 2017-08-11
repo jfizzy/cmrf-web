@@ -97,7 +97,7 @@ def recaptcha_verify_custom(recaptcha, request):
             "response": request.form.get('g-recaptcha-response'),
             "remoteip": request.remote_addr 
         }
-        r = requests.get(recaptcha.VERIFY_URL, params=data, verify='./server/ca_bundle.crt')
+        r = requests.get(recaptcha.VERIFY_URL, params=data, verify='./server/ca_bundle.pem')
         return r.json()["success"] if r.status_code == 200 else False
     return True
 
