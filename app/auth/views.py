@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user, c
 from flask_httpauth import HTTPBasicAuth
 from urllib import unquote
 import requests
+import os
 from ..decorators import admin_required, user_acc_required
 from . import auth
 from .. import db, recaptcha
@@ -97,7 +98,7 @@ def recaptcha_verify_custom(recaptcha, request):
             "response": request.form.get('g-recaptcha-response'),
             "remoteip": request.remote_addr 
         }
-        r = requests.get(recaptcha.VERIFY_URL, params=data, verify='./server/ca_bundle.pem')
+        r = requests.get(recaptcha.VERIFY_URL, params=data, verify=os.environ['SSL_CERTIFICATE'] or False)
         return r.json()["success"] if r.status_code == 200 else False
     return True
 
