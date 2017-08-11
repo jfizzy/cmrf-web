@@ -123,18 +123,19 @@ def before_request():
 @auth.route('/unconfirmed')
 def unconfirmed():
 	if current_user.is_anonymous or current_user.email_conf:
-		return redirect('main.index')
+		return redirect(url_for('main.index'))
 	return render_template('auth/unconfirmed.html')
 
 @auth.route('/send-confirm')
 @login_required
 def resend_confirmation():
-	token = current_user.generate_confirmation_token()
-	print token
-	send_email(current_user.email, 'Confirm Your Account',
-			   'auth/email/confirm', user=current_user, token=token)
-	flash('A new confirmation email has been sent to you by email.')
-	return redirect(url_for('cmrf.index'))
+    if current_user.is_anonymous or current_user.email_conf:
+        return redirect(url_for('main.index'))
+    token = current_user.generate_confirmation_token()
+    print token
+    send_email(current_user.email, 'Confirm Your Account', 'auth/email/confirm', user=current_user, token=token)
+    flash('A new confirmation email has been sent to you by email.')
+    return redirect(url_for('cmrf.index'))
 
 @auth.route('/change-password', methods=['GET', 'POST'])
 @fresh_login_required

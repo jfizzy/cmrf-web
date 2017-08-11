@@ -29,21 +29,20 @@
                     {{ field(class_=class_, **kwargs) }} {{ field.label.text }}
                 </label>
             </div>
-
         {% else %}
        
-            {% if field.type in ('TextField', 'TextAreaField', 'PasswordField') %}
+            {% if field.type in ('TextField', 'TextAreaField', 'PasswordField', 'IntegerField') %}
                 {% set class_ = class_ + ' input-xlarge form-control' %}
           
             {% elif field.type == 'FileField' %}
                 {% set class_ = class_ + ' input-file form-control' %}
             {% endif %}
 
-            {% if field.type == 'SelectField' %}
+            {% if field.type in ('SelectField', 'MultiCheckboxField') %}
                 {{ field(class_=class_, **kwargs) }}
             {% else %}
               
-            {{ field(class_=class_, placeholder=placeholder, **kwargs) }}
+                {{ field(class_=class_, placeholder=placeholder, **kwargs) }}
             {% endif %}
       
         {% endif %}

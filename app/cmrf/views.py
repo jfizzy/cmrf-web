@@ -85,7 +85,7 @@ def approve_request(id):
     db.session.add(wo)
     db.session.commit()
     flash('Request Approved.')
-    return redirect(url_for('cmrf.request', id=wo.ID))
+    return redirect(url_for('cmrf.view_request', id=wo.ID))
 
 @cmrf.route('/cancel-request/<int:id>', methods=['GET'])
 @login_required
@@ -97,7 +97,7 @@ def cancel_request(id):
     db.session.add(wo)
     db.session.commit()
     flash('Request Cancelled.')
-    return redirect(url_for('cmrf.request', id=wo.ID))
+    return redirect(url_for('cmrf.view_request', id=wo.ID))
 
 @cmrf.route('/edit-request/<int:id>', methods=['GET', 'POST'])
 @login_required
