@@ -766,7 +766,7 @@ footer {
 .form-makerequest input[type=checkbox],
 .form-makerequest input[type=radio],
 .form-makerequest button {
-    width: 100%;
+    width: auto;
     display: block;
     z-index: 1;
     position: relative;

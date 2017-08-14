@@ -43,7 +43,7 @@ class RequestForm(Form):
 							 		  (2,'TSQ'), (3, 'Unknown')], \
 							 default=[3], coerce=int)
 	assistance = RadioField('Assistance (Lab Technician)', \
-							choices=[(0, 'Assistance Required'), (1, 'No Assistance Required')], \
+							choices=[(0, 'Yes'), (1, 'No')], \
 							default=[0], coerce=int)
 
 	submit = SubmitField("Submit")

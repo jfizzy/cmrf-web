@@ -17,32 +17,33 @@
                     {{form.hidden_tag()}}
                     
                     {# Title #}
-                    {{ render_field(form.title, class_="form-control", type="text", tabindex=1, with_icon="fa fa-wpforms fa-fw", with_label="Request Title", with_ph="Title")}}
+                    {{ render_field(form.title, class_="form-control", type="text", tabindex=1, with_icon="fa fa-wpforms fa-fw", with_label="Request Title", with_ph="Title", style="width: 100%;")}}
                     
                     {# Description #}
                     {{ render_field(form.desc, class_="form-control", tabindex=2, with_label="Description", rows="6", with_ph="A short decription and anything to be noted...")}}
                     
                     {# Number of Samples #}
-                    {{ render_field(form.no_samples, class_="form-control", type="number", tabindex=3, with_label="Number of Samples", min="1", max="1000", step="1", pattern="\d+", onInput="checkLength(3,this)", style="width: 20%;", with_icon="fa fa-flask fa-fw")}}
+                    {{ render_field(form.no_samples, class_="form-control", type="number", tabindex=3, with_label="Number of Samples", min="1", max="1000", step="1", pattern="\d+", onInput="checkLength(3,this)", style="width: 30%;", with_icon="fa fa-flask fa-fw")}}
                     
                     <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     
-                    <div class="nopadding col-xs-12 col-sm-6">
+                    <div class="nopadding col-sm-12 col-md-6">
                         {# Target Metabolites #}
-                        {{ render_field(form.tm, class_="checkbox", tabindex=4, type="checkbox", with_label="Target Metabolites", style="list-style: none;")}}
+                        {{ render_field(form.tm, tabindex=4, with_label="Target Metabolites") }}
                         
                         {# Other Target Metabolites #}
                         {{ render_field(form.other_tm, class_="form-control", tabindex=5, with_label="Other Target Metabolites", disabled="disabled")}}
                     </div>
-                    <div class="nopadding col-xs-12 col-sm-6">
+                        
+                    <div class="nopadding col-sm-12 col-md-6">
                         {# Required Instruments #}
-                        {{ render_field(form.ri, class_="checkbox", tabindex=6, type="checkbox", with_label="Required Instruments", style="list-style: none;")}}
+                        {{ render_field(form.ri, tabindex=6, with_label="Required Instruments")}}
                     </div>
                     
                     <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     
                     {# Assistance #}
-                    {{ render_field(form.assistance, class_="radio", tabindex=7, type="radio", with_label="Assistance Required? (Technician)", style="list-style: none;")}}
+                    {{ render_field(form.assistance, class_="radio", tabindex=7, with_label="Assistance Required? (Technician)", style="list-style: none;")}}
                     
                     <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     

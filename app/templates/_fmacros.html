@@ -29,19 +29,27 @@
                     {{ field(class_=class_, **kwargs) }} {{ field.label.text }}
                 </label>
             </div>
+        {% elif field.type == 'MultiCheckboxField' %}
+            <div class="checkbox">
+                <ul class="list-group" id="tm" style="list-style: none">
+                    {% for f in field %}
+                        <li>
+                                {{ f }} {{ f.label }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% else %}
        
             {% if field.type in ('TextField', 'TextAreaField', 'PasswordField', 'IntegerField') %}
                 {% set class_ = class_ + ' input-xlarge form-control' %}
-          
             {% elif field.type == 'FileField' %}
                 {% set class_ = class_ + ' input-file form-control' %}
             {% endif %}
 
-            {% if field.type in ('SelectField', 'MultiCheckboxField') %}
+            {% if field.type == 'SelectField' %}
                 {{ field(class_=class_, **kwargs) }}
             {% else %}
-              
                 {{ field(class_=class_, placeholder=placeholder, **kwargs) }}
             {% endif %}
       
