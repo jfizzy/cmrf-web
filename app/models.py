@@ -196,7 +196,7 @@ class Report(db.Model):
 
     __tablename__ = "REPORT"
 
-    ID = db.Column(db.Integer, primary_key=True, nullable=False)
+    ID = db.Column(db.Numeric, primary_key=True, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     balance = db.Column(db.Numeric(6,2))
     desc = db.Column(db.Text, nullable=True)

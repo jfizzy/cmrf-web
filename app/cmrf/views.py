@@ -212,7 +212,7 @@ def make_report(id):
     wo = WorkOrder.query.get_or_404(id)
     form = ReportForm()
     if form.validate_on_submit():
-        report = Report(int(form.balance.data), wo.ID, desc=form.desc.data, file_loc=form.file_loc.data)
+        report = Report(float(form.balance.data.replace(', ','')), wo.ID, desc=form.desc.data, file_loc=form.file_loc.data)
         db.session.add(report)
         db.session.commit()
         wo.RPT_ID = report.ID
@@ -220,7 +220,7 @@ def make_report(id):
         db.session.add(wo)
         db.session.commit()
         flash('Report Submitted Successfully')
-        return redirect(url_for('cmrf.report', id=report.id))
+        return redirect(url_for('cmrf.report', id=report.ID))
     return render_template("cmrf/make_report.html", form=form, request=wo)
 
 @cmrf.route('/report/<int:id>', methods=['GET'])

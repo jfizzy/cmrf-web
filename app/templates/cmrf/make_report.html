@@ -1,19 +1,115 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "_fmacros.html" import render_field %}
 
 {% block title %}{{super()}} - Sumbit Report{% endblock %}
 
 {% block page_content %}
 <div class="container">
-    <div class="page-header">
-        <h1>New Report</h1>
-        <br>
-        <h4>Request {{request.ID}} - {{request.title}}</h4>
-        <br>
-        <h4>Status: {{request.status}}</h4>
-    </div>
-    <div class="col-md-4">
-        {{ wtf.quick_form(form) }}
+    <div id="row">
+        <div class="col-xs-0 col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="page-header text-center">
+                <h1>New Report</h1>
+            </div>
+            <div class="cmrfcard well">
+                <h3 class="lead text-center">
+                    Request{% if current_user.is_r_privileged() %} {{request.ID}}{% endif %} - {{request.title}}
+                    <br>
+                    Status - {{request.status}}
+                </h3>
+                
+                <form id="rptform" method="post" class="form-makereport" action="{{ url_for('cmrf.make_report', id=request.ID)}}">
+                    {{ form.hidden_tag() }} 
+                    
+                    {# Balance #}
+                    {{ render_field(form.balance, class_="form-control", type="text", tabindex=1, with_label="Balance for Completed Jobs", min="0", onInput="checkLength(6,2,this)", style="text-align: right; width: 50%;", with_icon="fa fa-dollar fa-fw", with_ph="CAD", id="bal") }}
+                    
+                    {# Description #}
+                    {{ render_field(form.desc, class_="form-control", tabindex=2, with_label="Description", rows="6", with_ph="Anything to be noted about the results...") }}
+                    
+                    {# File Location #}
+                    {{ render_field(form.file_loc, class_="form-control", tabindex=3, with_label="File Location of Results (Optional)", with_icon="fa fa-server fa-fw") }}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
+                    {# Submit #}
+                    {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=4) }}
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-3"></div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+    function checkLength(intlen,declen,ele){
+        console.log(ele.value);
+        var strval = ele.value;
+        var intPart = intLength = decPart = decLength = valid = goodDot = null;
+        if(strval.includes(",")){
+            strval = strval.replace(",","");  
+            strval = strval.replace(" ","");
+        }
+        if(strval.includes(".")) {
+            strtoks = strval.split(".");
+            intPart = strtoks[0];
+            intLength = intPart.length;
+            decPart = strtoks[1];
+            decLength = decPart.length;
+            if(decLength == 0){
+                goodDot = true;
+            }else{
+                goodDot = false;
+            }
+        }else{
+            intPart = strval;
+            intLength = intPart.length;
+            decLength = 0;
+            goodDot = false;
+        }
+        
+        if(intLength <= intlen && decLength <= declen){
+            valid = true;
+        }else{
+            if(intLength > intlen){
+                intPart = intPart.substring(0, intLength - 1);
+                intLength -= 1;
+            }
+            if(decLength > declen){
+                decPart = decPart.substring(0, decLength - 1);
+                decLength -= 1;
+            }
+        }
+        
+        if(intLength > 3){
+            var lowOrder = intPart.substring(intLength - 3);
+            var highOrder = intPart.substring(0, intLength - 3);
+            intPart = highOrder.concat(", ").concat(lowOrder);
+        }
+        
+        if(decLength == 0){
+            if(goodDot){
+                ele.value = intPart.concat(".");
+            }else{
+                ele.value = intPart;
+            }
+        }else{
+            ele.value = intPart.concat(".").concat(decPart);   
+        }
+        
+        if(valid){
+            return true;
+        }
+    }
+</script>
+<script>
+    document.addEventListener("submit", function() {
+        var str = $('#bal').val();
+        str.replace(", ","");
+        $('#bal').val(str);
+    }, false);
+</script>
 {% endblock %}

@@ -49,8 +49,8 @@ class RequestForm(Form):
 	submit = SubmitField("Submit")
 
 class ReportForm(Form):
-    balance = StringField('Balance For Request ($):', validators=[Required(), Length(2,20), Regexp('^[0-9]*$', 0, 'Must be an Integer')])
-    desc = StringField('Notes', validators=[Required(), Length(0, 200)], widget=TextArea())
+    balance = StringField('Balance For Request', validators=[Required(), Length(1,9), Regexp('^[\d\.\,\ ]+$', 0, 'Must be a dollar value.')])
+    desc = StringField('Notes', validators=[Required(), Length(0, 2000)], widget=TextArea())
     file_loc = StringField('File Location of Results (Optional)', validators=[Optional()])
 
     submit = SubmitField("Submit")

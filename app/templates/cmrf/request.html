@@ -10,11 +10,11 @@
         <div class="col-xs-12 col-sm-8">
             <div class="page-header">
                 <div class="text-center">
-                    <h1>Request Details{% if current_user.is_r_privileged() %} for {{request.ID}}{% endif %}</h1>
+                    <h1>Request Details</h1>
                 </div>
             </div>
             <div class="cmrfcard well">
-                <h3>Submitted by: {{owner.first_name}} {{owner.last_name}} - UCID:
+                <h3 class="lead text-center">{% if current_user.is_r_privileged() %}Request ID - {{request.ID}}{% endif %} <br> {{owner.first_name}} {{owner.last_name}} <br>UCID - 
                     {% if current_user.is_u_privileged() %}
                     <a href="{{url_for('auth.adm_account_details', id=owner.UCID)}}">
                     {{owner.UCID}}</a>
@@ -55,7 +55,7 @@
                         </tr>
                         <tr>
                             <td><b>Description: </b></td>
-                            <td>{{request.desc}}</td>
+                            <td><p>{{request.desc}}</p></td>
                         </tr>
                         <tr>
                             <td><b>Required Instruments: </b></td>
@@ -91,27 +91,25 @@
                 
                 <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                 {% if current_user.is_r_privileged() %}
-                    <h3><small>Admin Options:</small></h3>
+                    <h3 class="text-center"><small>Admin Options</small></h3>
                     <div class="row">
-                        <div class="col-xs-3"></div>
-                        <div class="col-xs-6 btn-group-vertical">
+                        <div class="col-xs-1 col-sm-3"></div>
+                        <div class="col-xs-10 col-sm-6 btn-group-vertical">
                             {% if request.status != 'Complete' %}
-                              <a class="btn btn-warning" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
-                    		  |
-                              <a class="btn btn-success" href="{{url_for('cmrf.approve_request', id=request.ID)}}"> Approve </a>
-                    		  |
-                              <a class="btn btn-danger" href="{{url_for('cmrf.cancel_request', id=request.ID)}}">  Cancel  </a>
-                    		  |
-                              <a class="btn btn-primary" href="{{url_for('cmrf.make_report', id=request.ID)}}"> Make Report </a>
-                    		  |
-                    		  {% else %}
+                                <a class="btn btn-primary" href="{{url_for('cmrf.edit_request', id=request.ID)}}"> Edit </a>
+                                <a class="btn btn-primary" href="{{url_for('cmrf.approve_request', id=request.ID)}}"> Approve </a>
+                                <a class="btn btn-danger" href="{{url_for('cmrf.cancel_request', id=request.ID)}}">  Cancel  </a>
+                                <hr class="separator">
+                                <a class="btn btn-primary" href="{{url_for('cmrf.make_report', id=request.ID)}}"> Make Report </a>
+                    		{% else %}
                               <a class="btn btn-success" href="{{url_for('cmrf.report', id=request.RPT_ID)}}"> View Report</a>
                             {% endif %}
                     		{% if current_user.can(Permission.ADMINISTER) %}
+                              <hr class="separator">
                     	  	  <a class="btn btn-danger" id="delbutton" href="{{url_for('cmrf.delete_request', id=request.ID)}}">Delete Request</a>
                     	  	{% endif %}
                         </div>
-                        <div class="col-xs-3"></div>
+                        <div class="col-xs-1 col-sm-3"></div>
                     </div>
                 {% endif %}
             </div>
