@@ -10,8 +10,7 @@
   </div>
 </div>
 <div class="container">
-  <div class="table-responsive">
-    <table id="all_req_table" class="table table-hover cell-border">
+    <table id="all_req_table" class="table table-hover cell-border display dt-responsive nowrap" cellspacing="0" width="100%">
       <thead>
         <tr>
           <th>ID</th>
@@ -46,8 +45,15 @@
           </tr>
         {% endfor %}
       </tbody>
-    </table>
-  </div>
+  </table>
 </div>
 
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script>
+    $(document).ready(function () {
+        $('#all_req_table').DataTable();
+    });
+</script>
 {% endblock %}

@@ -9,44 +9,49 @@
     </div>
 </div>
 <div class="container">
-    <div class="table-responsive">
-        <table id="all_req_table" class="table table-hover cell-border">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Date Submitted</th>
-                    <th>Samples</th>
-                    <th>Status</th>
-                    <th>Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for request in requests %}
+    <table id="all_req_table" class="table table-hover cell-border display dt-responsive nowrap" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Date Submitted</th>
+                <th>Samples</th>
+                <th>Status</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
                 {% if request.status == 'Pending Approval' %}
-                <tr class="warning">
-                    {% else %}
+                    <tr class="warning">
+                {% else %}
                     {% if request.status == 'Complete' %}
-                    <tr class="success">
-                        {% else %}
+                        <tr class="success">
+                    {% else %}
                         {% if request.status == 'In Progress' %}
-                        <tr class="info">
-                            {% else %}
+                            <tr class="info">
+                        {% else %}
                             <tr class="danger">
-                                {% endif %}
-                                {% endif %}
-                                {% endif %}
-                                <td>{{request.ID}}</td>
-                                <td>{% if request.title|length > 17 %}{{request.title[:15]+'...'}}{% else %}{{request.title}}{% endif %}</td>
-                                <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
-                                <td>{{request.no_samples}}</td>
-                                <td>{% if request.status == 'Pending Approval' %}<span class="glyphicon glyphicon-warning-sign">{% else %}{% if request.status == 'Complete' %}<span class="glyphicon glyphicon-ok">{% else %}{% if request.status == 'In Progress' %}<span class="glyphicon glyphicon-time">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}{% endif %}{% endif %}</span> {{request.status}}</td>
-                                <td><a href="{{url_for('cmrf.view_request', id=request.ID)}}">View</a></td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-        </table>
-    </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                    <td>{{request.ID}}</td>
+                    <td>{% if request.title|length > 17 %}{{request.title[:15]+'...'}}{% else %}{{request.title}}{% endif %}</td>
+                    <td>{{request.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
+                    <td>{{request.no_samples}}</td>
+                    <td>{% if request.status == 'Pending Approval' %}<span class="glyphicon glyphicon-warning-sign">{% else %}{% if request.status == 'Complete' %}<span class="glyphicon glyphicon-ok">{% else %}{% if request.status == 'In Progress' %}<span class="glyphicon glyphicon-time">{% else %}<span class="glyphicon glyphicon-remove">{% endif %}{% endif %}{% endif %}</span> {{request.status}}</td>
+                    <td><a href="{{url_for('cmrf.view_request', id=request.ID)}}">View</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script>
+    $(document).ready(function () {
+        $('#all_req_table').DataTable();
+    });
+</script>
 {% endblock %}

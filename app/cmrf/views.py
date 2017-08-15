@@ -200,7 +200,7 @@ def all_complete_requests():
 @all_r_required
 def all_cancel_requests():
 	requests = WorkOrder.query.filter_by(
-					status='Cancel').order_by(
+					status='Cancelled').order_by(
 					WorkOrder.submit_date.desc())
 	return render_template('cmrf/all_requests.html',
 						   title='Cancelled', requests=requests)
@@ -260,7 +260,7 @@ def delete_report(id):
 	rp = Report.query.get_or_404(id)
 	wo = WorkOrder.query.filter_by(RPT_ID=rp.ID).first()
 	wo.RPT_ID = None
-	wo.status = 'Cancelled'
+	wo.status = 'In Progress'
 	db.session.add(wo)
 	db.session.delete(rp)
 	db.session.commit()

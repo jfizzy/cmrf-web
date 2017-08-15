@@ -11,59 +11,65 @@
 </div>
 
 <div class="container">
-    <div class="table-responsive">
-        <table id="all_req_table" class="table table-hover cell-border">
-            <thead class="thead-inverse">
-                <tr>
-                    <th>UCID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Email Confirmed</th>
-                    <th>Role</th>
-                    <th>Lab</th>
-                    <th>Date Joined</th>
-                    <th>Requests</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                    {% if user.role_id == 1 %}
-                    <tr class="warning">
+    <table id="all_acc_table" class="table table-hover cell-border display dt-responsive nowrap" cellspacing="0" width="100%">
+        <thead class="thead-inverse">
+            <tr>
+                <th>UCID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Email Confirmed</th>
+                <th>Role</th>
+                <th>Lab</th>
+                <th>Date Joined</th>
+                <th>Requests</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                {% if user.role_id == 1 %}
+                <tr class="warning">
+                {% else %}
+                    {% if user.role_id == 2 %}
+                        <tr class="danger">
                     {% else %}
-                        {% if user.role_id == 2 %}
-                            <tr class="danger">
+                        {% if user.role_id == 4 %}
+                            <tr class="active">
                         {% else %}
-                            {% if user.role_id == 4 %}
-                                <tr class="active">
-                            {% else %}
-                                <tr class="success">
-                            {% endif %}
+                            <tr class="success">
                         {% endif %}
                     {% endif %}
-                    <td><a href="{{ url_for('auth.adm_account_details', id=user.UCID) }}">
-                        {{user.UCID}}</a></td>
-                    <td>{{user.first_name}} {{user.last_name}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{% if user.email_conf %}Yes{% else %}No{% endif %}</td>
-                    <td>{% if user.role_id == 1 %}Assistant
-                    {% else %}
-                    {% if user.role_id == 2 %}
-                    Lab Admin
-                    {% else %}
-                    {% if user.role_id == 4 %}
-                    Site Admin
-                    {% else %}
-                    Basic User
-                    {% endif %}
-                    {% endif %}
-                    {% endif %}</td>
-                    <td>{{user.lab}}</td>
-                    <td>{{user.date_joined.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
-                    <td><a href="{{ url_for('cmrf.adm_requests', id=user.UCID) }}">Requests</a></td>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                {% endif %}
+                <td><a href="{{ url_for('auth.adm_account_details', id=user.UCID) }}">
+                    {{user.UCID}}</a></td>
+                <td>{{user.first_name}} {{user.last_name}}</td>
+                <td>{{user.email}}</td>
+                <td>{% if user.email_conf %}Yes{% else %}No{% endif %}</td>
+                <td>{% if user.role_id == 1 %}Assistant
+                {% else %}
+                {% if user.role_id == 2 %}
+                Lab Admin
+                {% else %}
+                {% if user.role_id == 4 %}
+                Site Admin
+                {% else %}
+                Basic User
+                {% endif %}
+                {% endif %}
+                {% endif %}</td>
+                <td>{{user.lab}}</td>
+                <td>{{user.date_joined.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
+                <td><a href="{{ url_for('cmrf.adm_requests', id=user.UCID) }}">Requests</a></td>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script>
+    $(document).ready(function () {
+        $('#all_acc_table').DataTable();
+    });
+</script>
 {% endblock %}
