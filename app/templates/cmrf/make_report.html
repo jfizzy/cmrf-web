@@ -45,8 +45,7 @@
 {% block scripts %}
 {{ super() }}
 <script>
-    function checkLength(intlen,declen,ele){
-        console.log(ele.value);
+function checkLength(intlen,declen,ele){
         var strval = ele.value;
         var intPart = intLength = decPart = decLength = valid = goodDot = null;
         if(strval.includes(",")){
