@@ -14,12 +14,12 @@
             </div>
             <div class="cmrfcard well">
                 <h3 class="lead text-center">
-                    Request{% if current_user.is_r_privileged() %} {{request.ID}}{% endif %} - {{request.title}}
+                    Request{% if current_user.is_r_privileged() %} {{wo.ID}}{% endif %} - {{wo.title}}
                     <br>
-                    Status - {{request.status}}
+                    Status - {{wo.status}}
                 </h3>
                 
-                <form id="rptform" method="post" class="form-makereport" action="{{ url_for('cmrf.make_report', id=request.ID)}}">
+                <form id="rptform" method="post" class="form-makereport" action="{{ url_for('cmrf.edit_report', id=rp.ID)}}">
                     {{ form.hidden_tag() }} 
                     
                     {# Balance #}

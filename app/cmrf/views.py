@@ -231,8 +231,28 @@ def report(id):
     if current_user.id != wo.RSC_ID:
         if not current_user.can(Permission.ALL_R):
             abort(404)
-    return render_template("cmrf/report.html", report=rp)
-	
+    return render_template("cmrf/report.html", report=rp, wo=wo)
+    
+@cmrf.route('/edit-report/<int:id>', methods=['GET', 'POST'])
+@login_required
+@all_r_required
+def edit_report(id):
+    rp = Report.query.get_or_404(id)
+    wo = WorkOrder.query.filter_by(RPT_ID=rp.ID).first_or_404()
+    form = ReportForm(rp=rp)
+    if form.validate_on_submit():
+        rp.balance = float(form.balance.data.replace(', ',''))
+        rp.desc = form.desc.data
+        rp.file_loc = form.file_loc.data
+        db.session.add(rp)
+        db.session.commit()
+        flash('Changes Saved Successfully')
+        return redirect(url_for('cmrf.report', id=rp.ID))
+    form.balance.data = rp.balance
+    form.desc.data = rp.desc
+    form.file_loc.data = rp.file_loc
+    return render_template("cmrf/edit_report.html", errors=form.errors.items(), rp=rp, wo=wo, form=form)
+
 @cmrf.route('/delete-report/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
