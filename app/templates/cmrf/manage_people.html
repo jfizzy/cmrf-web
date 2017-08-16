@@ -20,7 +20,7 @@
           		<th>Title</th>
 				<th>Email</th>
           		<th>Date Submitted</th>
-          		<th>Photo Filename</th>
+          		<th>Photo</th>
           		<th>Edit</th>
           		<th>Delete</th>
     		</tr>
@@ -33,9 +33,9 @@
 					{{p.UCID}}</a></td>
 				<td>{{p.name}}</td>
 				<td>{% if p.title|length > 17 %}{{p.title[:15]+'...'}}{% else %}{{p.title}}{% endif %}</td>
-				<td>{{p.email}}</td>
+				<td>{% if p.email %}{% if p.email|length > 17 %}{{p.email[:15]+'...'}}{% else %}{{p.email}}{% endif %}{% else %}None{% endif %}</td>
 				<td>{{p.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
-				<td><a href="{{ url_for('main.show_pic', id=p.ID) }}">{{p.photo_name}}</a></td>
+				<td>{% if p.photo_name %}<a href="{{ url_for('main.show_pic', id=p.ID) }}">{{p.photo_name}}</a>{% else %}None{% endif %}</td>
 				<td><a href="{{ url_for('cmrf.edit_person', id=p.ID) }}">Edit</a></td>
 				<td><a href="{{ url_for('cmrf.delete_person', id=p.ID) }}">Delete</a></td>
 			</tr>
