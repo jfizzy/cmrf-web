@@ -16,19 +16,19 @@
                 {{form.hidden_tag()}}
                 
                 {# Name #}
-                {{ render_field(form.name, with_label="Name", with_ph="Name", with_icon="fa fa-user fa-fw", class_="form-control") }}
+                {{ render_field(form.name, with_label="Name", with_ph="Name", with_icon="fa fa-user fa-fw", class_="form-control", style="width: 100%;") }}
                 
                 {# Description #}
-                {{ render_field(form.title, with_label="Title", with_ph="Role in the lab", with_icon="fa fa-header fa-fw", class_="form-control") }}
+                {{ render_field(form.title, with_label="Title", with_ph="Role in the lab", with_icon="fa fa-header fa-fw", class_="form-control", style="width: 100%;") }}
                 
                 {# Caption #}
                 {{ render_field(form.caption, with_label="Caption (Optional)", with_ph="Special mentions...", rows="4", class_="form-control") }}
                 
                 {# Email #}
-                {{ render_field(form.email, with_label="Email (Optional)", type="email", with_icon="fa fa-envelope fa-fw", with_ph="Email Address", class_="form-control") }}
+                {{ render_field(form.email, with_label="Email (Optional)", type="email", with_icon="fa fa-envelope fa-fw", with_ph="Email Address", class_="form-control", style="width: 100%;") }}
                 
                 {# Photo #}
-                {{ render_field(form.file, with_label="Image (Optional)", with_icon="fa fa-file-photo-o fa-fw", accept=".png,.jpg,.jpe,.jpeg,.gif") }}
+                {{ render_field(form.file, with_label="Image (Optional)", with_icon="fa fa-file-photo-o fa-fw", accept=".png,.jpg,.jpe,.jpeg,.gif", style="width: 100%;") }}
                 
                 <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                 

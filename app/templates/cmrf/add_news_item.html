@@ -16,16 +16,16 @@
                 {{form.hidden_tag()}}
                 
                 {# Title #}
-                {{ render_field(form.title, with_label="Title", with_icon="fa fa-newspaper-o fa-fw", class_="form-control") }}
+                {{ render_field(form.title, with_label="Title", with_icon="fa fa-newspaper-o fa-fw", class_="form-control", style="width: 100%;") }}
                 
                 {# Description #}
                 {{ render_field(form.desc, with_label="Caption", with_ph="Description", rows="4", class_="form-control") }}
                 
                 {# URL #}
-                {{ render_field(form.url, with_label="URL (Optional)", class_="form-control", with_icon="fa fa-globe fa-fw", with_ph="URL for news item", type="url") }}
+                {{ render_field(form.url, with_label="URL (Optional)", class_="form-control", with_icon="fa fa-globe fa-fw", with_ph="URL for news item", type="url", style="width: 100%;") }}
                 
                 {# Image #}
-                {{ render_field(form.file, with_label="Image (Optional)", with_icon="fa fa-file-photo-o fa-fw", accept=".png,.jpg,.jpe,.jpeg,.gif") }}
+                {{ render_field(form.file, with_label="Image (Optional)", with_icon="fa fa-file-photo-o fa-fw", accept=".png,.jpg,.jpe,.jpeg,.gif", style="width: 100%;") }}
                 
                 <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                                 
