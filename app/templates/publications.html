@@ -4,24 +4,24 @@
 
 {% block page_content %}
 
-<header class="carousel slide">
-    <div class="carousel-inner">
-        <div class="item active">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/publications.jpg') }}'); height: 100%;"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/c_pubs.jpg') }}" style="max-height: 400px;" alt="">
+        </div>
+        <div class="col-md-12">
+            <div class="well">
+                <h2>Publications  <small>Lewis Research Group</small></h2>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="well">
+        		{% if current_user.can(Permission.ADD_ARTICLE) %}<a href="{{url_for('cmrf.add_publication')}}" class="btn btn-primary">Add Publication</a>{% endif %}
+        		{% if current_user.can(Permission.EDITING) %}<a href="{{url_for('cmrf.manage_publications')}}" class="btn btn-primary">Manage Publications</a>{% endif %}
+            </div>
         </div>
     </div>
-</header>
-
-<div class="container">
-    <div class="page-header">
-        <h1>Publications</h1>
-		<h2><small>Lewis Research Group</small></h2>
-		{% if current_user.can(Permission.ADD_ARTICLE) or current_user.can(Permission.EDITING) %}<hr>{% endif %}
-		{% if current_user.can(Permission.ADD_ARTICLE) %}<a href="{{url_for('cmrf.add_publication')}}" class="btn btn-primary">Add Publication</a>{% endif %}
-		{% if current_user.can(Permission.EDITING) %}<a href="{{url_for('cmrf.manage_publications')}}" class="btn btn-primary">Manage Publications</a>{% endif %}
-    </div>
 </div>
-
 <div class="container">
     <div class="list-group">
 		{% for publication in publications %}

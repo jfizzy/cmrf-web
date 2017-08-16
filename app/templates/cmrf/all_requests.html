@@ -5,20 +5,23 @@
 {% block page_content %}
 
 <div class="container">
-  <div class="page-header">
+  <div class="page-header text-center">
     <h1>All {% if title != None %}{{title}}{% endif %} CMRF Requests</h1>
   </div>
 </div>
 <div class="container">
-    <h3><small>Filter by Status:</small></h3>
-    <br>
-    <div class="btn-groupbtn-group-justified">
-        <a class="btn btn-info" href="{{url_for('cmrf.all_requests')}}">All</a>
-        <a class="btn btn-primary" href="{{url_for('cmrf.all_active_requests')}}">In Progress</a>
-        <a class="btn btn-warning" href="{{url_for('cmrf.all_pending_requests')}}">Pending Approval</a>
-        <a class="btn btn-danger" href="{{url_for('cmrf.all_cancel_requests')}}">Cancelled</a>
-        <a class="btn btn-success" href="{{url_for('cmrf.all_complete_requests')}}">Complete</a>
+    <div class="text-center">
+        <h3><small>Filter by Status:</small></h3>
+        <div id="butgrp" class="btn-group btn-group-justified">
+            <a class="btn btn-info" href="{{url_for('cmrf.all_requests')}}">All</a>
+            <a class="btn btn-primary" href="{{url_for('cmrf.all_active_requests')}}">In Progress</a>
+            <a class="btn btn-warning" href="{{url_for('cmrf.all_pending_requests')}}">Pending Approval</a>
+            <a class="btn btn-danger" href="{{url_for('cmrf.all_cancel_requests')}}">Cancelled</a>
+            <a class="btn btn-success" href="{{url_for('cmrf.all_complete_requests')}}">Complete</a>
+        </div>
     </div>
+    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+    
     <table id="all_req_table" class="table table-hover cell-border display dt-responsive nowrap" cellspacing="0" width="100%">
       <thead class="thead-inverse">
         <tr>
@@ -41,7 +44,7 @@
                     <tr class="success">
                 {% else %}
                     {% if request.status == 'In Progress' %}
-                        <tr class="primary">
+                        <tr class="info">
                     {% else %}
                         <tr class="danger">
                     {% endif %}
@@ -68,6 +71,25 @@
 <script>
     $(document).ready(function () {
         $('#all_req_table').DataTable();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var $window = $(window)
+        
+        function resize() {
+            if ($window.width() < 992) {
+                $("#butgrp").removeClass('btn-group');
+                $("#butgrp").removeClass('btn-group-justified');
+                $("#butgrp").addClass('btn-group-vertical');
+            }else{
+                $("#butgrp").addClass('btn-group');
+                $("#butgrp").addClass('btn-group-justified');
+                $("#butgrp").removeClass('btn-group-vertical');
+            }
+        }
+        
+        $window.resize(resize).trigger('resize');
     });
 </script>
 {% endblock %}
