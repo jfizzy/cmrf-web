@@ -60,7 +60,7 @@ def delete_request(id):
 @login_required
 @make_r_required
 def make_request():
-	form = RequestForm()
+	form = RequestForm(request.form)
 	if form.validate_on_submit():
 		wo = WorkOrder(title=form.title.data,
 					   no_samples=form.no_samples.data,
@@ -106,7 +106,7 @@ def cancel_request(id):
 def edit_request(id):
     wo = WorkOrder.query.get_or_404(id)
     woid = wo.ID
-    form = RequestForm(wo=wo)
+    form = RequestForm(request.form,wo=wo)
     if form.validate_on_submit():
         wo.title = form.title.data
         wo.no_samples = form.no_samples.data
@@ -212,7 +212,7 @@ def all_cancel_requests():
 @all_r_required
 def make_report(id):
     wo = WorkOrder.query.get_or_404(id)
-    form = ReportForm()
+    form = ReportForm(request.form)
     if form.validate_on_submit():
         report = Report(float(form.balance.data.replace(', ','')), wo.ID, desc=form.desc.data, file_loc=form.file_loc.data)
         db.session.add(report)
@@ -241,7 +241,7 @@ def report(id):
 def edit_report(id):
     rp = Report.query.get_or_404(id)
     wo = WorkOrder.query.filter_by(RPT_ID=rp.ID).first_or_404()
-    form = ReportForm(rp=rp)
+    form = ReportForm(request.form, rp=rp)
     if form.validate_on_submit():
         rp.balance = float(form.balance.data.replace(', ',''))
         rp.desc = form.desc.data
@@ -273,7 +273,7 @@ def delete_report(id):
 @login_required
 @add_article_required
 def add_news_item():
-	form = NewsItemForm()
+	form = NewsItemForm(request.form)
 	if form.validate_on_submit():
 		if request.files['file']:
 			filename = photos.save(request.files['file'])
@@ -292,7 +292,7 @@ def add_news_item():
 @editing_required
 def edit_news_item(id):
 	ni = NewsItem.query.get_or_404(id)
-	form = NewsItemForm(ni=ni)
+	form = NewsItemForm(request.form, ni=ni)
 	if form.validate_on_submit():
 		if request.files['file']:
 			filename = photos.save(request.files['file'])
@@ -335,7 +335,7 @@ def all_news_items():
 @login_required
 @add_article_required
 def add_publication():
-	form = PublicationForm()
+	form = PublicationForm(request.form)
 	if form.validate_on_submit():
 		filename = documents.save(request.files['file'])
 		url = documents.url(filename)
@@ -351,7 +351,7 @@ def add_publication():
 @editing_required
 def edit_publication(id):
 	p = Publication.query.get_or_404(id)
-	form = PublicationForm(p=p)
+	form = PublicationForm(request.form, p=p)
 	if form.validate_on_submit():
 		if request.files['file']:
 			os.remove(os.path.join('./app/uploads/documents/' + p.pdf_name))
@@ -393,7 +393,7 @@ def manage_publications():
 @login_required
 @editing_required
 def add_person():
-	form = PersonForm()
+	form = PersonForm(request.form)
 	if form.validate_on_submit():
 		if request.files['file']:
 			filename = photos.save(request.files['file'])
@@ -413,7 +413,7 @@ def add_person():
 @editing_required
 def edit_person(id):
 	per = Person.query.get_or_404(id)
-	form = PersonForm(per=per)
+	form = PersonForm(request.form, per=per)
 	if form.validate_on_submit():
 		if request.files['file']:
 			os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))

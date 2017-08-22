@@ -18,7 +18,7 @@ httpauth = HTTPBasicAuth()
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
-    form = LoginForm()
+    form = LoginForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and h_verify_password(user.email, form.password.data):
@@ -33,7 +33,7 @@ def login():
 
 @auth.route('/reauthenticate', methods=['GET', 'POST'])
 def reauthenticate():
-    form = ReAuthForm()
+    form = ReAuthForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and h_verify_password(user.email, form.password.data):
@@ -71,7 +71,7 @@ def logout():
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
+    form = RegistrationForm(request.form)
     if request.method == 'POST':
         if recaptcha_verify_custom(recaptcha, request):
             if form.validate_on_submit():
@@ -134,7 +134,6 @@ def resend_confirmation():
     if current_user.is_anonymous or current_user.email_conf:
         return redirect(url_for('main.index'))
     token = current_user.generate_confirmation_token()
-    print token
     send_email(current_user.email, 'Confirm Your Account', 'auth/email/confirm', user=current_user, token=token)
     flash('A new confirmation email has been sent to you by email.')
     return redirect(url_for('cmrf.index'))
@@ -142,7 +141,7 @@ def resend_confirmation():
 @auth.route('/change-password', methods=['GET', 'POST'])
 @fresh_login_required
 def change_password():
-	form = ChangePasswordForm()
+	form = ChangePasswordForm(request.form)
 	if form.validate_on_submit():
 		if current_user.verify_password(form.old_password.data):
 			current_user.password = form.password.data
@@ -157,7 +156,7 @@ def change_password():
 def password_reset_request():
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
-    form = PasswordResetRequestForm()
+    form = PasswordResetRequestForm(request.form)
     if request.method == 'POST':
         if recaptcha_verify_custom(recaptcha, request):
             if form.validate_on_submit():
@@ -183,7 +182,7 @@ def password_reset_request():
 def password_reset(token):
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
-    form = PasswordResetForm()
+    form = PasswordResetForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
@@ -198,7 +197,7 @@ def password_reset(token):
 @auth.route('/change-email', methods=['GET', 'POST'])
 @fresh_login_required
 def change_email_request():
-    form = ChangeEmailForm()
+    form = ChangeEmailForm(request.form)
     if form.validate_on_submit():
         if current_user.verify_password(form.password.data):
             new_email = form.email.data
@@ -239,7 +238,7 @@ def adm_account_details(id):
 @auth.route('/change-account', methods=['GET','POST'])
 @fresh_login_required
 def change_account_details():
-    form = ChangeAccountDetailsForm(lab=current_user.lab, phone=current_user.phone)    
+    form = ChangeAccountDetailsForm(request.form, lab=current_user.lab, phone=current_user.phone)    
     if form.validate_on_submit():
         current_user.lab = form.lab.data
         current_user.phone = form.phone.data
@@ -253,7 +252,7 @@ def change_account_details():
 @user_acc_required
 def adm_change_account_details(id):
     user = User.query.get_or_404(id)
-    form = ChangeAccountDetailsAdminForm(user=user)
+    form = ChangeAccountDetailsAdminForm(request.form, user=user)
     if form.validate_on_submit():
         if form.first_name.data != None and \
             user.first_name != form.first_name.data:
