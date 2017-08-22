@@ -1,0 +1,8 @@
+[Unit]
+Description=Renew Let's Ecrypt Certificates
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot --nginx renew --renew-hook "/bin/systemctl --no-block reload nginx" --quiet --agree-tos
+#ExecStopPost=/bin/systemctl --noblock reload nginx
