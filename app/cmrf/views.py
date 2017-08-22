@@ -199,11 +199,13 @@ def all_complete_requests():
 @login_required
 @all_r_required
 def all_cancel_requests():
-	requests = WorkOrder.query.filter_by(
-					status='Cancelled').order_by(
-					WorkOrder.submit_date.desc())
-	return render_template('cmrf/all_requests.html',
-						   title='Cancelled', requests=requests)
+    requests = WorkOrder.query.filter_by(status='Cancelled').join(User,
+                                     WorkOrder.RSC_ID==User.UCID).add_columns(
+                                     WorkOrder.ID, WorkOrder.RSC_ID, User.first_name,
+                                     User.last_name, WorkOrder.title, WorkOrder.submit_date,
+                                     WorkOrder.no_samples,WorkOrder.status).order_by(WorkOrder.submit_date.desc())
+    return render_template('cmrf/all_requests.html',
+                           title='Cancelled', requests=requests)
 
 @cmrf.route('/make-report/<int:id>', methods=['GET', 'POST'])
 @login_required

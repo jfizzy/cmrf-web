@@ -33,6 +33,7 @@ class Config:
     ALLOWED_EXT_PHOTOS = set(['png', 'jpg', 'jpeg', 'gif'])
     ALLOWED_EXT_DOCUMENTS = set(['pdf'])
 
+    
     RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
     RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
     RECAPTCHA_TYPE = 'image'
@@ -79,7 +80,7 @@ class ProductionConfig(Config):
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 
-class HerokuConfig(ProductionConfig):
+class UnixConfig(ProductionConfig):
 	SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
 	
 	@classmethod
@@ -90,18 +91,18 @@ class HerokuConfig(ProductionConfig):
 		from werkzeug.contrib.fixers import ProxyFix
 		app.wsgi_app = ProxyFix(app.wsgi_app)
 		
-		# log to stderr
+		# log to syslog
 		import logging
-		from logging import StreamHandler
-		file_handler = StreamHandler()
-		file_handler.setLevel(logging.WARNING)
-		app.logger.addHandler(file_handler)
+		from logging import SysLogHandler
+		syslog_handler = SysLogHandler()
+		syslog_handler.setLevel(logging.WARNING)
+		app.logger.addHandler(syslog_handler)
 	
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
-	'heroku': HerokuConfig,
+	'unix': UnixConfig,
 	
-    'default': HerokuConfig
+    'default': UnixConfig
 }
