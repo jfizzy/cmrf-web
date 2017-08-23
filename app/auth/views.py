@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, g, jsonify
+from flask import render_template, redirect, request, url_for, flash, g, jsonify, session
 from flask_login import login_user, logout_user, login_required, current_user, confirm_login, fresh_login_required, login_fresh
 from flask_httpauth import HTTPBasicAuth
 from urllib import unquote
@@ -17,19 +17,35 @@ httpauth = HTTPBasicAuth()
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('cmrf.index'))
+    p_by_c = session.get('protect_by_captcha', 'no')
     form = LoginForm(request.form)
+    if request.method == 'POST':
+        if p_by_c == 'yes':
+            if not recaptcha_verify_custom(recaptcha, request):
+                if session.get('failed_attempts', 1) > 3:
+                    flash('The CAPTCHA is required.')
+                else:
+                    flash('Invalid email or password.')
+                return render_template('auth/login.html', form=form, protect_by_captcha=p_by_c)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and h_verify_password(user.email, form.password.data):
             login_user(user, form.remember_me.data)
+            session.pop('failed_attempts', 1)
+            session.pop('protect_by_captcha', 'no')
             next = request.args.get('next')
             if next:
                 return redirect(next)
             else:
                 return redirect(url_for('cmrf.index'))
-        flash('Invalid email or password.')
-    return render_template('auth/login.html', form=form)
+        else:
+            session['failed_attempts'] = session.get('failed_attempts', 1) + 1
+            if session.get('failed_attempts', 1) > 2:
+                session['protect_by_captcha'] = 'yes'
+            flash('Invalid email or password.')
+            return render_template('auth/login.html', form=form, protect_by_captcha=p_by_c)
+    return render_template('auth/login.html', form=form, protect_by_captcha=p_by_c)
 
 @auth.route('/reauthenticate', methods=['GET', 'POST'])
 def reauthenticate():
@@ -222,7 +238,6 @@ def change_email(token):
     return redirect(url_for('main.index'))
 
 @auth.route('/account', methods=['GET'])
-@login_required
 @fresh_login_required
 def account_details():
     return render_template("auth/account.html")

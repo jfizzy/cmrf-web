@@ -29,6 +29,12 @@
                     {# Remember Me #}
                     {{ render_field(form.remember_me, class_="checkbox") }}
                 
+                    {% if protect_by_captcha == 'yes' %}
+                        <div class="col-md-offset-3">
+                            <div class="g-recaptcha" data-theme="light" data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+                        </div>
+                    {% endif %}
+                    
                     {# Submit #}
                     {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=3) }}
                 </form>
