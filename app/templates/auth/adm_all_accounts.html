@@ -44,10 +44,10 @@
                 <td>{{user.first_name}} {{user.last_name}}</td>
                 <td>{{user.email}}</td>
                 <td>{% if user.email_conf %}Yes{% else %}No{% endif %}</td>
-                <td>{% if user.role_id == 1 %}Assistant
+                <td>{% if user.role_id == 1 %}Lab Member
                 {% else %}
                 {% if user.role_id == 2 %}
-                Lab Admin
+                Lab Staff
                 {% else %}
                 {% if user.role_id == 4 %}
                 Site Admin
