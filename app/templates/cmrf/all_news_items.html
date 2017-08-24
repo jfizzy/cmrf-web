@@ -45,7 +45,9 @@
 {{super()}}
 <script>
     $(document).ready(function () {
-        $('#all_ni_table').DataTable();
+        $.fn.dataTable.moment('ddd MMM DD YYYY HH:MM:SS A');
+        var table = $('#all_ni_table').DataTable();
+        table.order([3,'desc']).draw();
     });
 </script>
 {% endblock %}

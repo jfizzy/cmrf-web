@@ -51,7 +51,7 @@ class Role(db.Model):
             role.default = roles[r][1]
             db.session.add(role)
         db.session.commit()
-
+        
     def __repr__(self):
         return '<Role [%s] - Permissions: [%s]>' % (self.name, bin(self.permissions))
 

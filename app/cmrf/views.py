@@ -29,7 +29,7 @@ def adm_requests(id):
     requests = WorkOrder.query.filter_by(
                     RSC_ID=id).order_by(
                     WorkOrder.submit_date.desc())
-    return render_template('cmrf/adm_requests.html', requests=requests)
+    return render_template('cmrf/adm_requests.html', requests=requests, selected_id=id)
 
 @cmrf.route('/request/<int:id>', methods=['GET'])
 @login_required

@@ -5,7 +5,7 @@
 {% block page_content %}
 <div class="container">
     <div class="page-header">
-        <h1>CMRF Requests - UCID: {{current_user.id}}</h1>
+        <h1>CMRF Requests - UCID: {{selected_id}}</h1>
     </div>
 </div>
 <div class="container">
@@ -51,6 +51,7 @@
 {{super()}}
 <script>
     $(document).ready(function () {
+        $.fn.dataTable.moment('ddd MMM DD YYYY HH:MM:SS A');
         $('#all_req_table').DataTable();
     });
 </script>

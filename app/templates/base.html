@@ -180,6 +180,9 @@ lang="en"
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <script src="//cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.15/sorting/datetime-moment.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
 	$(document).ready(function() {
 		$('#flashes').delay(5000).fadeOut(3000)
@@ -262,5 +265,4 @@ $("#password").focusin(function() {
     	}
     });
 </script>
-<script src='https://www.google.com/recaptcha/api.js'></script>
 {% endblock %}

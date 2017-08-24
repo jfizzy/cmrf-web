@@ -53,7 +53,9 @@
 {{super()}}
 <script>
     $(document).ready(function () {
-        $('#all_req_table').DataTable();
+        $.fn.dataTable.moment('ddd MMM DD YYYY HH:MM:SS A');
+        var table = $('#all_req_table').DataTable();
+        table.order([[2,'desc']]).draw();
     });
 </script>
 {% endblock %}

@@ -267,7 +267,7 @@ def change_account_details():
 @user_acc_required
 def adm_change_account_details(id):
     user = User.query.get_or_404(id)
-    form = ChangeAccountDetailsAdminForm(request.form, user=user)
+    form = ChangeAccountDetailsAdminForm(request.form)
     if form.validate_on_submit():
         if form.first_name.data != None and \
             user.first_name != form.first_name.data:
@@ -275,7 +275,8 @@ def adm_change_account_details(id):
         if form.last_name.data != None and \
             user.last_name != form.last_name.data:
             user.last_name = form.last_name.data
-        user.email = form.email.data
+        if user.email != form.email.data:
+            user.email = form.email.data
         user.email_conf = form.email_conf.data
         user.role = Role.query.get(form.role.data)
         if user.lab != form.lab.data:
@@ -298,7 +299,7 @@ def adm_change_account_details(id):
 @fresh_login_required
 @user_acc_required
 def all_accounts():
-    users = User.query.all()
+    users = User.query.order_by(User.date_joined.desc()).all()
     return render_template("auth/adm_all_accounts.html", users=users)
 	
 @auth.route('/delete-account/<int:id>', methods=['GET'])

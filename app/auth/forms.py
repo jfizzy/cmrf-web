@@ -7,6 +7,7 @@ from ..models import User, Role
 
 
 
+
 class Unique(object):
 	""" validator that checks field uniqueness """
 	def __init__(self, model, field, message=None):
@@ -104,19 +105,17 @@ class ChangeAccountDetailsAdminForm(Form):
     email = StringField('Email', validators=[Required(), Length(1, 64),
                                              Email()])
     email_conf = BooleanField('Confirmed')
+    
     role = SelectField('User Role', coerce=int)
     lab = StringField('Collaborators (Lab)', validators=[Required(), Length(1,64)])
     phone = TelField('Phone Number (Optional)')
 
     submit = SubmitField('Confirm Changes')
-
-    def __init__(self, user, *args, **kwargs):
+    
+    def __init__(self, *args, **kwargs):
         super(ChangeAccountDetailsAdminForm, self).__init__(*args, **kwargs)
-        self.role.choices = [(role.id, role.name)
-                             for role in Role.query.order_by(Role.name).all()]
-        self.user = user
+        self.role.choices = [(role.id, role.name) for role in Role.query.order_by(Role.name).all()]
 
     def validate_email(self, field):
-        if field.data != self.user.email and \
-                User.query.filter_by(email=field.data).first() is None:
+        if User.query.filter_by(email=field.data).first() is None:
             raise ValidationError('Email already Registered.')
