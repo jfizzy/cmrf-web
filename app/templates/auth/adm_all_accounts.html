@@ -71,7 +71,7 @@
     $(document).ready(function () {
         $.fn.dataTable.moment('ddd MMM DD YYYY HH:MM:SS A');
         var table = $('#all_acc_table').DataTable();
-        table.order([[6,'asc'], [4,'desc']]).draw();
+        table.order([[6,'desc'], [4,'desc']]).draw();
     });
 </script>
 {% endblock %}
