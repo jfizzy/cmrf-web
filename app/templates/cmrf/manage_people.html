@@ -6,8 +6,14 @@
 
 <div class="container">
   <div class="page-header">
-    <h1>Manage People</h1>
+    <h1 class="text-center">Manage People</h1>
   </div>
+</div>
+
+<div class="container">
+	<div class="col-lg-12">
+		<h1 class="lead">Team</h1>
+    </div>
 </div>
 
 <div class="container">
@@ -19,7 +25,8 @@
 				<th>Name</th>
           		<th>Title</th>
 				<th>Email</th>
-          		<th>Date Submitted</th>
+          		<th>Submitted</th>
+                <th>Position</th>
           		<th>Photo</th>
           		<th>Edit</th>
           		<th>Delete</th>
@@ -27,7 +34,7 @@
 		</thead>
 		<tbody>
 			{% for p in ppl %}
-			<tr>
+			<tr class="success">
 				<td>{{p.ID}}</td>
 				<td><a href="{{ url_for('auth.adm_account_details', id=p.UCID) }}">
 					{{p.UCID}}</a></td>
@@ -35,6 +42,52 @@
 				<td>{% if p.title|length > 17 %}{{p.title[:15]+'...'}}{% else %}{{p.title}}{% endif %}</td>
 				<td>{% if p.email %}{% if p.email|length > 17 %}{{p.email[:15]+'...'}}{% else %}{{p.email}}{% endif %}{% else %}None{% endif %}</td>
 				<td>{{p.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
+                <td><a href="{{ url_for('cmrf.person_up', id=p.ID) }}"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a><a href="{{ url_for('cmrf.person_down', id=p.ID) }}"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a> | {{p.position}}</td>
+				<td>{% if p.photo_name %}<a href="{{ url_for('main.show_pic', id=p.ID) }}">{{p.photo_name}}</a>{% else %}None{% endif %}</td>
+				<td><a href="{{ url_for('cmrf.edit_person', id=p.ID) }}">Edit</a></td>
+				<td><a href="{{ url_for('cmrf.delete_person', id=p.ID) }}">Delete</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+</div>
+
+
+
+<div class="container">
+	<div class="col-lg-12">
+		<h1 class="lead">Alumni</h1>
+    </div>
+</div>
+
+<div class="container">
+	<table id="all_alum_table" class="table table-hover cell-border display dt-responsive nowrap" cellspacing="0" width="100%">
+		<thead class="thead-inverse">
+    		<tr>
+          		<th>ID</th>
+          		<th>Submitter UCID</th>
+				<th>Name</th>
+          		<th>Title</th>
+				<th>Email</th>
+          		<th>Submitted</th>
+                <th>Position</th>
+          		<th>Photo</th>
+          		<th>Edit</th>
+          		<th>Delete</th>
+    		</tr>
+		</thead>
+		<tbody>
+			{% for p in alum %}
+			<tr class="danger">
+				<td>{{p.ID}}</td>
+				<td><a href="{{ url_for('auth.adm_account_details', id=p.UCID) }}">
+					{{p.UCID}}</a></td>
+				<td>{{p.name}}</td>
+				<td>{% if p.title|length > 17 %}{{p.title[:15]+'...'}}{% else %}{{p.title}}{% endif %}</td>
+				<td>{% if p.email %}{% if p.email|length > 17 %}{{p.email[:15]+'...'}}{% else %}{{p.email}}{% endif %}{% else %}None{% endif %}</td>
+				<td>{{p.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
+                <td><a href="{{ url_for('cmrf.person_up', id=p.ID) }}"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a><a href="{{ url_for('cmrf.person_down', id=p.ID) }}"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a> | {{p.position}}</td>
 				<td>{% if p.photo_name %}<a href="{{ url_for('main.show_pic', id=p.ID) }}">{{p.photo_name}}</a>{% else %}None{% endif %}</td>
 				<td><a href="{{ url_for('cmrf.edit_person', id=p.ID) }}">Edit</a></td>
 				<td><a href="{{ url_for('cmrf.delete_person', id=p.ID) }}">Delete</a></td>
@@ -50,8 +103,10 @@
 <script>
     $(document).ready(function () {
         $.fn.dataTable.moment('ddd MMM DD YYYY HH:MM:SS A');
-        var table = $('#all_ppl_table').DataTable();
-        table.order([[5,'desc']]).draw();
+        var table1 = $('#all_ppl_table').DataTable();
+        table1.order([[6, 'desc'], [5,'desc']]).draw();
+        var table2 = $('#all_alum_table').DataTable();
+        table2.order([[6, 'desc'], [5,'desc']]).draw();
     });
 </script>
 {% endblock %}

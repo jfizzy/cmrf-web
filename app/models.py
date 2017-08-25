@@ -307,6 +307,7 @@ class NewsItem(db.Model):
     desc = db.Column(db.Text, nullable=True)
     url = db.Column(db.Text, nullable=True)
     image= db.Column(db.Text, nullable=True)
+    
 	
     def __init__(self, ucid, title, desc=None, url=None, image=None):
 	self.UCID = ucid
@@ -357,6 +358,8 @@ class Person(db.Model):
 	email = db.Column(db.String(64), nullable=True, default=None)
 	photo_name = db.Column(db.Text, nullable=True, default=None)
 	photo_url = db.Column(db.Text, nullable=True, default=None)
+	alumni = db.Column(db.Boolean, nullable=False, default=False)
+	position = db.Column(db.Integer, nullable=False, default=1)
 	
 	def __init__(self, ucid, name, title, caption=None, email=None, photo_name=None, photo_url=None):
 		self.UCID = ucid

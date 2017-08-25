@@ -6,35 +6,40 @@
 
 {% block page_content %}
 <div class="container">
-  <div class="page-header">
-      <h1>Editing Person with ID : {{per.ID}}</h1>
-  </div>
-  <div class="well col-md-6">
-	  <form method="post" enctype="multipart/form-data" action="{{ url_for('cmrf.edit_person', id=per.ID) }}">
-		  {{form.hidden_tag()}}
-		  
-		  {# Name #}
-		  {{ render_field(form.name, with_label="Name", class_="form-control") }}
-		  <hr>
-
-		  {# Description #}
-		  {{ render_field(form.title, with_label="Title", class_="form-control") }}
-		  <hr>
-		  
-		  {# Caption #}
-		  {{ render_field(form.caption, with_label="Caption", class_="form-control") }}
-		  <hr>
-		  
-		  {# Email #}
-		  {{ render_field(form.email, with_label="Email", class_="form-control") }}
-		  <hr>
-		  
-		  {# Photo #}
-		  {{ render_field(form.file, with_label="Photo", accept=".png,.jpg,.jpe,.jpeg,.gif") }}
-
-		  {# Submit #}
-		  {{form.submit(class="btn btn-primary", type="submit", style="width: 40%; margin-left: 30%;")}}
-      </form>	      
-  </div>
+    <div class="page-header">
+        <h1 class="text-center">Editing Person with ID : {{per.ID}}</h1>
+    </div>
+    <div class="col-xs-0 col-sm-3"></div>
+    <div class="col-xs-12 col-sm-6">
+        <div class="cmrfcard well">
+    	    <form method="post" class="form-editperson" enctype="multipart/form-data" action="{{ url_for('cmrf.edit_person', id=per.ID) }}">
+    		    {{form.hidden_tag()}}
+    		  
+    		    {# Name #}
+                {{ render_field(form.name, with_label="Name", with_ph="Name", with_icon="fa fa-user fa-fw", class_="form-control", style="width: 100%;") }}
+            
+                {# Description #}
+                {{ render_field(form.title, with_label="Title", with_ph="Role in the lab", with_icon="fa fa-header fa-fw", class_="form-control", style="width: 100%;") }}
+            
+                {# Caption #}
+                {{ render_field(form.caption, with_label="Caption (Optional)", with_ph="Special mentions...", rows="4", class_="form-control") }}
+            
+                {# Email #}
+                {{ render_field(form.email, with_label="Email (Optional)", type="email", with_icon="fa fa-envelope fa-fw", with_ph="Email Address", class_="form-control", style="width: 100%;") }}
+            
+                {# Photo #}
+                {{ render_field(form.file, with_label="Image (Optional, Replaces current)", with_icon="fa fa-file-photo-o fa-fw",     accept=".png,.jpg,.jpe,.jpeg,.gif", style="width: 100%;") }}
+            
+                {# Alumni #}
+                {{ render_field(form.alumni) }}
+            
+                <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+    
+    		    {# Submit #}
+    		    {{form.submit(class="btn btn-primary", type="submit", style="width: 40%; margin-left: 30%;")}}
+            </form>
+        </div>      
+    </div>
+    <div class="col-xs-0 col-sm-3"></div>
 </div>
 {% endblock %}

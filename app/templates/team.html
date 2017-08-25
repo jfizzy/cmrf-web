@@ -42,11 +42,38 @@
             </div>
         </div>
         {% endfor %}
+        
+        {% if alumni %}
+            <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+            
+            <div class="col-lg-12">
+                <h3 class="page-header"><small>Alumni of the Lewis Research Group</small></h3>
+            </div>
+            
+            {% for person in alumni %}
+    		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 thumb">
+                <div class="thumbnail">
+    				{% if person.photo_name %}
+                    <img class="img-responsive" src="photo/{{person.ID}}" alt="">
+    				{% else %}
+    				<img src="{{ url_for('static', filename='assets/placeholder.jpg') }}" alt="">
+    				{% endif %}
+    				<div class="caption" style="text-align: center;">
+    					<h> {{ person.name }} </h>
+    	                <h1>{{ person.title }}</h1>
+    					{% if person.email %}
+    					<h1><small><a href="mailto:{{person.email}}">{{person.email}}</a></small></h1>
+    					{% endif %}
+    					{% if person.caption %}
+    	            	<p>{{person.caption}}</p>
+    					{% endif %}
+    				</div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
-
-<!--<h1 class="well">Alumni</h1>-->
-
 {% endblock %}
 
 {% block scripts %}

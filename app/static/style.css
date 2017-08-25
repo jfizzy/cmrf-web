@@ -844,6 +844,29 @@ footer {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
 }
 
+.form-editperson input[type=text],
+.form-editperson input[type=text],
+.form-editperson input[type=textarea],
+.form-editperson input[type=email],
+.form-editperson input[type=file],
+.form-editperson input[type=radio],
+.form-editperson button {
+    width: auto;
+    display: block;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-editperson .form-control:focus {
+    border-color: rgb(104, 145, 162);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+}
+
 .form-addnews input[type=text],
 .form-addnews input[type=textarea],
 .form-addnews input[type=url],

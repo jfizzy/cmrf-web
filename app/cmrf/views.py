@@ -2,11 +2,12 @@ import os
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
+from sqlalchemy import func
 from ..decorators import admin_required, all_r_required, view_r_required, make_r_required, user_acc_required, add_article_required, editing_required
 from ..models import WorkOrder, User, Permission, Report, NewsItem, Publication, Person
 from . import cmrf
 from .. import db, documents, photos
-from .forms import RequestForm, ReportForm, NewsItemForm, PublicationForm, PersonForm
+from .forms import RequestForm, ReportForm, NewsItemForm, PublicationForm, PublicationEditForm, PersonForm, PersonEditForm
 
 @cmrf.route('/', methods=['GET'])
 def index():
@@ -351,7 +352,7 @@ def add_publication():
 @editing_required
 def edit_publication(id):
 	p = Publication.query.get_or_404(id)
-	form = PublicationForm(request.form, p=p)
+	form = PublicationEditForm(request.form, p=p)
 	if form.validate_on_submit():
 		if request.files['file']:
 			os.remove(os.path.join('./app/uploads/documents/' + p.pdf_name))
@@ -413,7 +414,7 @@ def add_person():
 @editing_required
 def edit_person(id):
 	per = Person.query.get_or_404(id)
-	form = PersonForm(request.form, per=per)
+	form = PersonEditForm(request.form, per=per)
 	if form.validate_on_submit():
 		if request.files['file']:
 			os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))
@@ -423,16 +424,48 @@ def edit_person(id):
 		per.title = form.title.data
 		per.caption = form.caption.data
 		per.email = form.email.data
+		if per.alumni != form.alumni.data:
+		    per.alumni = form.alumni.data
+		    per.position = 1
 		db.session.add(per)
 		db.session.commit()
 		flash('Person Updated Successfully')
-		return redirect(url_for('main.team'))
+		return redirect(url_for('cmrf.manage_people'))
 	form.name.data = per.name
 	form.title.data = per.title
 	form.caption.data = per.caption
 	form.email.data = per.email
+	form.alumni.data = per.alumni
 	return render_template("cmrf/edit_person.html", errors=form.errors.items(), form=form, per=per)
-	
+
+@cmrf.route('/person-up/<int:id>', methods=['GET'])
+@login_required
+@editing_required
+def person_up(id):
+    per = Person.query.get_or_404(id)
+    qry = db.session.query(func.max(Person.position).label("max_pos"))
+    max_pos = qry.one()
+    if per.position <= max_pos:
+        per.position = per.position + 1
+        db.session.add(per)
+        db.session.commit()
+        flash('Person moved up in section of page')
+    return redirect(url_for('cmrf.manage_people'))
+    
+@cmrf.route('/person-down/<int:id>', methods=['GET'])
+@login_required
+@editing_required
+def person_down(id):
+    per = Person.query.get_or_404(id)
+    qry = db.session.query(func.min(Person.position).label("min_pos"))
+    min_pos = qry.one()
+    if per.position > 0:
+        per.position = per.position - 1
+        db.session.add(per)
+        db.session.commit()
+        flash('Person moved down in section of page')
+    return redirect(url_for('cmrf.manage_people'))
+    
 @cmrf.route('/delete-person/<int:id>', methods=['POST'])
 @login_required
 @editing_required
@@ -448,5 +481,6 @@ def delete_person(id):
 @login_required
 @editing_required
 def manage_people():
-	ppl = Person.query.order_by(Person.submit_date.desc()).all()
-	return render_template("cmrf/manage_people.html", ppl=ppl)
+    ppl = Person.query.filter(Person.alumni.is_(False)).order_by(Person.submit_date.desc()).all()
+    alum = Person.query.filter(Person.alumni.is_(True)).order_by(Person.submit_date.desc()).all()
+    return render_template("cmrf/manage_people.html", ppl=ppl, alum=alum)

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import StringField, SubmitField, IntegerField, SelectField, TextAreaField, SelectMultipleField, RadioField
+from wtforms import StringField, SubmitField, IntegerField, SelectField, TextAreaField, SelectMultipleField, RadioField, BooleanField
 from wtforms.validators import Required, Optional, Length, Email, Regexp, EqualTo, URL
 from wtforms.widgets import TextArea, ListWidget, CheckboxInput, FileInput
 from wtforms import ValidationError
@@ -69,7 +69,14 @@ class PublicationForm(Form):
 	file = FileField('PDF', validators=[FileRequired(), FileAllowed(documents, 'Only PDFs may be uploaded.')])
 	
 	submit = SubmitField("Submit")
-	
+    
+class PublicationEditForm(Form):
+    title = StringField('Title', validators=[Required(), Length(6,200)])
+    desc = StringField('Description', validators=[Required(), Length(0, 2000)], widget=TextArea())
+    file = FileField('PDF', validators=[FileAllowed(documents, 'Only PDFs may be uploaded.')])
+
+    submit = SubmitField("Submit")
+
 class PersonForm(Form):
 	name = StringField('Name', validators=[Required(), Length(6, 64)])
 	title = StringField('Title', validators=[Required(), Length(6, 64)])
@@ -78,6 +85,18 @@ class PersonForm(Form):
 	file = FileField('Photo (png, jpg, gif) (Optional) ', validators=[FileAllowed(photos, 'Only images of approved types may be uploaded.')])
 	
 	submit = SubmitField("Submit")
+    
+class PersonEditForm(Form):
+    name = StringField('Name', validators=[Required(), Length(6, 64)])
+    title = StringField('Title', validators=[Required(), Length(6, 64)])
+    caption = TextAreaField('Caption (Optional)', validators=[Optional(), Length(6,300)])
+    email = StringField('Email (Optional)', validators=[Optional(), Length(5, 64), Email()])
+    file = FileField('Photo (png, jpg, gif) (Optional) ', validators=[FileAllowed(photos, 'Only images of approved types may be uploaded.')])
+    alumni = BooleanField('Alumni')
+    
+    submit = SubmitField("Submit")
+    
+    
 
 class AdminChangeRequest(Form):
     title = StringField('Title', validators=[Required(), Length(6, 64)])
@@ -102,7 +121,7 @@ class AdminChangeRequest(Form):
                                           
     submit = SubmitField("Submit")
 
-def __init__(self, fa, wo, *args, **kwargs):
-    super(AdminChangeRequest, self).__init__(*args, **kwargs)
-    self.fa = fa
-    self.wo = wo
+    def __init__(self, fa, wo, *args, **kwargs):
+        super(AdminChangeRequest, self).__init__(*args, **kwargs)
+        self.fa = fa
+        self.wo = wo

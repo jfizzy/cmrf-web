@@ -20,8 +20,9 @@ def home():
 
 @main.route('/team')
 def team():
-	people = Person.query.order_by(Person.submit_date.desc()).all()
-	return render_template("team.html", people=people)
+    people = Person.query.filter(Person.alumni.is_(False)).order_by(Person.position.desc()).all()
+    alumni = Person.query.filter(Person.alumni.is_(True)).order_by(Person.position.desc()).all()
+    return render_template("team.html", people=people, alumni=alumni)
 
 @main.route('/facilities')
 def facilities():
@@ -76,7 +77,7 @@ def show_pic(id):
 	with open('./app/uploads/photos/' + person.photo_name, mode='rb') as pic:
 		pic_content = pic.read()
 		response = make_response(pic_content)
-		response.headers['Content-Type'] = 'image'
+		response.headers['Content-Type'] = 'image/%s' % person.photo_name.split('.')[1]
 		response.headers['Content-Disposition'] = 'inline; filename=%s' % person.photo_name
 		return response
 
@@ -86,7 +87,7 @@ def show_thumb(id):
 	with open('./app/uploads/photos/' + ni.image, mode='rb') as pic:
 		pic_content = pic.read()
 		response = make_response(pic_content)
-		response.headers['Content-Type'] = 'image'
+		response.headers['Content-Type'] = 'image/%s' % ni.image.split('.')[1]
 		response.headers['Content-Disposition'] = 'inline; filename=%s' % ni.image
 		return response
 
