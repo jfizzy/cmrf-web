@@ -38,6 +38,11 @@
                         {{ render_field(form.last_name, class_="form-control", with_icon="fa fa-user fa-fw", type="text", tabindex=2, with_label="Last Name", with_ph="Last Name")}}
                     </div>
                     
+                    {# phone #}
+                    {{ render_field(form.phone, class_="form-control", type="tel", onkeypress="return event.charCode >= 48 && event.charCode <= 57", maxlength="15", with_icon="fa fa-phone fa-fw", with_label="Phone Number (Optional)", with_ph="Phone")}}
+                    
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    
                     {# Email #}
                     {{ render_field(form.email, class_="form-control", with_icon="fa fa-envelope fa-fw", type="email", tabindex=3, with_label="Email Address", with_ph="Email")}}
                     
@@ -47,11 +52,18 @@
                     {# Role #}
                     {{ render_field(form.role, class_="form-control", tabindex=5, with_icon="fa fa-key fa-fw", with_label="User Role") }}
                     
-                    {# Lab #}
-                    {{ render_field(form.lab, class_="form-control", type="text", tabindex=6, with_icon="fa fa-university fa-fw", with_label="Laboratory", with_ph="Lab")}}
+                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     
-                    {# phone #}
-                    {{ render_field(form.phone, class_="form-control", type="tel", tabindex=7, onkeypress="return event.charCode >= 48 && event.charCode <= 57", maxlength="15", with_icon="fa fa-phone fa-fw", with_label="Phone Number (Optional)", with_ph="Phone")}}
+                    <p class="text-muted">Principal Investigator</p>
+                    
+                    <div class="nopadding col-xs-12 col-sm-6">
+                    {# First Name #}
+                    {{ render_field(form.pi_fname, class_="form-control", type="text", tabindex=6, with_icon="fa fa-user fa-fw", with_label="First Name", with_ph="First")}}
+                    </div>
+                    <div class="nopadding col-xs-12 col-sm-6">
+                    {# Last Name #}
+                    {{ render_field(form.pi_lname, class_="form-control", type="text", tabindex=7, with_icon="fa fa-user fa-fw", with_label="Last Name", with_ph="Last")}}
+                    </div>
                     
                     <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     

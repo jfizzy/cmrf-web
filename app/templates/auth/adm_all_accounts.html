@@ -56,7 +56,7 @@
                 {% endif %}
                 {% endif %}
                 {% endif %}</td>
-                <td>{{user.lab}}</td>
+                <td>{{user.pi_lname}}</td>
                 <td>{{user.date_joined.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
                 <td><a href="{{ url_for('cmrf.adm_requests', id=user.UCID) }}">Requests</a></td>
             {% endfor %}

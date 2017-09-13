@@ -66,7 +66,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('ROLE.id'))
     email_conf = db.Column(db.Boolean, default=False)
-    lab = db.Column(db.String(64), index=True)
+    pi_fname = db.Column(db.String(64), nullable=False)
+    pi_lname = db.Column(db.String(64), nullable=False)
     phone = db.Column(db.String(64))
     date_joined = db.Column(db.DateTime, default=datetime.datetime.now)
 

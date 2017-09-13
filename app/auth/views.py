@@ -91,7 +91,7 @@ def register():
     if request.method == 'POST':
         if recaptcha_verify_custom(recaptcha, request):
             if form.validate_on_submit():
-                user=User(UCID=int(form.UCID.data), first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, email=form.email.data, lab=form.lab.data, phone=str(form.phone.data))
+                user=User(UCID=int(form.UCID.data), first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, email=form.email.data, pi_fname=form.pi_fname.data, pi_lname=form.pi_lname.data, phone=str(form.phone.data))
                 db.session.add(user)
                 db.session.commit()
                 token = user.generate_confirmation_token()
@@ -253,9 +253,10 @@ def adm_account_details(id):
 @auth.route('/change-account', methods=['GET','POST'])
 @fresh_login_required
 def change_account_details():
-    form = ChangeAccountDetailsForm(request.form, lab=current_user.lab, phone=current_user.phone)    
+    form = ChangeAccountDetailsForm(request.form, pi_fname=current_user.pi_fname, pi_lname=current_user.pi_lname, phone=current_user.phone)    
     if form.validate_on_submit():
-        current_user.lab = form.lab.data
+        current_user.pi_fname = form.pi_fname.data
+        current_user.pi_lname = form.pi_lname.data
         current_user.phone = form.phone.data
         db.session.add(current_user)
         flash('Your information was successfully updated.')
@@ -279,8 +280,10 @@ def adm_change_account_details(id):
             user.email = form.email.data
         user.email_conf = form.email_conf.data
         user.role = Role.query.get(form.role.data)
-        if user.lab != form.lab.data:
-            user.lab = form.lab.data
+        if user.pi_fname != form.pi_fname.data:
+            user.pi_fname = form.pi_fname.data
+        if user.pi_lname != form.pi_lname.data:
+            user.pi_lname = form.pi_lname.data
         if user.phone != form.phone.data:
             user.first_name = form.first_name.data
         db.session.add(user)
@@ -291,7 +294,8 @@ def adm_change_account_details(id):
     form.email.data = user.email
     form.email_conf.data = user.email_conf
     form.role.data = user.role_id
-    form.lab.data = user.lab
+    form.pi_fname.data = user.pi_fname
+    form.pi_lname.data = user.pi_lname
     form.phone.data = user.phone
     return render_template("auth/adm_change_account.html", form=form, selected_user=user)
 
