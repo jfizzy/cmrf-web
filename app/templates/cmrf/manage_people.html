@@ -42,7 +42,7 @@
 				<td>{% if p.title|length > 17 %}{{p.title[:15]+'...'}}{% else %}{{p.title}}{% endif %}</td>
 				<td>{% if p.email %}{% if p.email|length > 17 %}{{p.email[:15]+'...'}}{% else %}{{p.email}}{% endif %}{% else %}None{% endif %}</td>
 				<td>{{p.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
-                <td><a href="{{ url_for('cmrf.person_up', id=p.ID) }}"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a><a href="{{ url_for('cmrf.person_down', id=p.ID) }}"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a> | {{p.position}}</td>
+                <td><a href="{{ url_for('cmrf.person_up', id=p.ID) }}"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a><a href="{{ url_for('cmrf.person_down', id=p.ID) }}"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a>{{p.position}}</td>
 				<td>{% if p.photo_name %}<a href="{{ url_for('main.show_pic', id=p.ID) }}">View</a>{% else %}None{% endif %}</td>
 				<td><a href="{{ url_for('cmrf.edit_person', id=p.ID) }}">Edit</a></td>
 				<td><a href="{{ url_for('cmrf.delete_person', id=p.ID) }}">Delete</a></td>
@@ -87,7 +87,7 @@
 				<td>{% if p.title|length > 17 %}{{p.title[:15]+'...'}}{% else %}{{p.title}}{% endif %}</td>
 				<td>{% if p.email %}{% if p.email|length > 17 %}{{p.email[:15]+'...'}}{% else %}{{p.email}}{% endif %}{% else %}None{% endif %}</td>
 				<td>{{p.submit_date.strftime('%a %b %d %Y %I:%M:%S %p')}}</td>
-                <td><a href="{{ url_for('cmrf.person_up', id=p.ID) }}"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a><a href="{{ url_for('cmrf.person_down', id=p.ID) }}"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a> | {{p.position}}</td>
+                <td><a href="{{ url_for('cmrf.person_up', id=p.ID) }}"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a><a href="{{ url_for('cmrf.person_down', id=p.ID) }}"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a>{{p.position}}</td>
 				<td>{% if p.photo_name %}<a href="{{ url_for('main.show_pic', id=p.ID) }}">View</a>{% else %}None{% endif %}</td>
 				<td><a href="{{ url_for('cmrf.edit_person', id=p.ID) }}">Edit</a></td>
 				<td><a href="{{ url_for('cmrf.delete_person', id=p.ID) }}">Delete</a></td>
