@@ -336,7 +336,7 @@ def all_news_items():
 @login_required
 @add_article_required
 def add_publication():
-	form = PublicationForm(request.form)
+	form = PublicationForm()
 	if form.validate_on_submit():
 		filename = documents.save(request.files['file'])
 		url = documents.url(filename)
@@ -466,12 +466,13 @@ def person_down(id):
         flash('Person moved down in section of page')
     return redirect(url_for('cmrf.manage_people'))
     
-@cmrf.route('/delete-person/<int:id>', methods=['POST'])
+@cmrf.route('/delete-person/<int:id>', methods=['GET', 'POST'])
 @login_required
 @editing_required
 def delete_person(id):
 	per = Person.query.get_or_404(id)
-	os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))
+        if os.path.isfile(os.path.join('./app/uploads/photos/' + per.photo_name)):
+	    os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))
 	db.session.delete(per)
 	db.session.commit()
 	flash('Person Successfully removed')

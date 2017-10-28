@@ -14,7 +14,7 @@
       <div class="cmrfcard well">
     	  <form class="form-addpub" method="post" enctype="multipart/form-data" action="{{ url_for('cmrf.add_publication') }}">
     		  {{form.hidden_tag()}}
-    		  
+
     		  {# Title #}
     		  {{ render_field(form.title, with_label="Title", with_ph="Title", with_icon="fa fa-header fa-fw", class_="form-control", style="width: 100%;") }}
     
