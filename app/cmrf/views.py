@@ -113,7 +113,7 @@ def edit_request(id):
         wo.no_samples = form.no_samples.data
         wo.desc = form.desc.data
         wo.tm = form.desc.data
-        wo.assistance = form.assistance.data
+        wo.assistance = bool(form.assistance.data)
         if 0 in form.tm.data:
             wo.tm_ccm = True
         if 1 in form.tm.data:

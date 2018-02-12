@@ -25,27 +25,35 @@
                     {# Number of Samples #}
                     {{ render_field(form.no_samples, class_="form-control", type="number", tabindex=3, with_label="Number of Samples", min="1", max="1000", step="1", pattern="\d+", onInput="checkLength(3,this)", style="width: 30%;", with_icon="fa fa-flask fa-fw")}}
                     
-                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
-                    
-                    <div class="nopadding col-sm-12 col-md-6">
-                        {# Target Metabolites #}
-                        {{ render_field(form.tm, tabindex=4, with_label="Target Metabolites") }}
-                        
-                        {# Other Target Metabolites #}
-                        {{ render_field(form.other_tm, class_="form-control", tabindex=5, with_label="Other Target Metabolites", disabled="disabled")}}
+                    <div class="col-xs-12">
+                        <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
                     </div>
-                        
-                    <div class="nopadding col-sm-12 col-md-6">
-                        {# Required Instruments #}
-                        {{ render_field(form.ri, tabindex=6, with_label="Required Instruments")}}
+
+                    <div class="nopadding col-xs-12">
+                        <div class="nopadding col-sm-12 col-md-6">
+                            {# Target Metabolites #}
+                            {{ render_field(form.tm, tabindex=4, with_label="Target Metabolites") }}
+
+                            {# Other Target Metabolites #}
+                            {{ render_field(form.other_tm, class_="form-control", tabindex=5, with_label="Other Target Metabolites", disabled="disabled")}}
+                        </div>
+
+                        <div class="nopadding col-sm-12 col-md-6">
+                            {# Required Instruments #}
+                            {{ render_field(form.ri, tabindex=6, with_label="Required Instruments")}}
+                        </div>
                     </div>
-                    
-                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+
+                    <div class="col-xs-12">
+                        <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    </div>
                     
                     {# Assistance #}
                     {{ render_field(form.assistance, class_="radio", tabindex=7, with_label="Assistance Required? (Technician)", style="list-style: none;")}}
                     
-                    <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    <div class="col-xs-12">
+                        <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+                    </div>
                     
                     {# Submit #}
                     {{ form.submit(class_="btn btn-lg btn-primary btn-block", type="submit", tabindex=8) }}
