@@ -86,9 +86,7 @@ lang="en"
 				<li class="dropdown" id="acc-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('main.analytics') }}">Analytics</a></li>
-                        <li><a href="{{ url_for('main.malaria') }}">Malaria</a></li>
-                        <li><a href="{{ url_for('main.hainfections') }}">Hospital Acquired Infections</a></li>
+                        <li><a href="{{ url_for('main.research') }}">Research Areas</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ url_for('main.publications') }}">Publications</a></li>
 						{% if current_user.can(Permission.EDITING) %}

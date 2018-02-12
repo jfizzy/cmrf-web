@@ -55,3 +55,6 @@ server/sysdenv
 
 # File uploads
 app/uploads
+
+# idea
+.idea
