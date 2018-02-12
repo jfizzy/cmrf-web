@@ -1,76 +1,51 @@
 {% extends "base.html" %}
 
-{% block title %}{{super()}} - News{% endblock %}
+{% block title %}{{super()}} - Research{% endblock %}
 
 {% block page_content %}
 <!-- Full Width Image Header -->
 <div class="container">
     <div class="page-header">
         <div class="well">
-            <h1>Research Areas</h1>
+            <h1 class="my-4">Research Areas
+            <small>Lewis Research Group</small>
+            </h1>
         </div>
     </div>
 </div>
 
 <div class="container">
 
-    <!-- Analytics Featurette -->
-    <div class="featurette" id="analytics">
-        <img class="featurette-image img-circle img-responsive pull-right" src="{{ url_for('static', filename='assets/big_data_analytics_research.jpg')}}">
-        <h2 class="featurette-heading">Analytics
-            <br>
-            <span class="text-muted">Big Data Analysis</span>
-        </h2>
-        <p class="lead">Infectious diseases account for the majority of deaths in developing countries and are among the ten leading causes of mortality in Alberta. The emergence of diverse drug resistant pathogens has made finding new antimicrobial therapies both a Canadian and global health priority. My laboratory investigates the connection between metabolic adaptation and virulence of human pathogens.</p>
+    <div class="row well">
+        <div class="col-md-12">
+            <h2>Analytics <small></small></h2>
+            <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/r_analytics.jpg') }}" alt="">
+            <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+            <p class="lead">The Lewis research group specializes in unraveling complex metabolic networks using high resolution mass spectrometry and multidimensional nuclear magnetic resonance spectroscopy. This metabolomics approach allows us to interrogate representative metabolites from most central carbon metabolism pathways, measure pathway fluxes using isotope-labeled precursors, and identify novel metabolites. Moreover, we recently developed a specialized technique for interrogating complete proteolytic cascades. This analytical approach allows the molecular details of pathways to be uncovered and provides quantitative feedback on the impact of human and pathogen interactions and metabolism. We are actively developing a suite of new chemistry, spectroscopic, and computation strategies for extending our ability to unravel the complex metabolic interactions that occur during infections.</p>
+        </div>
     </div>
 
-    <hr class="featurette-divider">
+    <hr/>
 
-    <!-- Malaria Featurette -->
-    <div class="featurette" id="malaria">
-        <img class="featurette-image img-circle img-responsive pull-left" src="{{ url_for('static', filename='assets/infectious_bacteria.jpg')}}">
-        <h2 class="featurette-heading">Malaria
-            <br>
-            <span class="text-muted">Infectious Disease caused by Parasitic Protozoans</span>
-        </h2>
-        <p class="lead">Malaria is a parasitic infection spread by Anopheles mosquitoes. The Plasmodium parasite that causes malaria is neither a virus nor a bacterium – it is a single-celled parasite that multiplies in red blood cells of humans as well as in the mosquito intestine.</p>
+    <div class="row well">
+        <div class="col-md-12">
+            <h2>Malaria <small></small></h2>
+            <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/malaria_b.jpg') }}" alt="">
+            <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+            <p class="lead">Malaria is thought to have killed more people throughout time than any other disease. Today, more than 500 million people suffer from this parasitic infection and a million people die annually. The malaria parasite lives for part of its lifecycle inside the human red blood cell, where in digests 80% of the hemoglobin over the course of its 48-hour intraerythrocytic development. Although the parasite’s hemoglobin metabolism has been studied intensively—and is an obvious drug target for controlling infections—surprisingly little is known about how this process works in live parasites. Our group is harnessing our new digestomics analytical strategy to unravel this complex metabolic process. Our hope is that a detailed map of this essential process may lead to new generation of antimalarial therapies.</p>
+        </div>
     </div>
 
-    <hr class="featurette-divider">
+    <hr/>
 
-    <!-- Hospital Acquired Infections Featurette -->
-    <div class="featurette" id="hospitalai">
-        <img class="featurette-image img-circle img-responsive pull-right" src="{{ url_for('static', filename='assets/hosp_acqu_infections.jpg')}}">
-        <h2 class="featurette-heading">Hospital Acquired Infections
-            <br>
-            <span class="text-muted">Viral, Bacterial and Fungal Pathogens</span>
-        </h2>
-        <p class="lead">Hospital-acquired infections are caused by viral, bacterial, and fungal pathogens; the most common types are bloodstream infection (BSI), pneumonia (eg, ventilator-associated pneumonia [VAP]), urinary tract infection (UTI), and surgical site infection (SSI).</p>
+    <div class="row well">
+        <div class="col-md-12">
+            <h2>Hospital Acquired Infections <small></small></h2>
+            <img class="img-responsive img-rounded" src="{{ url_for('static', filename='assets/r_hainfections.png') }}" alt="">
+            <hr style="width: 100%; color: black; height: 1px; background-color: #357ebd;" />
+            <p class="lead">One in every 25 patients who goes to the hospital will acquire an infection and 8,000 of these people die each year in Canada. Finding new ways to detect and control dangerous bacteria is both a Canadian and global health priority. Our research team is investigating the role that metabolism plays in the outcome of these infections. Up to 40% of Pseudomonas aeruginosa and Staphylococcus aureas strains isolated from human infections show evidence for metabolic adaptation. Although these metabolic changes are associated with clinical adaptation, it is still unclear how much of an impact these adaptations have on human morbidity and mortality. Understanding this link is of critical importance because significant metabolic/morbidity connections could be readily translated into a diagnostic tool for personalized antibiotic therapy. Recently, we launched a research program to systematically interrogate the relationship between metabolic changes, fitness of pathogens, clinical presentation, and mortality from common opportunistic pathogens.</p>
+        </div>
     </div>
 
-    <hr class="featurette-divider">
-
-    <!-- Malaria Featurette -->
-    <div class="featurette" id="opppath">
-        <img class="featurette-image img-circle img-responsive pull-left" src="{{ url_for('static', filename='assets/opportunistic_pathogens.jpg')}}">
-        <h2 class="featurette-heading">Opportunistic Pathogens
-            <br>
-            <span class="text-muted">Identification of High-Risk Hosts</span>
-        </h2>
-        <p class="lead">An opportunistic infection is an infection caused by pathogens (bacteria, viruses, fungi, or protozoa) that take advantage of an opportunity not normally available, such as a host with a weakened immune system, an altered microbiota (such as a disrupted gut flora), or breached integumentary barriers.</p>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <!-- Publications Featurette -->
-    <div class="featurette" id="publications">
-        <img class="featurette-image img-circle img-responsive pull-right" src="{{ url_for('static', filename='assets/publications.jpg')}}">
-        <h2 class="featurette-heading">Publications
-            <br>
-        </h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-    </div>
-
-    <hr class="featurette-divider">
 </div>
 {% endblock %}
