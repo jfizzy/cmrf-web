@@ -4,32 +4,23 @@
 {% block title %}{{super()}} - Facilities{% endblock %}
 
 {% block page_content %}
-<header id="faci-carousel" class="carousel slide">
-    <!-- Indicators -->
+<header id="faci-carousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#faci-carousel" data-slide-to="0" class="active"></li>
         <li data-target="#faci-carousel" data-slide-to="1"></li>
         <li data-target="#faci-carousel" data-slide-to="2"></li>
-        <li data-target="#faci-carousel" data-slide-to="3"></li>
     </ol>
-
-    <!-- Wrapper for slides -->
     <div class="carousel-inner">
         <div class="item active">
             <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/c_inst.jpg') }}');"></div>
         </div>
         <div class="item">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/facility.jpg') }}');"></div>
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/c_facility.jpg') }}');"></div>
         </div>
         <div class="item">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/c_prokaryote_lab.png') }}');"></div>
-        </div>
-        <div class="item">
-            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/c_eukaryote_lab.jpg') }}');"></div>
+            <div class="fill" style="background-image:url('{{ url_for('static', filename='assets/facilitiy.jpg') }}');"></div>
         </div>
     </div>
-
-    <!-- Controls -->
     <a class="left carousel-control" href="#faci-carousel" data-slide="prev">
         <span class="icon-prev"></span>
     </a>
@@ -40,17 +31,16 @@
 
 <div class="container">
 
+    <!-- Heading Row -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Facilities <br>
-				<small>Lewis Research Group</small></h1>
+            <h2>Facilities  <small>Lewis Research Group</small></h2>
+            <hr>
 			<p class="lead">The Lewis research group specializes in metabolic analysis of human pathogens. Our facilities include two separate biosafety-level two laboratories dedicated to eukaryotic and prokaryotic pathogens, and a state-of-the-art mass spectrometry laboratory.</p>
         </div>
     </div>
     <!-- /.row -->
-</div>
 
-<div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 thumb">
             <a class="thumbnail" href="{{url_for('cmrf.index')}}">
