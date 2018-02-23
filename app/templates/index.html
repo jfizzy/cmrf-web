@@ -100,7 +100,7 @@
                 </div>
                 <div class="panel-body">
                     <p>The Lewis laboratory specializes in unraveling complex metabolic networks using high resolution mass spectrometry...</p>
-                    <a href="{{ url_for('main.analytics') }}" class="btn btn-primary">Continue Reading</a>
+                    <a href="{{ url_for('main.research', _anchor='analytics') }}" class="btn btn-primary">Continue Reading</a>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="panel-body">
                     <p>Malaria is thought to have killed more people throughout time than any other disease. Today, more than 500 million people...</p>
-                    <a href="{{ url_for('main.malaria') }}" class="btn btn-primary">Continue Reading</a>
+                    <a href="{{ url_for('main.research', _anchor='malaria') }}" class="btn btn-primary">Continue Reading</a>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="panel-body">
                     <p>One in every 25 patients who goes to the hospital will acquire an infection and 8,000 of these people die each year in Canada...</p>
-                    <a href="{{ url_for('main.hainfections') }}" class="btn btn-primary">Continue Reading</a>
+                    <a href="{{ url_for('main.research', _anchor='hai') }}" class="btn btn-primary">Continue Reading</a>
                 </div>
             </div>
         </div>
@@ -140,42 +140,42 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'mass_spec.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = 'mass_spec.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_mass_spec.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'prok_lab_wl.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = 'prok_lab_w.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_prok_lab.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'inst.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = 'inst.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_inst.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'euk_lab_w.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = 'euk_lab_w.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_euk_lab.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'engi.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = 'engi.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_engi.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'subs_w.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = 'subs_w.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_subs.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = 'facility.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = 'facility.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_facility.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumb">
-            <a class="thumbnail" href="{{url_for('main.view_image', image = '600nmr.jpg')}}">
+            <a class="thumbnail" href="{{url_for('main.send_asset', path = '600nmr.jpg')}}">
                 <img class="img-responsive" src="{{ url_for('static', filename='assets/fgt_600nmr.jpg') }}" alt="">
             </a>
         </div>

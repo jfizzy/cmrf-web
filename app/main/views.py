@@ -91,6 +91,19 @@ def show_thumb(id):
 		response.headers['Content-Disposition'] = 'inline; filename=%s' % ni.image
 		return response
 
+@main.route('/assets/<path:path>')
+def send_asset(path):
+	try:
+		with open('./app/static/assets/' + str(path), mode='rb') as asset:
+			asset_content = asset.read()
+			response = make_response(asset_content)
+			response.headers['Content-Type'] = 'image/%s' % str(path).split('.')[1]
+			response.headers['Content-Disposition'] = 'inline; filename=%s' % str(path)
+			return response
+	except:
+		return abort(404)
+
+
 @main.route('/view-image/<image>')
 def view_image(image):
     return render_template('view_image.html', image=image)

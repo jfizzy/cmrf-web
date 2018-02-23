@@ -20,7 +20,9 @@ class Config:
     CMRF_ADMIN = os.environ.get('CMRF_ADMIN')
 	
     CMRF_SLOW_DB_QUERY_TIME = 0.5
-    
+
+    STATIC_FOLDER = './app/static'
+
     UPLOADS_DEFAULT_DEST = './app/uploads'
     UPLOADS_DEFAULT_URL = 'http://localhost:5000/app/uploads/'
 
