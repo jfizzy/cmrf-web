@@ -1,4 +1,5 @@
 import os
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -8,7 +9,7 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
-    
+
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
@@ -18,7 +19,7 @@ class Config:
     CMRF_MAIL_SUBJECT_PREFIX = '[CMRF]'
     CMRF_MAIL_SENDER = 'CMRF Admin <cmrfnoreply@gmail.com>'
     CMRF_ADMIN = os.environ.get('CMRF_ADMIN')
-	
+
     CMRF_SLOW_DB_QUERY_TIME = 0.5
 
     STATIC_FOLDER = './app/static'
@@ -28,19 +29,18 @@ class Config:
 
     UPLOADED_DOCUMENTS_DEST = './app/uploads/documents'
     UPLOADED_DOCUMENTS_URL = 'http://localhost:5000/app/uploads/documents/'
-    
+
     UPLOADED_PHOTOS_DEST = './app/uploads/photos'
     UPLOADED_PHOTOS_URL = 'http://localhost:5000/app/uploads/photos/'
 
     ALLOWED_EXT_PHOTOS = set(['png', 'jpg', 'jpeg', 'gif'])
     ALLOWED_EXT_DOCUMENTS = set(['pdf'])
 
-    
     RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
     RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
     RECAPTCHA_TYPE = 'image'
     RECAPTCHA_SIZE = 'compact'
-    
+
     @staticmethod
     def init_app(app):
         pass
@@ -48,16 +48,18 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') 
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
+
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+                              'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
     WTF_CSRF_ENABLED = False
 
+
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
     @classmethod
     def init_app(cls, app):
@@ -72,7 +74,7 @@ class ProductionConfig(Config):
             credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
             if getattr(cls, 'MAIL_USE_TLS', None):
                 secure = ()
-        mail_handler=SMTPHandler(
+        mail_handler = SMTPHandler(
             mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
             fromaddr=cls.CMRF_MAIL_SENDER,
             toaddrs=[cls.CMRF_ADMIN],
@@ -82,29 +84,31 @@ class ProductionConfig(Config):
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 
+
 class UnixConfig(ProductionConfig):
-	SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
-	
-	@classmethod
-	def init_app(cls, app):
-		ProductionConfig.init_app(app)
-		
-		# handle proxy server headers
-		from werkzeug.contrib.fixers import ProxyFix
-		app.wsgi_app = ProxyFix(app.wsgi_app)
-		
-		# log to syslog
-		import logging
-		from logging.handlers import SysLogHandler
-		syslog_handler = SysLogHandler()
-		syslog_handler.setLevel(logging.WARNING)
-		app.logger.addHandler(syslog_handler)
-	
+    SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
+
+    @classmethod
+    def init_app(cls, app):
+        ProductionConfig.init_app(app)
+
+        # handle proxy server headers
+        from werkzeug.contrib.fixers import ProxyFix
+        app.wsgi_app = ProxyFix(app.wsgi_app)
+
+        # log to syslog
+        import logging
+        from logging.handlers import SysLogHandler
+        syslog_handler = SysLogHandler()
+        syslog_handler.setLevel(logging.WARNING)
+        app.logger.addHandler(syslog_handler)
+
+
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
-	'unix': UnixConfig,
-	
+    'unix': UnixConfig,
+
     'default': UnixConfig
 }
