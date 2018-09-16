@@ -235,7 +235,7 @@ def report(id):
         if not current_user.can(Permission.ALL_R):
             abort(404)
     return render_template("cmrf/report.html", report=rp, wo=wo)
-    
+
 @cmrf.route('/edit-report/<int:id>', methods=['GET', 'POST'])
 @login_required
 @all_r_required
@@ -451,7 +451,7 @@ def person_up(id):
         db.session.commit()
         flash('Person moved up in section of page')
     return redirect(url_for('cmrf.manage_people'))
-    
+
 @cmrf.route('/person-down/<int:id>', methods=['GET'])
 @login_required
 @editing_required
@@ -465,14 +465,14 @@ def person_down(id):
         db.session.commit()
         flash('Person moved down in section of page')
     return redirect(url_for('cmrf.manage_people'))
-    
+
 @cmrf.route('/delete-person/<int:id>', methods=['GET', 'POST'])
 @login_required
 @editing_required
 def delete_person(id):
 	per = Person.query.get_or_404(id)
-        if os.path.isfile(os.path.join('./app/uploads/photos/' + per.photo_name)):
-	    os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))
+        if per.photo_name is not None and os.path.isfile(os.path.join('./app/uploads/photos/' + per.photo_name)):
+	    	os.remove(os.path.join('./app/uploads/photos/' + per.photo_name))
 	db.session.delete(per)
 	db.session.commit()
 	flash('Person Successfully removed')
