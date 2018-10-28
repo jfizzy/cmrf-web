@@ -320,6 +320,8 @@ def edit_news_item(id):
 	form = NewsItemForm(request.form, ni=ni)
 	if form.validate_on_submit():
 		if request.files['file']:
+			if ni.image is not None and os.path.isfile(os.path.join('./app/uploads/photos/' + ni.image)):
+				os.remove(os.path.join('./app/uploads/photos/' + ni.image))
 			filename = photos.save(request.files['file'])
 			url = photos.url(filename)
 			ni.image = filename
@@ -341,7 +343,7 @@ def edit_news_item(id):
 @editing_required
 def delete_news_item(id):
 	ni = NewsItem.query.get_or_404(id)
-	if ni.image is not None:
+	if ni.image is not None and os.path.isfile(os.path.join('./app/uploads/photos/' + ni.image)):
 		os.remove(os.path.join('./app/uploads/photos/' + ni.image))
 	db.session.delete(ni)
 	db.session.commit()
